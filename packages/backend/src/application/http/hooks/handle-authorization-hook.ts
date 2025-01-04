@@ -1,6 +1,7 @@
 import type { OIDCUser } from "@domain/oidc/oidc-user.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { getAccessToken } from "../controllers/access-token-utils.js";
 
@@ -59,4 +60,23 @@ export const handleAuthorizationHook = async (
   }
 
   request.user = { ...matchingLoggedUserResult.value, oidcUser: introspectionResult.user };
+};
+
+export const withAuthenticationErrorResponses = <T extends Record<number, z.ZodTypeAny>>(
+  responses: T,
+): Omit<T, 401 | 403 | 404 | 500> & {
+  401: z.ZodString | z.ZodUnion<[T[401], z.ZodString]>;
+  403: z.ZodString | z.ZodUnion<[T[403], z.ZodString]>;
+  404: z.ZodString | z.ZodUnion<[T[404], z.ZodString]>;
+  500: z.ZodNull | z.ZodUnion<[T[500], z.ZodNull]>;
+} => {
+  const { 401: response401, 403: response403, 404: response404, 500: response500, ...restResponses } = responses;
+
+  return {
+    ...restResponses,
+    401: response401 != null ? z.union([response401, z.string()]) : z.string(),
+    403: response403 != null ? z.union([response403, z.string()]) : z.string(),
+    404: response404 != null ? z.union([response404, z.string()]) : z.string(),
+    500: response500 != null ? z.union([response500, z.null()]) : z.null(),
+  };
 };
