@@ -2,6 +2,7 @@ import type { User } from "@domain/user/user.js";
 import { getMeResponse, putMeInput } from "@ou-ca/common/api/me";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import type { Services } from "../../services/services.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 
 export const meController: FastifyPluginCallbackZod<{
   services: Services;
@@ -14,6 +15,7 @@ export const meController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["User"],
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -50,6 +52,7 @@ export const meController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["User"],
         body: putMeInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {

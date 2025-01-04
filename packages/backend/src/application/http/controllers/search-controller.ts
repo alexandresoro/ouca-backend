@@ -2,6 +2,7 @@ import { getSpeciesPaginatedResponse, getSpeciesQueryParamsSchema } from "@ou-ca
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import type { Services } from "../../services/services.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { getPaginationMetadata } from "./controller-utils.js";
 
 export const searchController: FastifyPluginCallbackZod<{
@@ -16,6 +17,7 @@ export const searchController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         querystring: getSpeciesQueryParamsSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {

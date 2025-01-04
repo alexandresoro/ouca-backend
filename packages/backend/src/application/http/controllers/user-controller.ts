@@ -1,5 +1,6 @@
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import type { Services } from "../../services/services.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { getAccessToken } from "./access-token-utils.js";
 
 export const userController: FastifyPluginCallbackZod<{
@@ -12,8 +13,8 @@ export const userController: FastifyPluginCallbackZod<{
     {
       schema: {
         security: [{ token: [] }],
-
         tags: ["User"],
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {

@@ -9,6 +9,7 @@ import {
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import type { Services } from "../../services/services.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { idParamAsNumberSchema } from "./api-utils.js";
 import { getPaginationMetadata } from "./controller-utils.js";
 
@@ -24,6 +25,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -54,6 +56,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -87,6 +90,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         querystring: getSexesQueryParamsSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -120,6 +124,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         body: upsertSexInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -147,6 +152,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         tags: ["Sex"],
         params: idParamAsNumberSchema,
         body: upsertSexInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -173,6 +179,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {

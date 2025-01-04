@@ -11,6 +11,7 @@ import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { logger } from "../../../utils/logger.js";
 import type { Services } from "../../services/services.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { idParamSchema } from "./api-utils.js";
 import { getPaginationMetadata } from "./controller-utils.js";
 import { enrichedInventory } from "./inventories-enricher.js";
@@ -27,6 +28,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Inventory"],
         params: idParamSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -69,6 +71,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         tags: ["Inventory"],
         params: idParamSchema,
         querystring: getInventoryIndexParamsSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -98,6 +101,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Inventory"],
         querystring: getInventoriesQueryParamsSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -138,6 +142,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Inventory"],
         body: upsertInventoryInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -184,6 +189,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         tags: ["Inventory"],
         params: idParamSchema,
         body: upsertInventoryInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -233,6 +239,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Inventory"],
         params: idParamSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {

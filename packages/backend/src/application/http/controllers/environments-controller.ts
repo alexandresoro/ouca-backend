@@ -9,6 +9,7 @@ import {
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import type { Services } from "../../services/services.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { idParamAsNumberSchema } from "./api-utils.js";
 import { getPaginationMetadata } from "./controller-utils.js";
 
@@ -24,6 +25,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -54,6 +56,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -87,6 +90,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         querystring: getEnvironmentsQueryParamsSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -120,6 +124,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         body: upsertEnvironmentInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -147,6 +152,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         tags: ["Environment"],
         params: idParamAsNumberSchema,
         body: upsertEnvironmentInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -173,6 +179,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {

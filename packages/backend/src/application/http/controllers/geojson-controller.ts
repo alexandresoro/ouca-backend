@@ -1,6 +1,7 @@
 import { fastifyEtag } from "@fastify/etag";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import type { Services } from "../../services/services.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 
 export const geojsonController: FastifyPluginAsyncZod<{
   services: Services;
@@ -16,8 +17,8 @@ export const geojsonController: FastifyPluginAsyncZod<{
     {
       schema: {
         security: [{ token: [] }],
-
         tags: ["Location"],
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
