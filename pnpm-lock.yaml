@@ -242,8 +242,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       protomaps-themes-base:
-        specifier: 4.3.0
-        version: 4.3.0
+        specifier: 4.3.1
+        version: 4.3.1
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -3019,8 +3019,8 @@ packages:
   protocol-buffers-schema@3.6.0:
     resolution: {integrity: sha512-TdDRD+/QNdrCGCE7v8340QyuXd4kIWIgapsE2+n/SaGiSSbomYl4TjHlvIoCWRpE7wFt02EpB35VVA2ImcBVqw==}
 
-  protomaps-themes-base@4.3.0:
-    resolution: {integrity: sha512-XNLs3zamw/XucflU0qBXgiPN72/YEo6h01ClsVrfUUQCDzA4r8Eu23hG/fqYqFuocciwu0doCxGBBpE8xGMtoA==}
+  protomaps-themes-base@4.3.1:
+    resolution: {integrity: sha512-g3ne0iBxMcFExxstvXyC0xCJaZF9iLfIUQcxx86+cuzQ4KiZ4v5moxqDvHEZDa8xrTYY2iwm6VV5UGOHnpWYhg==}
 
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
@@ -6467,7 +6467,7 @@ snapshots:
 
   protocol-buffers-schema@3.6.0: {}
 
-  protomaps-themes-base@4.3.0: {}
+  protomaps-themes-base@4.3.1: {}
 
   proxy-addr@2.0.7:
     dependencies:
