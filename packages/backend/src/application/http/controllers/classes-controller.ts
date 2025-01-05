@@ -26,7 +26,10 @@ export const classesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getClassResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const classesController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getClassResponse.parse(speciesClass);
-      return await reply.send(response);
+      return await reply.send(speciesClass);
     },
   );
 
@@ -57,7 +59,10 @@ export const classesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: speciesClassInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -76,13 +81,11 @@ export const classesController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isSpeciesClassUsed, speciesCount] = speciesClassInfoResult.value;
 
-      const response = speciesClassInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isSpeciesClassUsed,
         ownEntriesCount,
         speciesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -93,7 +96,10 @@ export const classesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         querystring: getClassesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getClassesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -111,12 +117,10 @@ export const classesController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getClassesResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -127,7 +131,10 @@ export const classesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         body: upsertClassInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertClassResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -142,8 +149,7 @@ export const classesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertClassResponse.parse(speciesClassCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(speciesClassCreateResult.value);
     },
   );
 
@@ -155,7 +161,10 @@ export const classesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         params: idParamAsNumberSchema,
         body: upsertClassInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertClassResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -170,8 +179,7 @@ export const classesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertClassResponse.parse(speciesClassUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(speciesClassUpdateResult.value);
     },
   );
 

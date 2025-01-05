@@ -27,7 +27,10 @@ export const speciesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getSpeciesResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -46,8 +49,7 @@ export const speciesController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getSpeciesResponse.parse(species);
-      return await reply.send(response);
+      return await reply.send(species);
     },
   );
 
@@ -59,7 +61,10 @@ export const speciesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         params: idParamAsNumberSchema,
         querystring: speciesInfoQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: speciesInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -97,13 +102,11 @@ export const speciesController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isSpeciesUsed] = speciesInfoResult.value;
 
-      const response = speciesInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isSpeciesUsed,
         ownEntriesCount,
         totalEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -114,7 +117,10 @@ export const speciesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         querystring: getSpeciesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getSpeciesPaginatedResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -132,12 +138,10 @@ export const speciesController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getSpeciesPaginatedResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -148,7 +152,10 @@ export const speciesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Species"],
         body: upsertSpeciesInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertSpeciesResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -163,8 +170,7 @@ export const speciesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertSpeciesResponse.parse(speciesResult.value);
-      return await reply.send(response);
+      return await reply.send(speciesResult.value);
     },
   );
 
@@ -176,7 +182,10 @@ export const speciesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         params: idParamAsNumberSchema,
         body: upsertSpeciesInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertSpeciesResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -191,8 +200,7 @@ export const speciesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertSpeciesResponse.parse(speciesResult.value);
-      return await reply.send(response);
+      return await reply.send(speciesResult.value);
     },
   );
 

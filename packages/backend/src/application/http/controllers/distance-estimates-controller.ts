@@ -26,7 +26,10 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Distance"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getDistanceEstimateResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getDistanceEstimateResponse.parse(distanceEstimate);
-      return await reply.send(response);
+      return await reply.send(distanceEstimate);
     },
   );
 
@@ -57,7 +59,10 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Distance"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: distanceEstimateInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -75,12 +80,10 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isDistanceEstimateUsed] = distanceEstimateInfoResult.value;
 
-      const response = distanceEstimateInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isDistanceEstimateUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -91,7 +94,10 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Distance"],
         querystring: getDistanceEstimatesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getDistanceEstimatesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -109,12 +115,10 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getDistanceEstimatesResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -125,7 +129,10 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Distance"],
         body: upsertDistanceEstimateInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertDistanceEstimateResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -140,8 +147,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertDistanceEstimateResponse.parse(distanceEstimateCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(distanceEstimateCreateResult.value);
     },
   );
 
@@ -153,7 +159,10 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Distance"],
         params: idParamAsNumberSchema,
         body: upsertDistanceEstimateInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertDistanceEstimateResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -172,8 +181,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertDistanceEstimateResponse.parse(distanceEstimateUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(distanceEstimateUpdateResult.value);
     },
   );
 

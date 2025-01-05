@@ -27,7 +27,10 @@ export const observersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Observer"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getObserverResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -46,8 +49,7 @@ export const observersController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getObserverResponse.parse(observer);
-      return await reply.send(response);
+      return await reply.send(observer);
     },
   );
 
@@ -58,7 +60,10 @@ export const observersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Observer"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: observerInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -76,12 +81,10 @@ export const observersController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isObserverUsed] = observerInfoResult.value;
 
-      const response = observerInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isObserverUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -92,7 +95,10 @@ export const observersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Observer"],
         querystring: getObserversQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getObserversResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -110,12 +116,10 @@ export const observersController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getObserversResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -126,7 +130,10 @@ export const observersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Observer"],
         body: upsertObserverInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertObserverResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -141,8 +148,7 @@ export const observersController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertObserverResponse.parse(observerCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(observerCreateResult.value);
     },
   );
 
@@ -154,7 +160,10 @@ export const observersController: FastifyPluginCallbackZod<{
         tags: ["Observer"],
         params: idParamAsNumberSchema,
         body: upsertObserverInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertObserverResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -169,8 +178,7 @@ export const observersController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertObserverResponse.parse(observerUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(observerUpdateResult.value);
     },
   );
 

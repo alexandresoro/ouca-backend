@@ -26,7 +26,10 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getEnvironmentResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getEnvironmentResponse.parse(environment);
-      return await reply.send(response);
+      return await reply.send(environment);
     },
   );
 
@@ -57,7 +59,10 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: environmentInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -75,12 +80,10 @@ export const environmentsController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isEnvironmentUsed] = environmentInfoResult.value;
 
-      const response = environmentInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isEnvironmentUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -91,7 +94,10 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         querystring: getEnvironmentsQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getEnvironmentsResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -109,12 +115,10 @@ export const environmentsController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getEnvironmentsResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -125,7 +129,10 @@ export const environmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Environment"],
         body: upsertEnvironmentInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertEnvironmentResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -140,8 +147,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertEnvironmentResponse.parse(environmentResult.value);
-      return await reply.send(response);
+      return await reply.send(environmentResult.value);
     },
   );
 
@@ -153,7 +159,10 @@ export const environmentsController: FastifyPluginCallbackZod<{
         tags: ["Environment"],
         params: idParamAsNumberSchema,
         body: upsertEnvironmentInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertEnvironmentResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -168,8 +177,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertEnvironmentResponse.parse(environmentResult.value);
-      return await reply.send(response);
+      return await reply.send(environmentResult.value);
     },
   );
 

@@ -26,7 +26,10 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getSexResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getSexResponse.parse(sex);
-      return await reply.send(response);
+      return await reply.send(sex);
     },
   );
 
@@ -57,7 +59,10 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: sexInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -75,12 +80,10 @@ export const sexesController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isSexUsed] = sexInfoResult.value;
 
-      const response = sexInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isSexUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -91,7 +94,10 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         querystring: getSexesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getSexesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -109,12 +115,10 @@ export const sexesController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getSexesResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -125,7 +129,10 @@ export const sexesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Sex"],
         body: upsertSexInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertSexResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -140,8 +147,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertSexResponse.parse(sexCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(sexCreateResult.value);
     },
   );
 
@@ -153,7 +159,10 @@ export const sexesController: FastifyPluginCallbackZod<{
         tags: ["Sex"],
         params: idParamAsNumberSchema,
         body: upsertSexInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertSexResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -168,8 +177,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertSexResponse.parse(sexUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(sexUpdateResult.value);
     },
   );
 

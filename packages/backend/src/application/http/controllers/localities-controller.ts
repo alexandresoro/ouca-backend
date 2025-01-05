@@ -26,7 +26,10 @@ export const localitiesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getLocalityResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const localitiesController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getLocalityResponse.parse(locality);
-      return await reply.send(response);
+      return await reply.send(locality);
     },
   );
 
@@ -57,7 +59,10 @@ export const localitiesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: localityInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -93,15 +98,13 @@ export const localitiesController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = localityInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isLocalityUsed,
         ownEntriesCount,
         townCode: town.code,
         townName: town.nom,
         departmentCode: departmentResult.value.code,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -112,7 +115,10 @@ export const localitiesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         querystring: getLocalitiesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getLocalitiesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -130,12 +136,10 @@ export const localitiesController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getLocalitiesResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -146,7 +150,10 @@ export const localitiesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         body: upsertLocalityInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertLocalityResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -161,8 +168,7 @@ export const localitiesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertLocalityResponse.parse(localityCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(localityCreateResult.value);
     },
   );
 
@@ -174,7 +180,10 @@ export const localitiesController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         params: idParamAsNumberSchema,
         body: upsertLocalityInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertLocalityResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -189,8 +198,7 @@ export const localitiesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertLocalityResponse.parse(localityUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(localityUpdateResult.value);
     },
   );
 

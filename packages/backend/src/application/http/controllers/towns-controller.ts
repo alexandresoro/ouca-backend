@@ -26,7 +26,10 @@ export const townsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getTownResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const townsController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getTownResponse.parse(town);
-      return await reply.send(response);
+      return await reply.send(town);
     },
   );
 
@@ -57,7 +59,10 @@ export const townsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: townInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -81,14 +86,12 @@ export const townsController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = townInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isTownUsed,
         ownEntriesCount,
         departmentCode: department.code,
         localitiesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -99,7 +102,10 @@ export const townsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         querystring: getTownsQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getTownsResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -117,12 +123,10 @@ export const townsController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getTownsResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -133,7 +137,10 @@ export const townsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         body: upsertTownInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertTownResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -148,8 +155,7 @@ export const townsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertTownResponse.parse(townCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(townCreateResult.value);
     },
   );
 
@@ -161,7 +167,10 @@ export const townsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         params: idParamAsNumberSchema,
         body: upsertTownInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertTownResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -176,8 +185,7 @@ export const townsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertTownResponse.parse(townUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(townUpdateResult.value);
     },
   );
 

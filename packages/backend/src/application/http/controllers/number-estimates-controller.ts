@@ -26,7 +26,10 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Quantity"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getNumberEstimateResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getNumberEstimateResponse.parse(numberEstimate);
-      return await reply.send(response);
+      return await reply.send(numberEstimate);
     },
   );
 
@@ -57,7 +59,10 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Quantity"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: numberEstimateInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -75,12 +80,10 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isNumberEstimateUsed] = numberEstimateInfoResult.value;
 
-      const response = numberEstimateInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isNumberEstimateUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -91,7 +94,10 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Quantity"],
         querystring: getNumberEstimatesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getNumberEstimatesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -109,12 +115,10 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getNumberEstimatesResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -125,7 +129,10 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Quantity"],
         body: upsertNumberEstimateInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertNumberEstimateResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -140,8 +147,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertNumberEstimateResponse.parse(numberEstimateCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(numberEstimateCreateResult.value);
     },
   );
 
@@ -153,7 +159,10 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Quantity"],
         params: idParamAsNumberSchema,
         body: upsertNumberEstimateInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertNumberEstimateResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -172,8 +181,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertNumberEstimateResponse.parse(numberEstimateUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(numberEstimateUpdateResult.value);
     },
   );
 

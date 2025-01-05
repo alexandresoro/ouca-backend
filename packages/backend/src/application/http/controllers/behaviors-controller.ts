@@ -26,7 +26,10 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Behavior"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getBehaviorResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getBehaviorResponse.parse(behavior);
-      return await reply.send(response);
+      return await reply.send(behavior);
     },
   );
 
@@ -57,7 +59,10 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Behavior"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: behaviorInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -75,12 +80,10 @@ export const behaviorsController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isBehaviorUsed] = behaviorInfoResult.value;
 
-      const response = behaviorInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isBehaviorUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -91,7 +94,10 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Behavior"],
         querystring: getBehaviorsQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getBehaviorsResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -109,12 +115,10 @@ export const behaviorsController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getBehaviorsResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -125,7 +129,10 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Behavior"],
         body: upsertBehaviorInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertBehaviorResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -140,8 +147,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertBehaviorResponse.parse(behaviorResult.value);
-      return await reply.send(response);
+      return await reply.send(behaviorResult.value);
     },
   );
 
@@ -153,7 +159,10 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         tags: ["Behavior"],
         params: idParamAsNumberSchema,
         body: upsertBehaviorInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertBehaviorResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -168,8 +177,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertBehaviorResponse.parse(behaviorResult.value);
-      return await reply.send(response);
+      return await reply.send(behaviorResult.value);
     },
   );
 

@@ -26,7 +26,10 @@ export const departmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getDepartmentResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getDepartmentResponse.parse(department);
-      return await reply.send(response);
+      return await reply.send(department);
     },
   );
 
@@ -57,7 +59,10 @@ export const departmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: departmentInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -77,14 +82,12 @@ export const departmentsController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isDepartmentUsed, localitiesCount, townsCount] = departmentInfoResult.value;
 
-      const response = departmentInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isDepartmentUsed,
         ownEntriesCount,
         localitiesCount,
         townsCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -95,7 +98,10 @@ export const departmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         querystring: getDepartmentsQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getDepartmentsResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -113,12 +119,10 @@ export const departmentsController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getDepartmentsResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -129,7 +133,10 @@ export const departmentsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         body: upsertDepartmentInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertDepartmentResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -144,8 +151,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertDepartmentResponse.parse(departmentResult.value);
-      return await reply.send(response);
+      return await reply.send(departmentResult.value);
     },
   );
 
@@ -157,7 +163,10 @@ export const departmentsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         params: idParamAsNumberSchema,
         body: upsertDepartmentInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertDepartmentResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -172,8 +181,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertDepartmentResponse.parse(departmentResult.value);
-      return await reply.send(response);
+      return await reply.send(departmentResult.value);
     },
   );
 

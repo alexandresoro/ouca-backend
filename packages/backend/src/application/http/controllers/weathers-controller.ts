@@ -26,7 +26,10 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getWeatherResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = getWeatherResponse.parse(weather);
-      return await reply.send(response);
+      return await reply.send(weather);
     },
   );
 
@@ -57,7 +59,10 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: weatherInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -75,12 +80,10 @@ export const weathersController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isWeatherUsed] = weatherInfoResult.value;
 
-      const response = weatherInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isWeatherUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -91,7 +94,10 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         querystring: getWeathersQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getWeathersResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -109,12 +115,10 @@ export const weathersController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getWeathersResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -125,7 +129,10 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         body: upsertWeatherInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertWeatherResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -140,8 +147,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertWeatherResponse.parse(weatherResult.value);
-      return await reply.send(response);
+      return await reply.send(weatherResult.value);
     },
   );
 
@@ -153,7 +159,10 @@ export const weathersController: FastifyPluginCallbackZod<{
         tags: ["Weather"],
         params: idParamAsNumberSchema,
         body: upsertWeatherInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertWeatherResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -168,8 +177,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertWeatherResponse.parse(weatherResult.value);
-      return await reply.send(response);
+      return await reply.send(weatherResult.value);
     },
   );
 
