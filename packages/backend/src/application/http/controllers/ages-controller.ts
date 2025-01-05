@@ -26,7 +26,10 @@ export const agesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Age"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getAgeResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -45,8 +48,7 @@ export const agesController: FastifyPluginCallbackZod<{
         return await reply.status(404).send();
       }
 
-      const response = getAgeResponse.parse(age);
-      return await reply.send(response);
+      return await reply.send(age);
     },
   );
 
@@ -57,7 +59,10 @@ export const agesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Age"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: ageInfoSchema,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -75,12 +80,10 @@ export const agesController: FastifyPluginCallbackZod<{
 
       const [ownEntriesCount, isAgeUsed] = ageInfoResult.value;
 
-      const response = ageInfoSchema.parse({
+      return await reply.send({
         canBeDeleted: !isAgeUsed,
         ownEntriesCount,
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -91,7 +94,10 @@ export const agesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Age"],
         querystring: getAgesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getAgesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -109,12 +115,10 @@ export const agesController: FastifyPluginCallbackZod<{
 
       const [data, count] = paginatedResults.value;
 
-      const response = getAgesResponse.parse({
+      return await reply.send({
         data,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -125,7 +129,10 @@ export const agesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Age"],
         body: upsertAgeInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertAgeResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -140,8 +147,7 @@ export const agesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertAgeResponse.parse(ageCreateResult.value);
-      return await reply.send(response);
+      return await reply.send(ageCreateResult.value);
     },
   );
 
@@ -153,7 +159,10 @@ export const agesController: FastifyPluginCallbackZod<{
         tags: ["Age"],
         params: idParamAsNumberSchema,
         body: upsertAgeInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertAgeResponse,
+          ...buildFastifyDefaultErrorResponses([403, 409]),
+        }),
       },
     },
     async (req, reply) => {
@@ -168,8 +177,7 @@ export const agesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = upsertAgeResponse.parse(ageUpdateResult.value);
-      return await reply.send(response);
+      return await reply.send(ageUpdateResult.value);
     },
   );
 
