@@ -8,9 +8,10 @@ import {
 } from "@ou-ca/common/api/town";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
+import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
-import { idParamAsNumberSchema } from "./api-utils.js";
+import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
 import { getPaginationMetadata } from "./controller-utils.js";
 
 export const townsController: FastifyPluginCallbackZod<{
@@ -187,7 +188,10 @@ export const townsController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         params: idParamAsNumberSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: z.object({ id: z.string() }),
+          ...buildFastifyDefaultErrorResponses([403, 404, 409]),
+        }),
       },
     },
     async (req, reply) => {

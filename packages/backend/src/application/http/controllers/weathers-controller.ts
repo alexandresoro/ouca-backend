@@ -8,8 +8,10 @@ import {
 } from "@ou-ca/common/api/weather";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
+import { z } from "zod";
 import type { Services } from "../../services/services.js";
-import { idParamAsNumberSchema } from "./api-utils.js";
+import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
+import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
 import { getPaginationMetadata } from "./controller-utils.js";
 
 export const weathersController: FastifyPluginCallbackZod<{
@@ -24,6 +26,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -54,6 +57,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -87,6 +91,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         querystring: getWeathersQueryParamsSchema,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -120,6 +125,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         body: upsertWeatherInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -147,6 +153,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         tags: ["Weather"],
         params: idParamAsNumberSchema,
         body: upsertWeatherInput,
+        response: withAuthenticationErrorResponses({}),
       },
     },
     async (req, reply) => {
@@ -173,6 +180,10 @@ export const weathersController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Weather"],
         params: idParamAsNumberSchema,
+        response: withAuthenticationErrorResponses({
+          200: z.object({ id: z.string() }),
+          ...buildFastifyDefaultErrorResponses([403, 404, 409]),
+        }),
       },
     },
     async (req, reply) => {
