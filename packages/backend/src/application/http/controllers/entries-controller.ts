@@ -26,7 +26,10 @@ export const entriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Entry"],
         params: idParamSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getEntryResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -56,8 +59,7 @@ export const entriesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = getEntryResponse.parse(entryEnrichedResult.value);
-      return await reply.send(response);
+      return await reply.send(entryEnrichedResult.value);
     },
   );
 
@@ -68,7 +70,10 @@ export const entriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Entry"],
         querystring: getEntriesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getEntriesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -99,12 +104,10 @@ export const entriesController: FastifyPluginCallbackZod<{
 
       const enrichedEntries = enrichedEntriesResults.map((enrichedEntryResult) => enrichedEntryResult._unsafeUnwrap());
 
-      const response = getEntriesResponse.parse({
+      return await reply.send({
         data: enrichedEntries,
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -115,7 +118,11 @@ export const entriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Entry"],
         body: upsertEntryInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertEntryResponse,
+          409: z.object({ correspondingEntryFound: z.string() }),
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -147,8 +154,7 @@ export const entriesController: FastifyPluginCallbackZod<{
 
       const entryEnriched = entryEnrichedResult.value;
 
-      const response = upsertEntryResponse.parse(entryEnriched);
-      return await reply.send(response);
+      return await reply.send(entryEnriched);
     },
   );
 
@@ -160,7 +166,11 @@ export const entriesController: FastifyPluginCallbackZod<{
         tags: ["Entry"],
         params: idParamSchema,
         body: upsertEntryInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertEntryResponse,
+          409: z.object({ correspondingEntryFound: z.string() }),
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -192,8 +202,7 @@ export const entriesController: FastifyPluginCallbackZod<{
 
       const entryEnriched = entryEnrichedResult.value;
 
-      const response = upsertEntryResponse.parse(entryEnriched);
-      return await reply.send(response);
+      return await reply.send(entryEnriched);
     },
   );
 
