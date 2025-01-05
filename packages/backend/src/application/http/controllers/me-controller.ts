@@ -1,7 +1,6 @@
 import type { User } from "@domain/user/user.js";
 import { getMeResponse, putMeInput } from "@ou-ca/common/api/me";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
-import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses } from "./api-utils.js";
@@ -19,7 +18,6 @@ export const meController: FastifyPluginCallbackZod<{
         tags: ["User"],
         response: withAuthenticationErrorResponses({
           200: getMeResponse,
-          404: z.string(),
           ...buildFastifyDefaultErrorResponses([401]),
         }),
       },
@@ -35,7 +33,7 @@ export const meController: FastifyPluginCallbackZod<{
       );
 
       if (userResult.isErr()) {
-        return await reply.status(404).send("Internal user not found");
+        return await reply.notFound("Internal user not found");
       }
 
       const { id, settings } = userResult.value;

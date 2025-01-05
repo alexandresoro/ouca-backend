@@ -15,15 +15,15 @@ export const fastifyDefaultErrorResponseSchema = (statusCode: number) =>
     message: z.string(),
   });
 
-export type FastifyDefaultErrorResponse = z.infer<ReturnType<typeof fastifyDefaultErrorResponseSchema>>;
+export type FastifyDefaultErrorResponseSchema = ReturnType<typeof fastifyDefaultErrorResponseSchema>;
 
 export const buildFastifyDefaultErrorResponses = <C extends number>(
   statusCodes: C[],
-): { [K in C]: FastifyDefaultErrorResponse } => {
+): { [K in C]: FastifyDefaultErrorResponseSchema } => {
   return Object.fromEntries(
     statusCodes.map((statusCode) => {
       return [statusCode, fastifyDefaultErrorResponseSchema(statusCode)] as const;
     }),
     // cast as unknown because fromEntries will return as string key
-  ) as unknown as { [K in C]: FastifyDefaultErrorResponse };
+  ) as unknown as { [K in C]: FastifyDefaultErrorResponseSchema };
 };
