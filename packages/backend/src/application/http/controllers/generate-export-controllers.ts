@@ -1,8 +1,10 @@
 import { getSearchCriteriaParamsSchema } from "@ou-ca/common/api/common/search-criteria";
 import type { FastifyRequest } from "fastify";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
+import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
+import { buildFastifyDefaultErrorResponses } from "./api-utils.js";
 
 const getExportUrl = (req: FastifyRequest, exportId: string) => {
   return `${req.protocol}://${req.hostname}/download/${exportId}`;
@@ -19,7 +21,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Age"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -42,7 +47,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Species"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -65,7 +73,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Location"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -88,7 +99,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Behavior"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -111,7 +125,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Location"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -134,7 +151,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Species"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -157,7 +177,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Distance"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -180,7 +203,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Quantity"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -203,7 +229,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Location"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -226,7 +255,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Weather"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -249,7 +281,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Environment"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -272,7 +307,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Observer"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -295,7 +333,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Export", "Sex"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -319,7 +360,10 @@ export const generateExportController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Export", "Entry"],
         querystring: getSearchCriteriaParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          201: z.null(),
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
