@@ -1,7 +1,7 @@
 import type { OIDCUser } from "@domain/oidc/oidc-user.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { type ZodUnknown, z } from "zod";
+import type { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { getAccessToken } from "../controllers/access-token-utils.js";
 import { type FastifyDefaultErrorResponseSchema, buildFastifyDefaultErrorResponses } from "../controllers/api-utils.js";
@@ -70,14 +70,11 @@ export const withAuthenticationErrorResponses = <T extends Record<number, z.ZodT
   403: FastifyDefaultErrorResponseSchema;
   404: FastifyDefaultErrorResponseSchema;
   500: FastifyDefaultErrorResponseSchema;
-  default: ZodUnknown;
 } => {
   const authenticationErrorResponses = buildFastifyDefaultErrorResponses([401, 403, 404, 500]);
 
   return {
     ...responses,
     ...authenticationErrorResponses,
-    // TODO: remove this after migration.
-    default: z.unknown(),
   };
 };
