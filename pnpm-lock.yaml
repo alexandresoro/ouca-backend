@@ -96,8 +96,8 @@ importers:
         specifier: 13.0.0
         version: 13.0.0
       serialize-error:
-        specifier: 11.0.3
-        version: 11.0.3
+        specifier: 12.0.0
+        version: 12.0.0
       umzug:
         specifier: 3.8.2
         version: 3.8.2(@types/node@20.17.11)
@@ -3256,9 +3256,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  serialize-error@11.0.3:
-    resolution: {integrity: sha512-2G2y++21dhj2R7iHAdd0FIzjGwuKZld+7Pl/bTU6YIkrC2ZMbVUjm+luj6A6V34Rv9XfKJDKpTWu9W4Gse1D9g==}
-    engines: {node: '>=14.16'}
+  serialize-error@12.0.0:
+    resolution: {integrity: sha512-ZYkZLAvKTKQXWuh5XpBw7CdbSzagarX39WyZ2H07CDLC5/KfsRGlIXV8d4+tfqX1M7916mRqR1QfNHSij+c9Pw==}
+    engines: {node: '>=18'}
 
   set-cookie-parser@2.7.1:
     resolution: {integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==}
@@ -3474,10 +3474,6 @@ packages:
 
   turbo-stream@2.4.0:
     resolution: {integrity: sha512-FHncC10WpBd2eOmGwpmQsWLDoK4cqsA/UT/GqNoaKOQnT8uzhtCbg3EoUDMvqpOSAI0S26mr0rkjzbOO6S3v1g==}
-
-  type-fest@2.19.0:
-    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
-    engines: {node: '>=12.20'}
 
   type-fest@4.31.0:
     resolution: {integrity: sha512-yCxltHW07Nkhv/1F6wWBr8kz+5BGMfP+RbRSYFnegVb0qV/UMT0G0ElBloPVerqn4M2ZV80Ir1FtCcYv1cT6vQ==}
@@ -6693,9 +6689,9 @@ snapshots:
 
   semver@7.6.3: {}
 
-  serialize-error@11.0.3:
+  serialize-error@12.0.0:
     dependencies:
-      type-fest: 2.19.0
+      type-fest: 4.31.0
 
   set-cookie-parser@2.7.1: {}
 
@@ -6929,8 +6925,6 @@ snapshots:
       fsevents: 2.3.3
 
   turbo-stream@2.4.0: {}
-
-  type-fest@2.19.0: {}
 
   type-fest@4.31.0: {}
 
