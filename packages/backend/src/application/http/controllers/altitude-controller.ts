@@ -2,6 +2,7 @@ import { getAltitudeQueryParamsSchema, getAltitudeResponse } from "@ou-ca/common
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
+import { buildFastifyDefaultErrorResponses } from "./api-utils.js";
 
 export const altitudeController: FastifyPluginCallbackZod<{
   services: Services;
@@ -15,7 +16,10 @@ export const altitudeController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Location"],
         querystring: getAltitudeQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getAltitudeResponse,
+          ...buildFastifyDefaultErrorResponses([404, 500]),
+        }),
       },
     },
     async (req, reply) => {
@@ -32,9 +36,7 @@ export const altitudeController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = getAltitudeResponse.parse(altitudeResult.value);
-
-      return await reply.send(response);
+      return await reply.send(altitudeResult.value);
     },
   );
 

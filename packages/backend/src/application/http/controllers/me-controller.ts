@@ -1,8 +1,10 @@
 import type { User } from "@domain/user/user.js";
 import { getMeResponse, putMeInput } from "@ou-ca/common/api/me";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
+import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
+import { buildFastifyDefaultErrorResponses } from "./api-utils.js";
 
 export const meController: FastifyPluginCallbackZod<{
   services: Services;
@@ -15,7 +17,11 @@ export const meController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["User"],
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getMeResponse,
+          404: z.string(),
+          ...buildFastifyDefaultErrorResponses([401]),
+        }),
       },
     },
     async (req, reply) => {
@@ -34,14 +40,12 @@ export const meController: FastifyPluginCallbackZod<{
 
       const { id, settings } = userResult.value;
 
-      const responseBody = getMeResponse.parse({
+      return await reply.send({
         id,
         settings,
         user: req.user.oidcUser,
         permissions: req.user.permissions,
       });
-
-      return await reply.send(responseBody);
     },
   );
 
@@ -52,7 +56,10 @@ export const meController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["User"],
         body: putMeInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getMeResponse,
+          ...buildFastifyDefaultErrorResponses([401]),
+        }),
       },
     },
     async (req, reply) => {
@@ -76,14 +83,12 @@ export const meController: FastifyPluginCallbackZod<{
 
       const { id, settings } = updatedUser;
 
-      const responseBody = getMeResponse.parse({
+      return await reply.send({
         id,
         settings,
         user: req.user.oidcUser,
         permissions: req.user.permissions,
       });
-
-      return await reply.send(responseBody);
     },
   );
 
