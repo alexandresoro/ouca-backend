@@ -20,8 +20,7 @@ export const userController: FastifyPluginCallbackZod<{
           201: z.object({
             id: z.string(),
           }),
-          401: z.string(),
-          ...buildFastifyDefaultErrorResponses([403, 500]),
+          ...buildFastifyDefaultErrorResponses([401, 403, 500]),
         }),
       },
     },
@@ -31,9 +30,9 @@ export const userController: FastifyPluginCallbackZod<{
       if (accessTokenResult.isErr()) {
         switch (accessTokenResult.error) {
           case "headerNotFound":
-            return await reply.status(401).send("Authorization header is missing.");
+            return await reply.unauthorized("Authorization header is missing.");
           case "headerInvalidFormat":
-            return await reply.status(401).send("Authorization header is invalid.");
+            return await reply.unauthorized("Authorization header is invalid.");
         }
       }
 
@@ -41,19 +40,19 @@ export const userController: FastifyPluginCallbackZod<{
       const introspectionResultResult = await oidcService.introspectAccessTokenCached(accessTokenResult.value);
 
       if (introspectionResultResult.isErr()) {
-        return await reply.status(500).send();
+        return await reply.internalServerError();
       }
 
       const introspectionResult = introspectionResultResult.value;
 
       if (!introspectionResult.active) {
-        return await reply.status(401).send("Access token is not active.");
+        return await reply.unauthorized("Access token is not active.");
       }
 
       // Only user with active roles can create account
       const role = oidcService.getHighestRoleFromLoggedUser(introspectionResult.user);
       if (!role) {
-        return await reply.status(403).send();
+        return await reply.forbidden();
       }
 
       const { id } = await userService.createUser({

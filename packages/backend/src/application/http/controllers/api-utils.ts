@@ -8,19 +8,22 @@ export const idParamSchema = z.object({
   id: z.string().nonempty(),
 });
 
-const fastifyDefaultErrorResponseSchema = (statusCode: number) =>
+export const fastifyDefaultErrorResponseSchema = (statusCode: number) =>
   z.object({
     statusCode: z.literal(statusCode),
     error: z.string(),
     message: z.string(),
   });
 
-export const buildFastifyDefaultErrorResponses = (
-  statusCodes: number[],
-): Record<number, ReturnType<typeof fastifyDefaultErrorResponseSchema>> => {
+export type FastifyDefaultErrorResponse = z.infer<ReturnType<typeof fastifyDefaultErrorResponseSchema>>;
+
+export const buildFastifyDefaultErrorResponses = <C extends number>(
+  statusCodes: C[],
+): { [K in C]: FastifyDefaultErrorResponse } => {
   return Object.fromEntries(
     statusCodes.map((statusCode) => {
-      return [statusCode, fastifyDefaultErrorResponseSchema(statusCode)];
+      return [statusCode, fastifyDefaultErrorResponseSchema(statusCode)] as const;
     }),
-  );
+    // cast as unknown because fromEntries will return as string key
+  ) as unknown as { [K in C]: FastifyDefaultErrorResponse };
 };
