@@ -41,14 +41,14 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryResult.isErr()) {
         switch (inventoryResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const inventory = inventoryResult.value;
 
       if (!inventory) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const inventoryEnrichedResult = await enrichedInventory(services, inventory, req.user);
@@ -56,9 +56,9 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryEnrichedResult.isErr()) {
         switch (inventoryEnrichedResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "extendedDataNotFound":
-            return await reply.status(404).send();
+            return await reply.notFound();
         }
       }
 
@@ -86,14 +86,14 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryIndexResult.isErr()) {
         switch (inventoryIndexResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const inventoryIndex = inventoryIndexResult.value;
 
       if (inventoryIndex == null) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
       return await reply.send(inventoryIndex);
     },
@@ -121,7 +121,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -161,12 +161,12 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryResult.isErr()) {
         switch (inventoryResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "requiredDataNotFound":
             return await reply.status(422).send();
           default:
             logger.error({ error: inventoryResult.error }, "Unexpected error");
-            return await reply.status(500).send();
+            return await reply.internalServerError();
         }
       }
 
@@ -177,9 +177,9 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryEnrichedResult.isErr()) {
         switch (inventoryEnrichedResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "extendedDataNotFound":
-            return await reply.status(404).send();
+            return await reply.notFound();
         }
       }
 
@@ -210,7 +210,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryResult.isErr()) {
         switch (inventoryResult.error.type) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "requiredDataNotFound":
             return await reply.status(422).send();
           case "similarInventoryAlreadyExists":
@@ -220,7 +220,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
               .send({ correspondingInventoryFound: inventoryResult.error.correspondingInventoryFound });
           default:
             logger.error({ error: inventoryResult.error }, "Unexpected error");
-            return await reply.status(500).send();
+            return await reply.internalServerError();
         }
       }
 
@@ -231,9 +231,9 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryEnrichedResult.isErr()) {
         switch (inventoryEnrichedResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "extendedDataNotFound":
-            return await reply.status(404).send();
+            return await reply.notFound();
         }
       }
 
@@ -262,16 +262,16 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (deletedInventoryResult.isErr()) {
         switch (deletedInventoryResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "inventoryStillInUse":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedInventory = deletedInventoryResult.value;
 
       if (!deletedInventory) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedInventory.id });

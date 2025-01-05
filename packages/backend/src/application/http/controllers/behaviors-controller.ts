@@ -35,14 +35,14 @@ export const behaviorsController: FastifyPluginCallbackZod<{
       if (behaviorResult.isErr()) {
         switch (behaviorResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const behavior = behaviorResult.value;
 
       if (!behavior) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getBehaviorResponse.parse(behavior);
@@ -69,7 +69,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
       if (behaviorInfoResult.isErr()) {
         switch (behaviorInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -103,7 +103,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -134,9 +134,9 @@ export const behaviorsController: FastifyPluginCallbackZod<{
       if (behaviorResult.isErr()) {
         switch (behaviorResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -162,9 +162,9 @@ export const behaviorsController: FastifyPluginCallbackZod<{
       if (behaviorResult.isErr()) {
         switch (behaviorResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -192,16 +192,16 @@ export const behaviorsController: FastifyPluginCallbackZod<{
       if (deletedBehaviorResult.isErr()) {
         switch (deletedBehaviorResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedBehavior = deletedBehaviorResult.value;
 
       if (!deletedBehavior) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedBehavior.id });

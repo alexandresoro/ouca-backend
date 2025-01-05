@@ -26,7 +26,7 @@ export const searchController: FastifyPluginCallbackZod<{
     },
     async (req, reply) => {
       if (req.query.fromAllUsers && !req.user?.permissions.canViewAllEntries) {
-        return await reply.status(403).send();
+        return await reply.forbidden();
       }
 
       // If we don't want to see all users' species, we need to filter by ownerId
@@ -43,7 +43,7 @@ export const searchController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 

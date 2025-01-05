@@ -35,14 +35,14 @@ export const departmentsController: FastifyPluginCallbackZod<{
       if (departmentResult.isErr()) {
         switch (departmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const department = departmentResult.value;
 
       if (!department) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getDepartmentResponse.parse(department);
@@ -71,7 +71,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
       if (departmentInfoResult.isErr()) {
         switch (departmentInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -107,7 +107,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -138,9 +138,9 @@ export const departmentsController: FastifyPluginCallbackZod<{
       if (departmentResult.isErr()) {
         switch (departmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -166,9 +166,9 @@ export const departmentsController: FastifyPluginCallbackZod<{
       if (departmentResult.isErr()) {
         switch (departmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -196,16 +196,16 @@ export const departmentsController: FastifyPluginCallbackZod<{
       if (deletedDepartmentResult.isErr()) {
         switch (deletedDepartmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedDepartment = deletedDepartmentResult.value;
 
       if (!deletedDepartment) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedDepartment.id });

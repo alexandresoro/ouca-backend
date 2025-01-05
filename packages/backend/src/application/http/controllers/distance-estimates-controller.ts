@@ -35,14 +35,14 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
       if (distanceEstimateResult.isErr()) {
         switch (distanceEstimateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const distanceEstimate = distanceEstimateResult.value;
 
       if (!distanceEstimate) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getDistanceEstimateResponse.parse(distanceEstimate);
@@ -69,7 +69,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
       if (distanceEstimateInfoResult.isErr()) {
         switch (distanceEstimateInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -103,7 +103,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -134,9 +134,9 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
       if (distanceEstimateCreateResult.isErr()) {
         switch (distanceEstimateCreateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -166,9 +166,9 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
       if (distanceEstimateUpdateResult.isErr()) {
         switch (distanceEstimateUpdateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -199,16 +199,16 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
       if (deletedDistanceEstimateResult.isErr()) {
         switch (deletedDistanceEstimateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedDistanceEstimate = deletedDistanceEstimateResult.value;
 
       if (!deletedDistanceEstimate) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedDistanceEstimate.id });

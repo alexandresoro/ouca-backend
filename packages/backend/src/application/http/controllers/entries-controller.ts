@@ -38,14 +38,14 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (entryResult.isErr()) {
         switch (entryResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const entry = entryResult.value;
 
       if (!entry) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const entryEnrichedResult = await enrichedEntry(services, entry, req.user);
@@ -53,9 +53,9 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (entryEnrichedResult.isErr()) {
         switch (entryEnrichedResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "extendedDataNotFound":
-            return await reply.status(404).send();
+            return await reply.notFound();
         }
       }
 
@@ -78,7 +78,7 @@ export const entriesController: FastifyPluginCallbackZod<{
     },
     async (req, reply) => {
       if (req.query.fromAllUsers && !req.user?.permissions.canViewAllEntries) {
-        return await reply.status(403).send();
+        return await reply.forbidden();
       }
 
       const paginatedResults = Result.combine([
@@ -89,7 +89,7 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -131,7 +131,7 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (entryResult.isErr()) {
         switch (entryResult.error.type) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "similarEntryAlreadyExists":
             return await reply.status(409).send({
               correspondingEntryFound: entryResult.error.correspondingEntryFound,
@@ -146,9 +146,9 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (entryEnrichedResult.isErr()) {
         switch (entryEnrichedResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "extendedDataNotFound":
-            return await reply.status(404).send();
+            return await reply.notFound();
         }
       }
 
@@ -179,7 +179,7 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (entryResult.isErr()) {
         switch (entryResult.error.type) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "similarEntryAlreadyExists":
             return await reply.status(409).send({
               correspondingEntryFound: entryResult.error.correspondingEntryFound,
@@ -194,9 +194,9 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (entryEnrichedResult.isErr()) {
         switch (entryEnrichedResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "extendedDataNotFound":
-            return await reply.status(404).send();
+            return await reply.notFound();
         }
       }
 
@@ -225,14 +225,14 @@ export const entriesController: FastifyPluginCallbackZod<{
       if (deletedEntryResult.isErr()) {
         switch (deletedEntryResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const deletedEntry = deletedEntryResult.value;
 
       if (!deletedEntry) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedEntry.id });

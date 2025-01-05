@@ -38,14 +38,14 @@ export const agesController: FastifyPluginCallbackZod<{
       if (ageResult.isErr()) {
         switch (ageResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const age = ageResult.value;
 
       if (!age) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send(age);
@@ -74,7 +74,7 @@ export const agesController: FastifyPluginCallbackZod<{
       if (ageInfoResult.isErr()) {
         switch (ageInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -109,7 +109,7 @@ export const agesController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -141,9 +141,9 @@ export const agesController: FastifyPluginCallbackZod<{
       if (ageCreateResult.isErr()) {
         switch (ageCreateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -171,9 +171,9 @@ export const agesController: FastifyPluginCallbackZod<{
       if (ageUpdateResult.isErr()) {
         switch (ageUpdateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -200,16 +200,16 @@ export const agesController: FastifyPluginCallbackZod<{
       if (deletedAgeResult.isErr()) {
         switch (deletedAgeResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedAge = deletedAgeResult.value;
 
       if (!deletedAge) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedAge.id });

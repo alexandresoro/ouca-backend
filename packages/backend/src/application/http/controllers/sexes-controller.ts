@@ -35,14 +35,14 @@ export const sexesController: FastifyPluginCallbackZod<{
       if (sexResult.isErr()) {
         switch (sexResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const sex = sexResult.value;
 
       if (!sex) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getSexResponse.parse(sex);
@@ -69,7 +69,7 @@ export const sexesController: FastifyPluginCallbackZod<{
       if (sexInfoResult.isErr()) {
         switch (sexInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -103,7 +103,7 @@ export const sexesController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -134,9 +134,9 @@ export const sexesController: FastifyPluginCallbackZod<{
       if (sexCreateResult.isErr()) {
         switch (sexCreateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -162,9 +162,9 @@ export const sexesController: FastifyPluginCallbackZod<{
       if (sexUpdateResult.isErr()) {
         switch (sexUpdateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -192,16 +192,16 @@ export const sexesController: FastifyPluginCallbackZod<{
       if (deletedSexResult.isErr()) {
         switch (deletedSexResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedSex = deletedSexResult.value;
 
       if (!deletedSex) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedSex.id });

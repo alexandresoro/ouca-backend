@@ -35,14 +35,14 @@ export const environmentsController: FastifyPluginCallbackZod<{
       if (environmentResult.isErr()) {
         switch (environmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const environment = environmentResult.value;
 
       if (!environment) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getEnvironmentResponse.parse(environment);
@@ -69,7 +69,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
       if (environmentInfoResult.isErr()) {
         switch (environmentInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -103,7 +103,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -134,9 +134,9 @@ export const environmentsController: FastifyPluginCallbackZod<{
       if (environmentResult.isErr()) {
         switch (environmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -162,9 +162,9 @@ export const environmentsController: FastifyPluginCallbackZod<{
       if (environmentResult.isErr()) {
         switch (environmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -192,16 +192,16 @@ export const environmentsController: FastifyPluginCallbackZod<{
       if (deletedEnvironmentResult.isErr()) {
         switch (deletedEnvironmentResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedEnvironment = deletedEnvironmentResult.value;
 
       if (!deletedEnvironment) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedEnvironment.id });

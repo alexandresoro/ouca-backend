@@ -24,7 +24,7 @@ export const meController: FastifyPluginCallbackZod<{
     },
     async (req, reply) => {
       if (!req.user) {
-        return await reply.status(401).send();
+        return await reply.unauthorized();
       }
 
       const userResult = await oidcService.findLoggedUserFromProvider(
@@ -62,7 +62,7 @@ export const meController: FastifyPluginCallbackZod<{
     },
     async (req, reply) => {
       if (!req.user) {
-        return await reply.status(401).send();
+        return await reply.unauthorized();
       }
 
       const reshapedInput = {

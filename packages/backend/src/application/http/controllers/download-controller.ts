@@ -16,7 +16,7 @@ export const downloadController: FastifyPluginCallback<{
       return reply.header("content-disposition", contentDisposition(req.query.filename)).send(downloadFromCacheBuffer);
     }
 
-    return reply.status(404).send();
+    return reply.notFound();
   });
 
   done();

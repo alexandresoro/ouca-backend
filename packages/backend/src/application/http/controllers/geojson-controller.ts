@@ -27,7 +27,7 @@ export const geojsonController: FastifyPluginAsyncZod<{
       if (geoJsonLocalitiesResult.isErr()) {
         switch (geoJsonLocalitiesResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 

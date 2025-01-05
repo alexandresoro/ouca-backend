@@ -36,14 +36,14 @@ export const observersController: FastifyPluginCallbackZod<{
       if (observerResult.isErr()) {
         switch (observerResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const observer = observerResult.value;
 
       if (!observer) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getObserverResponse.parse(observer);
@@ -70,7 +70,7 @@ export const observersController: FastifyPluginCallbackZod<{
       if (observerInfoResult.isErr()) {
         switch (observerInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -104,7 +104,7 @@ export const observersController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -135,9 +135,9 @@ export const observersController: FastifyPluginCallbackZod<{
       if (observerCreateResult.isErr()) {
         switch (observerCreateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -163,9 +163,9 @@ export const observersController: FastifyPluginCallbackZod<{
       if (observerUpdateResult.isErr()) {
         switch (observerUpdateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -193,16 +193,16 @@ export const observersController: FastifyPluginCallbackZod<{
       if (deletedObserverResult.isErr()) {
         switch (deletedObserverResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedObserver = deletedObserverResult.value;
 
       if (!deletedObserver) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = deleteObserverResponse.parse(deletedObserver);

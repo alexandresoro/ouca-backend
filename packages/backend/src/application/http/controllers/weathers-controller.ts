@@ -35,14 +35,14 @@ export const weathersController: FastifyPluginCallbackZod<{
       if (weatherResult.isErr()) {
         switch (weatherResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const weather = weatherResult.value;
 
       if (!weather) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getWeatherResponse.parse(weather);
@@ -69,7 +69,7 @@ export const weathersController: FastifyPluginCallbackZod<{
       if (weatherInfoResult.isErr()) {
         switch (weatherInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -103,7 +103,7 @@ export const weathersController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -134,9 +134,9 @@ export const weathersController: FastifyPluginCallbackZod<{
       if (weatherResult.isErr()) {
         switch (weatherResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -162,9 +162,9 @@ export const weathersController: FastifyPluginCallbackZod<{
       if (weatherResult.isErr()) {
         switch (weatherResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -192,16 +192,16 @@ export const weathersController: FastifyPluginCallbackZod<{
       if (deletedWeatherResult.isErr()) {
         switch (deletedWeatherResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedWeather = deletedWeatherResult.value;
 
       if (!deletedWeather) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedWeather.id });

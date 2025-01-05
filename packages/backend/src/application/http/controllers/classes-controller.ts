@@ -35,14 +35,14 @@ export const classesController: FastifyPluginCallbackZod<{
       if (speciesClassResult.isErr()) {
         switch (speciesClassResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const speciesClass = speciesClassResult.value;
 
       if (!speciesClass) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getClassResponse.parse(speciesClass);
@@ -70,7 +70,7 @@ export const classesController: FastifyPluginCallbackZod<{
       if (speciesClassInfoResult.isErr()) {
         switch (speciesClassInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -105,7 +105,7 @@ export const classesController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -136,9 +136,9 @@ export const classesController: FastifyPluginCallbackZod<{
       if (speciesClassCreateResult.isErr()) {
         switch (speciesClassCreateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -164,9 +164,9 @@ export const classesController: FastifyPluginCallbackZod<{
       if (speciesClassUpdateResult.isErr()) {
         switch (speciesClassUpdateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -194,16 +194,16 @@ export const classesController: FastifyPluginCallbackZod<{
       if (deletedSpeciesClassResult.isErr()) {
         switch (deletedSpeciesClassResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedSpeciesClass = deletedSpeciesClassResult.value;
 
       if (!deletedSpeciesClass) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedSpeciesClass.id });

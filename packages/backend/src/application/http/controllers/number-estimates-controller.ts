@@ -35,14 +35,14 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
       if (numberEstimateResult.isErr()) {
         switch (numberEstimateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const numberEstimate = numberEstimateResult.value;
 
       if (!numberEstimate) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getNumberEstimateResponse.parse(numberEstimate);
@@ -69,7 +69,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
       if (numberEstimateInfoResult.isErr()) {
         switch (numberEstimateInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -103,7 +103,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -134,9 +134,9 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
       if (numberEstimateCreateResult.isErr()) {
         switch (numberEstimateCreateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -166,9 +166,9 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
       if (numberEstimateUpdateResult.isErr()) {
         switch (numberEstimateUpdateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -196,16 +196,16 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
       if (deletedNumberEstimateResult.isErr()) {
         switch (deletedNumberEstimateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedNumberEstimate = deletedNumberEstimateResult.value;
 
       if (!deletedNumberEstimate) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedNumberEstimate.id });

@@ -33,7 +33,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -59,7 +59,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -85,7 +85,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -111,7 +111,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -137,7 +137,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -163,7 +163,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -189,7 +189,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -215,7 +215,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -241,7 +241,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -267,7 +267,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -293,7 +293,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -319,7 +319,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -345,7 +345,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -368,7 +368,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
     },
     async (req, reply) => {
       if (req.query.fromAllUsers && !req.user?.permissions.canViewAllEntries) {
-        return await reply.status(403).send();
+        return await reply.forbidden();
       }
 
       // If we don't want to see all users' entries, we need to filter by ownerId
@@ -383,7 +383,7 @@ export const generateExportController: FastifyPluginCallbackZod<{
       if (idResult.isErr()) {
         switch (idResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 

@@ -35,14 +35,14 @@ export const townsController: FastifyPluginCallbackZod<{
       if (townResult.isErr()) {
         switch (townResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const town = townResult.value;
 
       if (!town) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = getTownResponse.parse(town);
@@ -71,14 +71,14 @@ export const townsController: FastifyPluginCallbackZod<{
       if (townInfoResult.isErr()) {
         switch (townInfoResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
       const [ownEntriesCount, isTownUsed, localitiesCount, department] = townInfoResult.value;
 
       if (!department) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       const response = townInfoSchema.parse({
@@ -111,7 +111,7 @@ export const townsController: FastifyPluginCallbackZod<{
       if (paginatedResults.isErr()) {
         switch (paginatedResults.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
         }
       }
 
@@ -142,9 +142,9 @@ export const townsController: FastifyPluginCallbackZod<{
       if (townCreateResult.isErr()) {
         switch (townCreateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -170,9 +170,9 @@ export const townsController: FastifyPluginCallbackZod<{
       if (townUpdateResult.isErr()) {
         switch (townUpdateResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "alreadyExists":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
@@ -200,16 +200,16 @@ export const townsController: FastifyPluginCallbackZod<{
       if (deletedTownResult.isErr()) {
         switch (deletedTownResult.error) {
           case "notAllowed":
-            return await reply.status(403).send();
+            return await reply.forbidden();
           case "isUsed":
-            return await reply.status(409).send();
+            return await reply.conflict();
         }
       }
 
       const deletedTown = deletedTownResult.value;
 
       if (!deletedTown) {
-        return await reply.status(404).send();
+        return await reply.notFound();
       }
 
       return await reply.send({ id: deletedTown.id });
