@@ -29,7 +29,10 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Inventory"],
         params: idParamSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getInventoryResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -59,8 +62,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         }
       }
 
-      const response = getInventoryResponse.parse(inventoryEnrichedResult.value);
-      return await reply.send(response);
+      return await reply.send(inventoryEnrichedResult.value);
     },
   );
 
@@ -72,7 +74,10 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         tags: ["Inventory"],
         params: idParamSchema,
         querystring: getInventoryIndexParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getInventoryIndexResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404]),
+        }),
       },
     },
     async (req, reply) => {
@@ -90,8 +95,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
       if (inventoryIndex == null) {
         return await reply.status(404).send();
       }
-      const response = getInventoryIndexResponse.parse(inventoryIndex);
-      return await reply.send(response);
+      return await reply.send(inventoryIndex);
     },
   );
 
@@ -102,7 +106,10 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Inventory"],
         querystring: getInventoriesQueryParamsSchema,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: getInventoriesResponse,
+          ...buildFastifyDefaultErrorResponses([403]),
+        }),
       },
     },
     async (req, reply) => {
@@ -127,12 +134,10 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         }),
       );
 
-      const response = getInventoriesResponse.parse({
+      return await reply.send({
         data: enrichedInventoriesResults.map((enrichedInventoryResult) => enrichedInventoryResult._unsafeUnwrap()),
         meta: getPaginationMetadata(count, req.query),
       });
-
-      return await reply.send(response);
     },
   );
 
@@ -143,7 +148,10 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Inventory"],
         body: upsertInventoryInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertInventoryResponse,
+          ...buildFastifyDefaultErrorResponses([403, 404, 422, 500]),
+        }),
       },
     },
     async (req, reply) => {
@@ -177,8 +185,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
 
       const inventoryEnriched = inventoryEnrichedResult.value;
 
-      const response = upsertInventoryResponse.parse(inventoryEnriched);
-      return await reply.send(response);
+      return await reply.send(inventoryEnriched);
     },
   );
 
@@ -190,7 +197,11 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         tags: ["Inventory"],
         params: idParamSchema,
         body: upsertInventoryInput,
-        response: withAuthenticationErrorResponses({}),
+        response: withAuthenticationErrorResponses({
+          200: upsertInventoryResponse,
+          409: z.object({ correspondingInventoryFound: z.string() }),
+          ...buildFastifyDefaultErrorResponses([403, 404, 422, 500]),
+        }),
       },
     },
     async (req, reply) => {
@@ -228,8 +239,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
 
       const inventoryEnriched = inventoryEnrichedResult.value;
 
-      const response = upsertInventoryResponse.parse(inventoryEnriched);
-      return await reply.send(response);
+      return await reply.send(inventoryEnriched);
     },
   );
 
