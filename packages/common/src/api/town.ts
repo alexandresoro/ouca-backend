@@ -42,7 +42,7 @@ export const getTownsResponse = getPaginatedResponseSchema(townSchema);
  * `POST` `/town` Create new town entity
  */
 export const upsertTownInput = z.object({
-  code: z.coerce.number().int().positive(),
+  code: z.coerce.number().int().min(1),
   nom: z.string().trim().min(1),
   departmentId: z.string().trim().min(1),
 });

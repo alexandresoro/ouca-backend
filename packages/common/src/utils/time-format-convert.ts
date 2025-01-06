@@ -34,7 +34,7 @@ export const getMinutesFromTime = (timeStr: string): number => {
   return Number.NaN;
 };
 
-const validMinutesSchema = z.number().nonnegative().safe().int().max(MAX_SUPPORTED_MINUTES); //Database does not allow more than 5 characters
+const validMinutesSchema = z.number().min(0).safe().int().max(MAX_SUPPORTED_MINUTES); //Database does not allow more than 5 characters
 
 export const getHumanFriendlyTimeFromMinutes = (minutes: number): string => {
   const validMinutes = validMinutesSchema.parse(minutes);

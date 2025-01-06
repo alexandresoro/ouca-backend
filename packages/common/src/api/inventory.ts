@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getPaginatedResponseSchema, paginationQueryParamsSchema } from "./common/pagination.js";
+import { coordinatesSchema } from "./entities/coordinates.js";
 import { inventorySchema } from "./entities/inventory.js";
 
 /**
@@ -52,13 +53,7 @@ export const upsertInventoryInput = z.object({
     .nullable(),
   duration: z.number().nullable(),
   localityId: z.string().trim().min(1),
-  coordinates: z
-    .object({
-      altitude: z.number().int().min(-1000).max(9000),
-      latitude: z.number().min(-90).max(90),
-      longitude: z.number().min(-180).max(180),
-    })
-    .nullable(),
+  coordinates: coordinatesSchema.nullable(),
   weatherIds: z.array(z.string().trim().min(1)),
   temperature: z.number().int().min(-50).max(100).nullable(),
   migrateDonneesIfMatchesExistingInventaire: z.boolean().optional(),

@@ -2,15 +2,15 @@ import { z } from "zod";
 
 // INPUT
 export const paginationQueryParamsSchema = z.object({
-  pageNumber: z.coerce.number().int().positive().safe().optional(),
-  pageSize: z.coerce.number().int().positive().safe().optional(),
+  pageNumber: z.coerce.number().int().min(1).optional(),
+  pageSize: z.coerce.number().int().min(1).optional(),
 });
 
 // OUTPUT
 const paginationMetadataSchema = z.object({
-  pageNumber: z.number().int().positive().safe().optional(),
-  pageSize: z.number().int().positive().safe().optional(),
-  count: z.number(),
+  pageNumber: z.number().int().min(1).optional(),
+  pageSize: z.number().int().min(1).optional(),
+  count: z.number().min(0).int(),
 });
 
 export type PaginationMetadata = z.infer<typeof paginationMetadataSchema>;
