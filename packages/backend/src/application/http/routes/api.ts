@@ -1,5 +1,9 @@
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import { upsertAgeInput } from "@ou-ca/common/api/age";
+import { upsertBehaviorInput } from "@ou-ca/common/api/behavior";
+import { upsertDepartmentInput } from "@ou-ca/common/api/department";
+import { upsertDistanceEstimateInput } from "@ou-ca/common/api/distance-estimate";
 import { ageSchema } from "@ou-ca/common/api/entities/age";
 import { behaviorSchema } from "@ou-ca/common/api/entities/behavior";
 import { coordinatesSchema } from "@ou-ca/common/api/entities/coordinates";
@@ -16,6 +20,17 @@ import { speciesSchema } from "@ou-ca/common/api/entities/species";
 import { speciesClassSchema } from "@ou-ca/common/api/entities/species-class";
 import { townSchema } from "@ou-ca/common/api/entities/town";
 import { weatherSchema } from "@ou-ca/common/api/entities/weather";
+import { upsertEntryInput } from "@ou-ca/common/api/entry";
+import { upsertEnvironmentInput } from "@ou-ca/common/api/environment";
+import { upsertInventoryInput } from "@ou-ca/common/api/inventory";
+import { upsertLocalityInput } from "@ou-ca/common/api/locality";
+import { upsertNumberEstimateInput } from "@ou-ca/common/api/number-estimate";
+import { upsertObserverInput } from "@ou-ca/common/api/observer";
+import { upsertSexInput } from "@ou-ca/common/api/sex";
+import { upsertSpeciesInput } from "@ou-ca/common/api/species";
+import { upsertClassInput } from "@ou-ca/common/api/species-class";
+import { upsertTownInput } from "@ou-ca/common/api/town";
+import { upsertWeatherInput } from "@ou-ca/common/api/weather";
 import type { FastifyPluginAsync } from "fastify";
 import {
   createJsonSchemaTransformObject,
@@ -105,6 +120,36 @@ export const apiRoutes: FastifyPluginAsync<{ services: Services }> = async (fast
         Town: townSchema,
         // biome-ignore lint/style/useNamingConvention: <explanation>
         Weather: weatherSchema,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertAgeInput: upsertAgeInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertBehaviorInput: upsertBehaviorInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertDepartment: upsertDepartmentInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>=
+        UpsertDistanceEstimate: upsertDistanceEstimateInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertEntry: upsertEntryInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertEnvironment: upsertEnvironmentInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertInventory: upsertInventoryInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertLocality: upsertLocalityInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertNumberEstimate: upsertNumberEstimateInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertObserver: upsertObserverInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertSex: upsertSexInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertSpecies: upsertSpeciesInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertSpeciesClass: upsertClassInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertTown: upsertTownInput,
+        // biome-ignore lint/style/useNamingConvention: <explanation>
+        UpsertWeather: upsertWeatherInput,
       },
     }),
   });
