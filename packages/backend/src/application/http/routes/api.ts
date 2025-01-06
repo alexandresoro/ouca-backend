@@ -125,31 +125,31 @@ export const apiRoutes: FastifyPluginAsync<{ services: Services }> = async (fast
         // biome-ignore lint/style/useNamingConvention: <explanation>
         UpsertBehaviorInput: upsertBehaviorInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertDepartment: upsertDepartmentInput,
+        UpsertDepartmentInput: upsertDepartmentInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>=
-        UpsertDistanceEstimate: upsertDistanceEstimateInput,
+        UpsertDistanceEstimateInput: upsertDistanceEstimateInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertEntry: upsertEntryInput,
+        UpsertEntryInput: upsertEntryInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertEnvironment: upsertEnvironmentInput,
+        UpsertEnvironmentInput: upsertEnvironmentInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertInventory: upsertInventoryInput,
+        UpsertInventoryInput: upsertInventoryInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertLocality: upsertLocalityInput,
+        UpsertLocalityInput: upsertLocalityInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertNumberEstimate: upsertNumberEstimateInput,
+        UpsertNumberEstimateInput: upsertNumberEstimateInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertObserver: upsertObserverInput,
+        UpsertObserverInput: upsertObserverInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertSex: upsertSexInput,
+        UpsertSexInput: upsertSexInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertSpecies: upsertSpeciesInput,
+        UpsertSpeciesInput: upsertSpeciesInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertSpeciesClass: upsertClassInput,
+        UpsertSpeciesClassInput: upsertClassInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertTown: upsertTownInput,
+        UpsertTownInput: upsertTownInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertWeather: upsertWeatherInput,
+        UpsertWeatherInput: upsertWeatherInput,
       },
     }),
   });
