@@ -2,7 +2,7 @@ import { z } from "zod";
 import { NICHEUR_CODES } from "../../types/nicheur.model.js";
 
 export const behaviorSchema = z.object({
-  id: z.coerce.string(),
+  id: z.string(),
   code: z.string(),
   libelle: z.string(),
   nicheur: z.enum(NICHEUR_CODES).nullable(),

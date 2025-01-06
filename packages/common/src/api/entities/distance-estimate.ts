@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const distanceEstimateSchema = z.object({
-  id: z.coerce.string(),
+  id: z.string(),
   libelle: z.string(),
   ownerId: z.string().uuid().nullable(),
 });

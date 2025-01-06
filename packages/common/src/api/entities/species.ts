@@ -2,7 +2,7 @@ import { z } from "zod";
 import { speciesClassSchema } from "./species-class.js";
 
 export const speciesSchema = z.object({
-  id: z.coerce.string(),
+  id: z.string(),
   code: z.string(),
   nomFrancais: z.string(),
   nomLatin: z.string(),

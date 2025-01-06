@@ -5,7 +5,7 @@ import type { SortOrder } from "../shared/sort-order.js";
 export type ObserverFailureReason = CommonFailureReason;
 
 export const observerSchema = z.object({
-  id: z.coerce.string(),
+  id: z.string(),
   libelle: z.string(),
   ownerId: z.string().uuid().nullable(),
 });

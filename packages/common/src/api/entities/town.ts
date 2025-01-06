@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const townSchema = z.object({
-  id: z.coerce.string(),
+  id: z.string(),
   code: z.number(),
   nom: z.string(),
   departmentId: z.string(),
