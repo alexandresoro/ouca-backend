@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => {
   return {
     resolve: {
       alias: {
+        "@ou-ca/api": path.resolve(__dirname, "./src/services/api/generated"),
         "@ou-ca/common": path.resolve(__dirname, "../common/src"),
         "@components": path.resolve(__dirname, "./src/components"),
         "@hooks": path.resolve(__dirname, "./src/hooks"),

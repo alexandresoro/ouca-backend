@@ -18,7 +18,8 @@
     "test": "find ./src -name '*.test.ts' | tr '\\n' ' ' | xargs node --import tsx --test",
     "lint": "biome lint *",
     "typecheck": "tsc --build tsconfig.build.json",
-    "biome:ci": "biome ci *"
+    "biome:ci": "biome ci *",
+    "generate:api": "orval"
   },
   "dependencies": {
     "@fontsource-variable/nunito": "5.1.1",
@@ -69,6 +70,7 @@
     "@vitejs/plugin-react": "4.3.4",
     "autoprefixer": "10.4.20",
     "daisyui": "4.12.23",
+    "orval": "7.3.0",
     "postcss": "8.4.49",
     "tailwindcss": "3.4.17",
     "tsx": "4.19.2",
