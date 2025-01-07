@@ -6,7 +6,8 @@ import { useNotifications } from "@hooks/useNotifications";
 import { useUserSettings } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
 import StyledPanelHeader from "@layouts/StyledPanelHeader";
-import { type PutMeInput, putMeInput } from "@ou-ca/common/api/me";
+import type { PutV1MeBody } from "@ou-ca/api/models";
+import { putMeInput } from "@ou-ca/common/api/me";
 import { useApiAgesQuery } from "@services/api/age/api-age-queries";
 import { useApiDepartmentsQuery } from "@services/api/department/api-department-queries";
 import { useApiSettingsUpdate } from "@services/api/me/api-me-queries";
@@ -106,7 +107,7 @@ const SettingsPage: FunctionComponent = () => {
   }, [settings, reset]);
 
   // Handle updated settings
-  const sendUpdatedSettings: SubmitHandler<PutMeInput> = useCallback(
+  const sendUpdatedSettings: SubmitHandler<PutV1MeBody> = useCallback(
     (values) => {
       if (settings === undefined) {
         return;
