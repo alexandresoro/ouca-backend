@@ -40,7 +40,7 @@ jobs:
 
       - name: Is OpenAPI contract up to date?
         shell: bash
-        run: diff <(jq -S . ./packages/frontend/src/services/api/ouca-api.json) <(curl -s ${{ vars.OPENAPI_SPEC_URL }} | jq -S) || exit 1
+        run: diff <(jq -S . ./packages/frontend/src/services/api/ouca-api.json 2>&1) <(curl -s ${{ vars.OPENAPI_SPEC_URL }} | jq -S)
 
   deploy-cloudflare:
     needs: [validate, check-openapi-contract]
