@@ -5,8 +5,6 @@ runs:
   using: "composite"
 
   steps:
-    - uses: ./.forgejo/actions/install
-
     - name: Biome
       shell: bash
       run: pnpm --aggregate-output --recursive run biome:ci
