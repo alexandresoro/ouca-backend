@@ -1,4 +1,4 @@
-import type { Species } from "@ou-ca/common/api/entities/species";
+import type { Species } from "@ou-ca/api/models";
 import { useApiSpeciesInfoQuery } from "@services/api/species/api-species-queries";
 import { useAtomValue } from "jotai";
 import type { FunctionComponent } from "react";

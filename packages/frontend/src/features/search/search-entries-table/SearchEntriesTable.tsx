@@ -1,9 +1,8 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import { useNotifications } from "@hooks/useNotifications";
-import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { GetV1EntriesOrderBy, GetV1EntriesSortOrder, UpsertEntryInput } from "@ou-ca/api/models";
 import type { Entry } from "@ou-ca/common/api/entities/entry";
-import type { EntriesOrderBy, UpsertEntryInput } from "@ou-ca/common/api/entry";
 import { useApiEntryDelete, useApiEntryUpdate } from "@services/api/entry/api-entry-queries";
 import { type FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -37,9 +36,9 @@ type SearchEntriesTableProps = {
   onEntryDeleted?: () => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: EntriesOrderBy | undefined;
-  sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: EntriesOrderBy) => void;
+  orderBy: GetV1EntriesOrderBy | undefined;
+  sortOrder: GetV1EntriesSortOrder;
+  handleRequestSort: (sortingColumn: GetV1EntriesOrderBy) => void;
 };
 
 const SearchEntriesTable: FunctionComponent<SearchEntriesTableProps> = ({

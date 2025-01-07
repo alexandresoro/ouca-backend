@@ -1,8 +1,6 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
-import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
-import type { Species } from "@ou-ca/common/api/entities/species";
-import type { SpeciesOrderBy } from "@ou-ca/common/api/species";
+import type { GetV1SearchSpeciesOrderBy, GetV1SearchSpeciesSortOrder, Species } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import SearchSpeciesTableRow from "./SearchSpeciesTableRow";
@@ -30,9 +28,9 @@ type SearchSpeciesTableProps = {
   species: Species[];
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: SpeciesOrderBy | undefined;
-  sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: SpeciesOrderBy) => void;
+  orderBy: GetV1SearchSpeciesOrderBy | undefined;
+  sortOrder: GetV1SearchSpeciesSortOrder;
+  handleRequestSort: (sortingColumn: GetV1SearchSpeciesOrderBy) => void;
 };
 
 const SearchSpeciesTable: FunctionComponent<SearchSpeciesTableProps> = ({

@@ -1,7 +1,6 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import usePaginationParams from "@hooks/usePaginationParams";
-import type { EntriesOrderBy } from "@ou-ca/common/api/entry";
-import type { SpeciesOrderBy } from "@ou-ca/common/api/species";
+import type { GetV1EntriesOrderBy, GetV1SearchSpeciesOrderBy } from "@ou-ca/api/models";
 import { useApiEntriesInfiniteQuery } from "@services/api/entry/api-entry-queries";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import { useApiSearchInfiniteSpecies } from "@services/api/search/api-search-queries";
@@ -31,7 +30,7 @@ const SearchPage: FunctionComponent = () => {
     setOrderBy: setOrderByEntries,
     sortOrder: sortOrderEntries,
     setSortOrder: setSortOrderEntries,
-  } = usePaginationParams<EntriesOrderBy>({
+  } = usePaginationParams<GetV1EntriesOrderBy>({
     orderBy: "date",
     sortOrder: "desc",
   });
@@ -41,7 +40,7 @@ const SearchPage: FunctionComponent = () => {
     setOrderBy: setOrderBySpecies,
     sortOrder: sortOrderSpecies,
     setSortOrder: setSortOrderSpecies,
-  } = usePaginationParams<SpeciesOrderBy>({
+  } = usePaginationParams<GetV1SearchSpeciesOrderBy>({
     orderBy: "nbDonnees",
     sortOrder: "desc",
   });
@@ -70,13 +69,13 @@ const SearchPage: FunctionComponent = () => {
     ...searchCriteria,
   });
 
-  const handleRequestSortEntries = (sortingColumn: EntriesOrderBy) => {
+  const handleRequestSortEntries = (sortingColumn: GetV1EntriesOrderBy) => {
     const isAsc = orderByEntries === sortingColumn && sortOrderEntries === "asc";
     setSortOrderEntries(isAsc ? "desc" : "asc");
     setOrderByEntries(sortingColumn);
   };
 
-  const handleRequestSortSpecies = (sortingColumn: SpeciesOrderBy) => {
+  const handleRequestSortSpecies = (sortingColumn: GetV1SearchSpeciesOrderBy) => {
     const isAsc = orderBySpecies === sortingColumn && sortOrderSpecies === "asc";
     setSortOrderSpecies(isAsc ? "desc" : "asc");
     setOrderBySpecies(sortingColumn);
