@@ -21,6 +21,10 @@ jobs:
 
       - uses: ./.forgejo/actions/install
 
+      - name: Generate OpenAPI client
+        shell: bash
+        run: pnpm frontend generate:api
+
       - uses: ./.forgejo/actions/validate
 
       # We had cases where the PR typecheck was fine, but the build failed
