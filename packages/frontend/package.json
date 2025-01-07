@@ -27,7 +27,7 @@
     "@headlessui/react": "2.2.0",
     "@hookform/resolvers": "3.9.1",
     "@ou-ca/common": "workspace:*",
-    "@sentry/react": "8.47.0",
+    "@sentry/react": "8.48.0",
     "@styled-icons/boxicons-regular": "10.47.0",
     "@styled-icons/boxicons-solid": "10.47.0",
     "@turf/bbox": "7.2.0",
