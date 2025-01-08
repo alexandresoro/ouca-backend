@@ -1,5 +1,5 @@
 import { useNotifications } from "@hooks/useNotifications";
-import type { UpsertInventoryInput } from "@ou-ca/common/api/inventory";
+import type { UpsertInventoryInput } from "@ou-ca/api/models";
 import { useApiInventoryCreate } from "@services/api/inventory/api-inventory-queries";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";

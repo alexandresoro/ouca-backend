@@ -1,8 +1,8 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
+import type { GetV1EnvironmentsOrderBy } from "@ou-ca/api/models";
 import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
 import type { Environment } from "@ou-ca/common/api/entities/environment";
-import type { EnvironmentsOrderBy } from "@ou-ca/common/api/environment";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import EnvironmentTableRow from "./EnvironmentTableRow";
@@ -13,9 +13,9 @@ type MilieuTableProps = {
   onClickDeleteEnvironment: (environment: Environment) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: EnvironmentsOrderBy | undefined;
+  orderBy: GetV1EnvironmentsOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: EnvironmentsOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1EnvironmentsOrderBy) => void;
 };
 
 const COLUMNS = [

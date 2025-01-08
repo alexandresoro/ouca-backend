@@ -1,8 +1,8 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
+import type { GetV1NumberEstimatesOrderBy } from "@ou-ca/api/models";
 import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
 import type { NumberEstimate } from "@ou-ca/common/api/entities/number-estimate";
-import type { NumberEstimatesOrderBy } from "@ou-ca/common/api/number-estimate";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import NumberEstimateTableRow from "./NumberEstimateTableRow";
@@ -13,9 +13,9 @@ type EstimationNombreTableProps = {
   onClickDeleteNumberEstimate: (numberEstimate: NumberEstimate) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: NumberEstimatesOrderBy | undefined;
+  orderBy: GetV1NumberEstimatesOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: NumberEstimatesOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1NumberEstimatesOrderBy) => void;
 };
 
 const COLUMNS = [

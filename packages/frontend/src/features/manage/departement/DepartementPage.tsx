@@ -2,7 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { DepartmentsOrderBy, UpsertDepartmentInput } from "@ou-ca/common/api/department";
+import type { GetV1DepartmentsOrderBy, UpsertDepartmentInput } from "@ou-ca/api/models";
 import type { Department } from "@ou-ca/common/api/entities/department";
 import {
   useApiDepartmentCreate,
@@ -35,9 +35,10 @@ const DepartementPage: FunctionComponent = () => {
   >(null);
   const [departmentToDelete, setDepartmentToDelete] = useState<Department | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<DepartmentsOrderBy>({
-    orderBy: "code",
-  });
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
+    usePaginationParams<GetV1DepartmentsOrderBy>({
+      orderBy: "code",
+    });
 
   const queryParams = {
     q: query,
@@ -53,7 +54,7 @@ const DepartementPage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: DepartmentsOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1DepartmentsOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

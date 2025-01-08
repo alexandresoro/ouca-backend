@@ -1,4 +1,4 @@
-import type { UpsertDistanceEstimateInput } from "@ou-ca/common/api/distance-estimate";
+import type { UpsertDistanceEstimateInput } from "@ou-ca/api/models";
 import type { DistanceEstimate } from "@ou-ca/common/api/entities/distance-estimate";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";

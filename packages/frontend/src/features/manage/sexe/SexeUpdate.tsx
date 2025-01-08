@@ -1,5 +1,5 @@
+import type { UpsertSexInput } from "@ou-ca/api/models";
 import type { Sex } from "@ou-ca/common/api/entities/sex";
-import type { UpsertSexInput } from "@ou-ca/common/api/sex";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import SexeEdit from "./SexeEdit";

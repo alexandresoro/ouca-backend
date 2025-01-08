@@ -2,8 +2,8 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
+import type { GetV1TownsOrderBy, UpsertTownInput } from "@ou-ca/api/models";
 import type { Town } from "@ou-ca/common/api/entities/town";
-import type { TownsOrderBy, UpsertTownInput } from "@ou-ca/common/api/town";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiTownCreate,
@@ -35,7 +35,7 @@ const CommunePage: FunctionComponent = () => {
   );
   const [townToDelete, setTownToDelete] = useState<Town | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<TownsOrderBy>({
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1TownsOrderBy>({
     orderBy: "nom",
   });
 
@@ -53,7 +53,7 @@ const CommunePage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: TownsOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1TownsOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

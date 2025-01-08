@@ -2,8 +2,8 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
+import type { GetV1NumberEstimatesOrderBy, UpsertNumberEstimateInput } from "@ou-ca/api/models";
 import type { NumberEstimate } from "@ou-ca/common/api/entities/number-estimate";
-import type { NumberEstimatesOrderBy, UpsertNumberEstimateInput } from "@ou-ca/common/api/number-estimate";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiNumberEstimateCreate,
@@ -35,9 +35,8 @@ const EstimationNombrePage: FunctionComponent = () => {
   >(null);
   const [numberEstimateToDelete, setNumberEstimateToDelete] = useState<NumberEstimate | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<NumberEstimatesOrderBy>(
-    { orderBy: "libelle" },
-  );
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
+    usePaginationParams<GetV1NumberEstimatesOrderBy>({ orderBy: "libelle" });
 
   const queryParams = {
     q: query,
@@ -53,7 +52,7 @@ const EstimationNombrePage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: NumberEstimatesOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1NumberEstimatesOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

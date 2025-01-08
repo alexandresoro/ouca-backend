@@ -1,15 +1,16 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type UpsertClassInput, upsertClassInput } from "@ou-ca/common/api/species-class";
+import type { UpsertSpeciesClassInput } from "@ou-ca/api/models";
+import { upsertClassInput } from "@ou-ca/common/api/species-class";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import EntityUpsertFormActionButtons from "../common/EntityUpsertFormActionButtons";
 
 type ClasseEditProps = {
-  defaultValues?: UpsertClassInput | null;
+  defaultValues?: UpsertSpeciesClassInput | null;
   onCancel: () => void;
-  onSubmit: SubmitHandler<UpsertClassInput>;
+  onSubmit: SubmitHandler<UpsertSpeciesClassInput>;
 };
 
 const ClasseEdit: FunctionComponent<ClasseEditProps> = (props) => {
@@ -21,7 +22,7 @@ const ClasseEdit: FunctionComponent<ClasseEditProps> = (props) => {
     register,
     formState: { isValid, isDirty, errors },
     handleSubmit,
-  } = useForm<UpsertClassInput>({
+  } = useForm<UpsertSpeciesClassInput>({
     defaultValues: defaultValues ?? {
       libelle: "",
     },

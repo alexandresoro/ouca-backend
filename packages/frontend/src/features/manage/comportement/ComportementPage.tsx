@@ -2,7 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { BehaviorsOrderBy, UpsertBehaviorInput } from "@ou-ca/common/api/behavior";
+import type { GetV1BehaviorsOrderBy, UpsertBehaviorInput } from "@ou-ca/api/models";
 import type { Behavior } from "@ou-ca/common/api/entities/behavior";
 import {
   useApiBehaviorCreate,
@@ -35,7 +35,7 @@ const ComportementPage: FunctionComponent = () => {
   >(null);
   const [behaviorToDelete, setBehaviorToDelete] = useState<Behavior | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<BehaviorsOrderBy>({
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1BehaviorsOrderBy>({
     orderBy: "code",
   });
 
@@ -53,7 +53,7 @@ const ComportementPage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: BehaviorsOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1BehaviorsOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

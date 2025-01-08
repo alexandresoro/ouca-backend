@@ -1,4 +1,4 @@
-import type { SearchCriteriaParams } from "@ou-ca/common/api/common/search-criteria";
+import type { GetV1EntriesParams } from "@ou-ca/api/models";
 import type { Age } from "@ou-ca/common/api/entities/age";
 import type { Behavior } from "@ou-ca/common/api/entities/behavior";
 import type { Department } from "@ou-ca/common/api/entities/department";
@@ -106,5 +106,5 @@ export const searchEntriesCriteriaAtom = atom((get) => {
     environmentIds,
     comment: comment?.length ? comment : undefined,
     fromAllUsers,
-  } satisfies SearchCriteriaParams;
+  } satisfies Omit<GetV1EntriesParams, "pageNumber" | "pageSize" | "orderBy" | "sortOrder">;
 });

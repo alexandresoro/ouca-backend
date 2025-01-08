@@ -2,7 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { UpsertAgeInput } from "@ou-ca/common/api/age";
+import type { UpsertAgeInput } from "@ou-ca/api/models";
 import type { EntitiesWithLabelOrderBy } from "@ou-ca/common/api/common/entitiesSearchParams";
 import type { Age } from "@ou-ca/common/api/entities/age";
 import {

@@ -1,5 +1,5 @@
+import type { UpsertInventoryInput } from "@ou-ca/api/models";
 import type { Inventory } from "@ou-ca/common/api/entities/inventory";
-import type { UpsertInventoryInput } from "@ou-ca/common/api/inventory";
 import { useSetAtom } from "jotai";
 import { RESET } from "jotai/utils";
 import { type FunctionComponent, useEffect, useState } from "react";

@@ -2,8 +2,8 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
+import type { GetV1LocalitiesOrderBy, UpsertLocalityInput } from "@ou-ca/api/models";
 import type { Locality } from "@ou-ca/common/api/entities/locality";
-import type { LocalitiesOrderBy, UpsertLocalityInput } from "@ou-ca/common/api/locality";
 import { getTownResponse } from "@ou-ca/common/api/town";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
@@ -37,9 +37,11 @@ const LieuDitPage: FunctionComponent = () => {
   >(null);
   const [localityToDelete, setLocalityToDelete] = useState<Locality | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<LocalitiesOrderBy>({
-    orderBy: "nom",
-  });
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1LocalitiesOrderBy>(
+    {
+      orderBy: "nom",
+    },
+  );
 
   const queryParams = {
     q: query,
@@ -55,7 +57,7 @@ const LieuDitPage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: LocalitiesOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1LocalitiesOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

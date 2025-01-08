@@ -1,5 +1,5 @@
+import type { UpsertSpeciesClassInput } from "@ou-ca/api/models";
 import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class";
-import type { UpsertClassInput } from "@ou-ca/common/api/species-class";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import ClasseEdit from "./ClasseEdit";
@@ -7,11 +7,11 @@ import ClasseEdit from "./ClasseEdit";
 type ClasseUpdateProps = {
   speciesClass: SpeciesClass;
   onCancel: () => void;
-  onSubmit: (id: string, input: UpsertClassInput) => void;
+  onSubmit: (id: string, input: UpsertSpeciesClassInput) => void;
 };
 
 const ClasseUpdate: FunctionComponent<ClasseUpdateProps> = ({ speciesClass, onCancel, onSubmit }) => {
-  const handleSubmit: SubmitHandler<UpsertClassInput> = (input) => {
+  const handleSubmit: SubmitHandler<UpsertSpeciesClassInput> = (input) => {
     onSubmit(speciesClass.id, input);
   };
 

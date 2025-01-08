@@ -1,6 +1,7 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type UpsertDistanceEstimateInput, upsertDistanceEstimateInput } from "@ou-ca/common/api/distance-estimate";
+import type { UpsertDistanceEstimateInput } from "@ou-ca/api/models";
+import { upsertDistanceEstimateInput } from "@ou-ca/common/api/distance-estimate";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";

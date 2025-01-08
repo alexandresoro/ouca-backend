@@ -1,4 +1,4 @@
-import type { UpsertAgeInput } from "@ou-ca/common/api/age";
+import type { UpsertAgeInput } from "@ou-ca/api/models";
 import type { Age } from "@ou-ca/common/api/entities/age";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";

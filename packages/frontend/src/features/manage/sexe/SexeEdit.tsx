@@ -1,6 +1,7 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type UpsertSexInput, upsertSexInput } from "@ou-ca/common/api/sex";
+import type { UpsertSexInput } from "@ou-ca/api/models";
+import { upsertSexInput } from "@ou-ca/common/api/sex";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";

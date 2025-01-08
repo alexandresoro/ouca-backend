@@ -2,8 +2,8 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
+import type { GetV1EnvironmentsOrderBy, UpsertEnvironmentInput } from "@ou-ca/api/models";
 import type { Environment } from "@ou-ca/common/api/entities/environment";
-import type { EnvironmentsOrderBy, UpsertEnvironmentInput } from "@ou-ca/common/api/environment";
 import {
   useApiEnvironmentCreate,
   useApiEnvironmentDelete,
@@ -35,9 +35,10 @@ const MilieuPage: FunctionComponent = () => {
   >(null);
   const [environmentToDelete, setEnvironmentToDelete] = useState<Environment | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<EnvironmentsOrderBy>({
-    orderBy: "code",
-  });
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
+    usePaginationParams<GetV1EnvironmentsOrderBy>({
+      orderBy: "code",
+    });
 
   const queryParams = {
     q: query,
@@ -53,7 +54,7 @@ const MilieuPage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: EnvironmentsOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1EnvironmentsOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

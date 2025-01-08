@@ -1,4 +1,4 @@
-import type { UpsertInventoryInput } from "@ou-ca/common/api/inventory";
+import type { UpsertInventoryInput } from "@ou-ca/api/models";
 import { useApiInventoryQuery } from "@services/api/inventory/api-inventory-queries";
 import InventoryFormWithMap from "../../../inventory/inventory-form-with-map/InventoryFormWithMap";
 

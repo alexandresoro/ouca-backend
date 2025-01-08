@@ -2,8 +2,8 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
+import type { GetV1ClassesOrderBy, UpsertSpeciesClassInput } from "@ou-ca/api/models";
 import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class";
-import type { ClassesOrderBy, UpsertClassInput } from "@ou-ca/common/api/species-class";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiSpeciesClassCreate,
@@ -35,7 +35,7 @@ const ClassePage: FunctionComponent = () => {
   >(null);
   const [speciesClassToDelete, setSpeciesClassToDelete] = useState<SpeciesClass | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<ClassesOrderBy>({
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1ClassesOrderBy>({
     orderBy: "libelle",
   });
 
@@ -53,7 +53,7 @@ const ClassePage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: ClassesOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1ClassesOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);
@@ -129,7 +129,7 @@ const ClassePage: FunctionComponent = () => {
     void downloadExport();
   };
 
-  const handleCreateSpeciesClass = (input: UpsertClassInput) => {
+  const handleCreateSpeciesClass = (input: UpsertSpeciesClassInput) => {
     createSpeciesClass({ body: input })
       .then(() => {
         displayNotification({
@@ -146,7 +146,7 @@ const ClassePage: FunctionComponent = () => {
       });
   };
 
-  const handleUpdateSpeciesClass = (_id: string, input: UpsertClassInput) => {
+  const handleUpdateSpeciesClass = (_id: string, input: UpsertSpeciesClassInput) => {
     void updateSpeciesClass({ body: input });
   };
 

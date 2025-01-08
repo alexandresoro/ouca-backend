@@ -1,4 +1,4 @@
-import type { UpsertBehaviorInput } from "@ou-ca/common/api/behavior";
+import type { UpsertBehaviorInput } from "@ou-ca/api/models";
 import type { Behavior } from "@ou-ca/common/api/entities/behavior";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";

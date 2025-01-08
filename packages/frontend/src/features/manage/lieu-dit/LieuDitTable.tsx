@@ -1,8 +1,8 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
+import type { GetV1LocalitiesOrderBy } from "@ou-ca/api/models";
 import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
 import type { Locality } from "@ou-ca/common/api/entities/locality";
-import type { LocalitiesOrderBy } from "@ou-ca/common/api/locality";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import LocalityTableRow from "./LocalityTableRow";
@@ -13,9 +13,9 @@ type LieuDitTableProps = {
   onClickDeleteLocality: (locality: Locality) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: LocalitiesOrderBy | undefined;
+  orderBy: GetV1LocalitiesOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: LocalitiesOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1LocalitiesOrderBy) => void;
 };
 
 const COLUMNS = [

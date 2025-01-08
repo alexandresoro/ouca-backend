@@ -1,6 +1,6 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
-import type { BehaviorsOrderBy } from "@ou-ca/common/api/behavior";
+import type { GetV1BehaviorsOrderBy } from "@ou-ca/api/models";
 import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
 import type { Behavior } from "@ou-ca/common/api/entities/behavior";
 import type { FunctionComponent } from "react";
@@ -13,9 +13,9 @@ type ComportementTableProps = {
   onClickDeleteBehavior: (behavior: Behavior) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: BehaviorsOrderBy | undefined;
+  orderBy: GetV1BehaviorsOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: BehaviorsOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1BehaviorsOrderBy) => void;
 };
 
 const COLUMNS = [

@@ -1,7 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
+import type { GetV1DepartmentsOrderBy } from "@ou-ca/api/models";
 import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
-import type { DepartmentsOrderBy } from "@ou-ca/common/api/department";
 import type { Department } from "@ou-ca/common/api/entities/department";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,9 +13,9 @@ type DepartementTableProps = {
   onClickDeleteDepartment: (department: Department) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: DepartmentsOrderBy | undefined;
+  orderBy: GetV1DepartmentsOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: DepartmentsOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1DepartmentsOrderBy) => void;
 };
 
 const COLUMNS = [

@@ -2,8 +2,8 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
+import type { GetV1SpeciesOrderBy, UpsertSpeciesInput } from "@ou-ca/api/models";
 import type { Species } from "@ou-ca/common/api/entities/species";
-import type { SpeciesOrderBy, UpsertSpeciesInput } from "@ou-ca/common/api/species";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiSpeciesCreate,
@@ -35,7 +35,7 @@ const EspecePage: FunctionComponent = () => {
   >(null);
   const [speciesToDelete, setSpeciesToDelete] = useState<Species | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<SpeciesOrderBy>({
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1SpeciesOrderBy>({
     orderBy: "nomFrancais",
   });
 
@@ -53,7 +53,7 @@ const EspecePage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: SpeciesOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1SpeciesOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

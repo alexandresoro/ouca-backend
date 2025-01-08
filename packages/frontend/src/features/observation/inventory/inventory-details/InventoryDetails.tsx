@@ -1,4 +1,4 @@
-import type { GetEntriesResponse } from "@ou-ca/common/api/entry";
+import type { GetV1Entries200 } from "@ou-ca/api/models";
 import { useApiInventoryQuery } from "@services/api/inventory/api-inventory-queries";
 import { CopyAlt } from "@styled-icons/boxicons-regular";
 import { Fragment } from "react";
@@ -9,7 +9,7 @@ import InventorySummaryPanel from "../inventory-summary-panel/InventorySummaryPa
 
 type InventoryDetailsProps = {
   inventoryId: string;
-  entriesPages: GetEntriesResponse[];
+  entriesPages: GetV1Entries200[];
   hasMoreEntries?: boolean;
   onMoreEntriesRequested?: () => void;
 };

@@ -1,6 +1,7 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type UpsertDepartmentInput, upsertDepartmentInput } from "@ou-ca/common/api/department";
+import type { UpsertDepartmentInput } from "@ou-ca/api/models";
+import { upsertDepartmentInput } from "@ou-ca/common/api/department";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
