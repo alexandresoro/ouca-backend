@@ -1,10 +1,10 @@
-import type { PaginatedResponseSchemaType } from "@ou-ca/common/api/common/pagination";
 import { useApiUrl } from "@services/api/useApiUrl";
 import { fetchApi } from "@utils/fetch-api";
 import { toUrlSearchParams } from "@utils/url/url-search-params";
 import { useAuth } from "react-oidc-context";
 import useSWRInfinite, { type SWRInfiniteConfiguration } from "swr/infinite";
 import type { z } from "zod";
+import type { PaginatedResponseSchemaType } from "./pagination";
 
 export type UseApiInfiniteQueryCommonParams = {
   queryParams: Record<string, string | number | string[] | number[] | boolean | undefined> & {

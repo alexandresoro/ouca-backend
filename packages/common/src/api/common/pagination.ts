@@ -20,5 +20,3 @@ export const getPaginatedResponseSchema = <T extends z.ZodTypeAny>(dataElement: 
     data: z.array(dataElement),
     meta: paginationMetadataSchema,
   });
-
-export type PaginatedResponseSchemaType<T extends z.ZodTypeAny> = ReturnType<typeof getPaginatedResponseSchema<T>>;
