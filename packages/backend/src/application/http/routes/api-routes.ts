@@ -10,8 +10,7 @@ import { entriesController } from "../controllers/entries-controller.js";
 import { environmentsController } from "../controllers/environments-controller.js";
 import { generateExportController } from "../controllers/generate-export-controllers.js";
 import { geojsonController } from "../controllers/geojson-controller.js";
-import { importStatusController } from "../controllers/import/import-status-controller.js";
-import { uploadsController } from "../controllers/import/uploads-controller.js";
+import { importController } from "../controllers/import-controller.js";
 import { inventoriesController } from "../controllers/inventories-controller.js";
 import { localitiesController } from "../controllers/localities-controller.js";
 import { meController } from "../controllers/me-controller.js";
@@ -55,8 +54,7 @@ export const apiV1Routes: FastifyPluginAsync<{ services: Services }> = async (fa
 
   await fastify.register(altitudeController, { services, prefix: "/altitude" });
 
-  await fastify.register(uploadsController, { services });
-  await fastify.register(importStatusController, { services });
+  await fastify.register(importController, { services, prefix: "/import" });
 
   await fastify.register(meController, { services, prefix: "/me" });
 };
