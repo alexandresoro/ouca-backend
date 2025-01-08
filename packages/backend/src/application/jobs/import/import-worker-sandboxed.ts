@@ -1,7 +1,7 @@
 import type { ImportStatus } from "@domain/import/import-status.js";
+import type { ImportType } from "@domain/import/import-type.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import { workerLogger } from "@infrastructure/bullmq/worker.js";
-import type { ImportType } from "@ou-ca/common/import/import-types";
 import type { SandboxedJob } from "bullmq";
 import { getNewImportServiceForRequestType } from "../../services/import/entities/import-service-per-request-type.js";
 import { buildServices } from "../../services/services.js";

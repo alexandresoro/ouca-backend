@@ -1,4 +1,3 @@
-import type { ImportType } from "@ou-ca/common/import/import-types";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import ImportAgesPanel from "./entities/ImportAgesPanel";
@@ -15,6 +14,7 @@ import ImportSpeciesClassesPanel from "./entities/ImportSpeciesClassesPanel";
 import ImportSpeciesEstimatesPanel from "./entities/ImportSpeciesPanel";
 import ImportTownsPanel from "./entities/ImportTownsPanel";
 import ImportWeathersPanel from "./entities/ImportWeathersPanel";
+import type { ImportType } from "./import-type";
 
 const getImportComponent = (importType: ImportType) => () => {
   switch (importType) {

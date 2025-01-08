@@ -1,10 +1,10 @@
 import type { getV1ImportStatusImportIdResponse } from "@ou-ca/api/zod/import.zod";
-import type { ImportType } from "@ou-ca/common/import/import-types";
 import { downloadBlob } from "@utils/dom/file-download-helper";
 import { stringify } from "csv-stringify/browser/esm/sync";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import type { z } from "zod";
+import type { ImportType } from "./import-type";
 
 type ImportStatus = z.infer<typeof getV1ImportStatusImportIdResponse>;
 

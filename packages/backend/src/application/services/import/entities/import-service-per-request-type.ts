@@ -1,4 +1,4 @@
-import type { ImportType } from "@ou-ca/common/import/import-types";
+import type { ImportType } from "@domain/import/import-type.js";
 import type { Services } from "../../services.js";
 import { ImportAgeService } from "./import-age-service.js";
 import { ImportClasseService } from "./import-classe-service.js";

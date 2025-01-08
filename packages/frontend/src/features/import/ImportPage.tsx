@@ -1,7 +1,6 @@
 import Select from "@components/base/select/Select";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import { IMPORT_TYPE, type ImportType } from "@ou-ca/common/import/import-types";
 import { useApiImportStatusQuery } from "@services/api/import/api-import-queries";
 import { useApiFetch } from "@services/api/useApiFetch";
 import { capitalizeFirstLetter } from "@utils/capitalize-first-letter";
@@ -11,6 +10,7 @@ import { Navigate } from "react-router";
 import { z } from "zod";
 import ImportInstructionsPanel from "./ImportInstructionsPanel";
 import ImportStatusPanel from "./ImportStatusPanel";
+import { IMPORT_TYPE, type ImportType } from "./import-type";
 
 const ImportPage: FunctionComponent = () => {
   const { t } = useTranslation();

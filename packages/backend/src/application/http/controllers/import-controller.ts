@@ -1,5 +1,5 @@
 import { importStatusSchema } from "@domain/import/import-status.js";
-import { IMPORT_TYPE, type ImportType } from "@ou-ca/common/import/import-types";
+import { IMPORT_TYPE, type ImportType } from "@domain/import/import-type.js";
 import type { FastifyInstance } from "fastify";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { z } from "zod";
