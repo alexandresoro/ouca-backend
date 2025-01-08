@@ -1,7 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
+import type { SortOrder } from "@hooks/usePaginationParams";
 import type { GetV1BehaviorsOrderBy } from "@ou-ca/api/models";
-import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
 import type { Behavior } from "@ou-ca/common/api/entities/behavior";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";

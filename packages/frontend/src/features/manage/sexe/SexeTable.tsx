@@ -1,6 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
-import type { EntitiesWithLabelOrderBy, SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { SortOrder } from "@hooks/usePaginationParams";
+import type { GetV1SexesOrderBy } from "@ou-ca/api/models";
 import type { Sex } from "@ou-ca/common/api/entities/sex";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,9 +13,9 @@ type SexeTableProps = {
   onClickDeleteSex: (sex: Sex) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: EntitiesWithLabelOrderBy | undefined;
+  orderBy: GetV1SexesOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: EntitiesWithLabelOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1SexesOrderBy) => void;
 };
 
 const COLUMNS = [

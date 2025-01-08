@@ -1,6 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
-import type { EntitiesWithLabelOrderBy, SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { SortOrder } from "@hooks/usePaginationParams";
+import type { GetV1WeathersOrderBy } from "@ou-ca/api/models";
 import type { Weather } from "@ou-ca/common/api/entities/weather";
 import { Cloud, Wind } from "@styled-icons/boxicons-regular";
 import type { FunctionComponent } from "react";
@@ -13,9 +14,9 @@ type MeteoTableProps = {
   onClickDeleteWeather: (weather: Weather) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: EntitiesWithLabelOrderBy | undefined;
+  orderBy: GetV1WeathersOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: EntitiesWithLabelOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1WeathersOrderBy) => void;
 };
 
 const COLUMNS = [

@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { UpsertDistanceEstimateInput } from "@ou-ca/api/models";
-import type { EntitiesWithLabelOrderBy } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { GetV1DistanceEstimatesOrderBy, UpsertDistanceEstimateInput } from "@ou-ca/api/models";
 import type { DistanceEstimate } from "@ou-ca/common/api/entities/distance-estimate";
 import {
   useApiDistanceEstimateCreate,
@@ -37,7 +36,7 @@ const EstimationDistancePage: FunctionComponent = () => {
   const [distanceEstimateToDelete, setDistanceEstimateToDelete] = useState<DistanceEstimate | null>(null);
 
   const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
-    usePaginationParams<EntitiesWithLabelOrderBy>({ orderBy: "libelle" });
+    usePaginationParams<GetV1DistanceEstimatesOrderBy>({ orderBy: "libelle" });
 
   const queryParams = {
     q: query,
@@ -53,7 +52,7 @@ const EstimationDistancePage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: EntitiesWithLabelOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1DistanceEstimatesOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

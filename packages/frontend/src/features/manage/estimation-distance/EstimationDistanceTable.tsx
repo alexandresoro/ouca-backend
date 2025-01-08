@@ -1,6 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
-import type { EntitiesWithLabelOrderBy, SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { SortOrder } from "@hooks/usePaginationParams";
+import type { GetV1DistanceEstimatesOrderBy } from "@ou-ca/api/models";
 import type { DistanceEstimate } from "@ou-ca/common/api/entities/distance-estimate";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,9 +13,9 @@ type EstimationDistanceTableProps = {
   onClickDeleteDistanceEstimate: (distanceEstimate: DistanceEstimate) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: EntitiesWithLabelOrderBy | undefined;
+  orderBy: GetV1DistanceEstimatesOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: EntitiesWithLabelOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1DistanceEstimatesOrderBy) => void;
 };
 
 const COLUMNS = [

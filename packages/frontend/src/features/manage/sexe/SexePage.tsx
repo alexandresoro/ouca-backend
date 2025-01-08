@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { UpsertSexInput } from "@ou-ca/api/models";
-import type { EntitiesWithLabelOrderBy } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { GetV1SexesOrderBy, UpsertSexInput } from "@ou-ca/api/models";
 import type { Sex } from "@ou-ca/common/api/entities/sex";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
@@ -36,8 +35,9 @@ const SexePage: FunctionComponent = () => {
   );
   const [sexToDelete, setSexToDelete] = useState<Sex | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
-    usePaginationParams<EntitiesWithLabelOrderBy>({ orderBy: "libelle" });
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1SexesOrderBy>({
+    orderBy: "libelle",
+  });
 
   const queryParams = {
     q: query,
@@ -53,7 +53,7 @@ const SexePage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: EntitiesWithLabelOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1SexesOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

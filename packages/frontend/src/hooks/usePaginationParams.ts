@@ -1,5 +1,6 @@
-import type { SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
 import { useState } from "react";
+
+export type SortOrder = "asc" | "desc";
 
 export type PaginationParams<T> = {
   query: string;

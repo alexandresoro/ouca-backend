@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { UpsertObserverInput } from "@ou-ca/api/models";
-import type { EntitiesWithLabelOrderBy } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { GetV1ObserversOrderBy, UpsertObserverInput } from "@ou-ca/api/models";
 import type { Observer } from "@ou-ca/common/api/entities/observer";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
@@ -36,8 +35,9 @@ const ObservateurPage: FunctionComponent = () => {
   >(null);
   const [observerToDelete, setObserverToDelete] = useState<Observer | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
-    usePaginationParams<EntitiesWithLabelOrderBy>({ orderBy: "libelle" });
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1ObserversOrderBy>({
+    orderBy: "libelle",
+  });
 
   const queryParams = {
     q: query,
@@ -53,7 +53,7 @@ const ObservateurPage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: EntitiesWithLabelOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1ObserversOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

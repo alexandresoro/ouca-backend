@@ -1,6 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
-import type { EntitiesWithLabelOrderBy, SortOrder } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { SortOrder } from "@hooks/usePaginationParams";
+import type { GetV1AgesOrderBy } from "@ou-ca/api/models";
 import type { Age } from "@ou-ca/common/api/entities/age";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,9 +13,9 @@ type AgeTableProps = {
   onClickDeleteAge: (age: Age) => void;
   hasNextPage?: boolean;
   onMoreRequested?: () => void;
-  orderBy: EntitiesWithLabelOrderBy | undefined;
+  orderBy: GetV1AgesOrderBy | undefined;
   sortOrder: SortOrder;
-  handleRequestSort: (sortingColumn: EntitiesWithLabelOrderBy) => void;
+  handleRequestSort: (sortingColumn: GetV1AgesOrderBy) => void;
 };
 
 const COLUMNS = [

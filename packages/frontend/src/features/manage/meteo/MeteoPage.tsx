@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { UpsertWeatherInput } from "@ou-ca/api/models";
-import type { EntitiesWithLabelOrderBy } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { GetV1WeathersOrderBy, UpsertWeatherInput } from "@ou-ca/api/models";
 import type { Weather } from "@ou-ca/common/api/entities/weather";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
@@ -36,8 +35,9 @@ const MeteoPage: FunctionComponent = () => {
   >(null);
   const [weatherToDelete, setWeatherToDelete] = useState<Weather | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
-    usePaginationParams<EntitiesWithLabelOrderBy>({ orderBy: "libelle" });
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1WeathersOrderBy>({
+    orderBy: "libelle",
+  });
 
   const queryParams = {
     q: query,
@@ -53,7 +53,7 @@ const MeteoPage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: EntitiesWithLabelOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1WeathersOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);

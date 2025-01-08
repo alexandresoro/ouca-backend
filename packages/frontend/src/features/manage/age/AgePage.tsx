@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { UpsertAgeInput } from "@ou-ca/api/models";
-import type { EntitiesWithLabelOrderBy } from "@ou-ca/common/api/common/entitiesSearchParams";
+import type { GetV1AgesOrderBy, UpsertAgeInput } from "@ou-ca/api/models";
 import type { Age } from "@ou-ca/common/api/entities/age";
 import {
   useApiAgeCreate,
@@ -36,8 +35,9 @@ const AgePage: FunctionComponent = () => {
   );
   const [ageToDelete, setAgeToDelete] = useState<Age | null>(null);
 
-  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } =
-    usePaginationParams<EntitiesWithLabelOrderBy>({ orderBy: "libelle" });
+  const { query, setQuery, orderBy, setOrderBy, sortOrder, setSortOrder } = usePaginationParams<GetV1AgesOrderBy>({
+    orderBy: "libelle",
+  });
 
   const queryParams = {
     q: query,
@@ -53,7 +53,7 @@ const AgePage: FunctionComponent = () => {
     void mutate();
   }, [queryParams, mutate]);
 
-  const handleRequestSort = (sortingColumn: EntitiesWithLabelOrderBy) => {
+  const handleRequestSort = (sortingColumn: GetV1AgesOrderBy) => {
     const isAsc = orderBy === sortingColumn && sortOrder === "asc";
     setSortOrder(isAsc ? "desc" : "asc");
     setOrderBy(sortingColumn);
