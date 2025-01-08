@@ -1,26 +1,28 @@
 import type { FastifyPluginAsync } from "fastify";
-import type { Services } from "../services/services.js";
-import { agesController } from "./controllers/ages-controller.js";
-import { altitudeController } from "./controllers/altitude-controller.js";
-import { behaviorsController } from "./controllers/behaviors-controller.js";
-import { classesController } from "./controllers/classes-controller.js";
-import { departmentsController } from "./controllers/departments-controller.js";
-import { distanceEstimatesController } from "./controllers/distance-estimates-controller.js";
-import { entriesController } from "./controllers/entries-controller.js";
-import { environmentsController } from "./controllers/environments-controller.js";
-import { generateExportController } from "./controllers/generate-export-controllers.js";
-import { geojsonController } from "./controllers/geojson-controller.js";
-import { inventoriesController } from "./controllers/inventories-controller.js";
-import { localitiesController } from "./controllers/localities-controller.js";
-import { meController } from "./controllers/me-controller.js";
-import { numberEstimatesController } from "./controllers/number-estimates-controller.js";
-import { observersController } from "./controllers/observers-controller.js";
-import { searchController } from "./controllers/search-controller.js";
-import { sexesController } from "./controllers/sexes-controller.js";
-import { speciesController } from "./controllers/species-controller.js";
-import { townsController } from "./controllers/towns-controller.js";
-import { weathersController } from "./controllers/weathers-controller.js";
-import { handleAuthorizationHook } from "./hooks/handle-authorization-hook.js";
+import type { Services } from "../../services/services.js";
+import { agesController } from "../controllers/ages-controller.js";
+import { altitudeController } from "../controllers/altitude-controller.js";
+import { behaviorsController } from "../controllers/behaviors-controller.js";
+import { classesController } from "../controllers/classes-controller.js";
+import { departmentsController } from "../controllers/departments-controller.js";
+import { distanceEstimatesController } from "../controllers/distance-estimates-controller.js";
+import { entriesController } from "../controllers/entries-controller.js";
+import { environmentsController } from "../controllers/environments-controller.js";
+import { generateExportController } from "../controllers/generate-export-controllers.js";
+import { geojsonController } from "../controllers/geojson-controller.js";
+import { importStatusController } from "../controllers/import/import-status-controller.js";
+import { uploadsController } from "../controllers/import/uploads-controller.js";
+import { inventoriesController } from "../controllers/inventories-controller.js";
+import { localitiesController } from "../controllers/localities-controller.js";
+import { meController } from "../controllers/me-controller.js";
+import { numberEstimatesController } from "../controllers/number-estimates-controller.js";
+import { observersController } from "../controllers/observers-controller.js";
+import { searchController } from "../controllers/search-controller.js";
+import { sexesController } from "../controllers/sexes-controller.js";
+import { speciesController } from "../controllers/species-controller.js";
+import { townsController } from "../controllers/towns-controller.js";
+import { weathersController } from "../controllers/weathers-controller.js";
+import { handleAuthorizationHook } from "../hooks/handle-authorization-hook.js";
 
 export const apiV1Routes: FastifyPluginAsync<{ services: Services }> = async (fastify, { services }) => {
   // API needs authentication/authorization
@@ -52,6 +54,9 @@ export const apiV1Routes: FastifyPluginAsync<{ services: Services }> = async (fa
   await fastify.register(geojsonController, { services, prefix: "/geojson" });
 
   await fastify.register(altitudeController, { services, prefix: "/altitude" });
+
+  await fastify.register(uploadsController, { services });
+  await fastify.register(importStatusController, { services });
 
   await fastify.register(meController, { services, prefix: "/me" });
 };
