@@ -24,11 +24,11 @@ export type UseApiQuerySWROptions<T = unknown, E = unknown> = Omit<SWRConfigurat
 
 export const useApiQuery = <T = unknown, E = unknown>(
   path: string | null,
-  { queryParams, paused, schema, useApiPath = true }: UseApiQueryParams<T> = {},
+  { queryParams, paused, schema }: UseApiQueryParams<T> = {},
   swrOptions?: UseApiQuerySWROptions<T, E>,
 ) => {
   const { user } = useAuth();
-  const apiUrl = useApiUrl(useApiPath);
+  const apiUrl = useApiUrl();
 
   const accessToken = user?.access_token;
 

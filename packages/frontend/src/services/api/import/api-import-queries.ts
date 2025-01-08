@@ -8,11 +8,10 @@ export const useApiImportStatusQuery = (
   { paused = false } = {},
 ) => {
   return useApiQuery(
-    id != null ? `/import-status/${id}` : null,
+    id != null ? `/import/status/${id}` : null,
     {
       schema: importStatusSchema,
       paused,
-      useApiPath: false,
     },
     {
       ...swrOptions,
