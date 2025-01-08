@@ -1,16 +1,16 @@
-import { importStatusSchema } from "@ou-ca/common/import/import-status";
+import { getV1ImportStatusImportIdResponse } from "@ou-ca/api/zod/import.zod";
 import { type UseApiQuerySWROptions, useApiQuery } from "@services/api/useApiQuery";
 import type { z } from "zod";
 
 export const useApiImportStatusQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof importStatusSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1ImportStatusImportIdResponse>>,
   { paused = false } = {},
 ) => {
   return useApiQuery(
     id != null ? `/import/status/${id}` : null,
     {
-      schema: importStatusSchema,
+      schema: getV1ImportStatusImportIdResponse,
       paused,
     },
     {

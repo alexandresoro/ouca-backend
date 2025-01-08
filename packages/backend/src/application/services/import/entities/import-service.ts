@@ -1,5 +1,5 @@
+import type { ImportStatus } from "@domain/import/import-status.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { ImportStatus } from "@ou-ca/common/import/import-status";
 import type { SandboxedJob } from "bullmq";
 import { parse } from "csv-parse/sync";
 import { logger } from "../../../../utils/logger.js";

@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
+import { type ImportStatus, importStatusSchema } from "@domain/import/import-status.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { Queues } from "@infrastructure/bullmq/queues.js";
 import { redis } from "@infrastructure/ioredis/redis.js";
-import { type ImportStatus, importStatusSchema } from "@ou-ca/common/import/import-status";
 import type { ImportType } from "@ou-ca/common/import/import-types";
 import { logger } from "../../../utils/logger.js";
 
