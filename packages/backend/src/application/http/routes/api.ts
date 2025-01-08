@@ -42,7 +42,7 @@ import { ZodError } from "zod";
 import { logger as loggerParent } from "../../../utils/logger.js";
 import type { Services } from "../../services/services.js";
 import { userController } from "../controllers/user-controller.js";
-import { apiV1Routes } from "./api-routes.js";
+import { apiV1Routes } from "./api-v1-routes.js";
 
 const logger = loggerParent.child({ module: "fastify" });
 

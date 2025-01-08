@@ -8,7 +8,6 @@ import type { Logger } from "pino";
 import { logger as loggerParent } from "../../utils/logger.js";
 import type { Services } from "../services/services.js";
 import { downloadController } from "./controllers/download-controller.js";
-import { importRoutes } from "./import-routes.js";
 import { apiRoutes } from "./routes/api.js";
 
 const logger = loggerParent.child({ module: "fastify" });
@@ -28,6 +27,5 @@ export const registerRoutes = async (
   // Static routes
   await server.register(downloadController, { services, prefix: "/download" });
 
-  await server.register(importRoutes, { services });
   logger.debug("Fastify static routes added");
 };
