@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import test from "node:test";
-import type { Locality } from "../api/entities/locality.js";
+import type { Locality } from "@ou-ca/common/api/entities/locality";
 import { areCoordinatesCustom } from "./coordinates-helper.js";
 
 test("should correctly validate non-customized coordinated", () => {

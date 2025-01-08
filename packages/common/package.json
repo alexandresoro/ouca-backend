@@ -25,13 +25,11 @@
     "biome:ci": "biome ci *"
   },
   "dependencies": {
-    "proj4": "2.15.0",
     "zod": "3.24.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "20.17.12",
-    "@types/proj4": "2.5.6",
     "tsx": "4.19.2",
     "typescript": "5.7.2"
   }
