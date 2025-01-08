@@ -11187,7 +11187,7 @@
         }
       }
     },
-    "/v1/uploads/observer": {
+    "/v1/import/observer": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -11293,7 +11293,7 @@
         }
       }
     },
-    "/v1/uploads/department": {
+    "/v1/import/department": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -11399,7 +11399,7 @@
         }
       }
     },
-    "/v1/uploads/town": {
+    "/v1/import/town": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -11505,7 +11505,7 @@
         }
       }
     },
-    "/v1/uploads/locality": {
+    "/v1/import/locality": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -11611,7 +11611,7 @@
         }
       }
     },
-    "/v1/uploads/weather": {
+    "/v1/import/weather": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -11717,7 +11717,7 @@
         }
       }
     },
-    "/v1/uploads/species-class": {
+    "/v1/import/species-class": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -11823,7 +11823,7 @@
         }
       }
     },
-    "/v1/uploads/species": {
+    "/v1/import/species": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -11929,7 +11929,7 @@
         }
       }
     },
-    "/v1/uploads/age": {
+    "/v1/import/age": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -12035,7 +12035,7 @@
         }
       }
     },
-    "/v1/uploads/sex": {
+    "/v1/import/sex": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -12141,7 +12141,7 @@
         }
       }
     },
-    "/v1/uploads/number-estimate": {
+    "/v1/import/number-estimate": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -12247,7 +12247,7 @@
         }
       }
     },
-    "/v1/uploads/distance-estimate": {
+    "/v1/import/distance-estimate": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -12353,7 +12353,7 @@
         }
       }
     },
-    "/v1/uploads/behavior": {
+    "/v1/import/behavior": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -12459,7 +12459,7 @@
         }
       }
     },
-    "/v1/uploads/environment": {
+    "/v1/import/environment": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -12565,7 +12565,7 @@
         }
       }
     },
-    "/v1/uploads/entry": {
+    "/v1/import/entry": {
       "post": {
         "tags": ["Import"],
         "security": [{ "token": [] }],
@@ -12671,7 +12671,7 @@
         }
       }
     },
-    "/v1/import-status/{importId}": {
+    "/v1/import/status/{importId}": {
       "get": {
         "tags": ["Import"],
         "parameters": [
