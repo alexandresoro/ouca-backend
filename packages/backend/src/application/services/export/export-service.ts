@@ -3,7 +3,6 @@ import type { LoggedUser } from "@domain/user/logged-user.js";
 import { findFullEntriesForExport } from "@infrastructure/repositories/entry/entry-export.js";
 import type { ExportRepository } from "@interfaces/export-repository-interface.js";
 import type { EntriesSearchParams } from "@ou-ca/common/api/entry";
-import { GPS_COORDINATES } from "@ou-ca/common/coordinates-system/gps.object";
 import { getNicheurStatusToDisplay } from "@ou-ca/common/helpers/nicheur-helper";
 import { type Result, err, ok } from "neverthrow";
 import { getDateOnlyAsUTCDate } from "../../../utils/time-utils.js";
@@ -165,8 +164,7 @@ export const buildExportService = (dependencies: ExportServiceDependencies) => {
       return err("notAllowed");
     }
 
-    const coordinatesSystem = GPS_COORDINATES;
-    const coordinatesSuffix = ` en ${coordinatesSystem.unitName} (${coordinatesSystem.name})`;
+    const coordinatesSuffix = " en degrés (GPS)";
 
     const { fromAllUsers } = searchCriteria;
 

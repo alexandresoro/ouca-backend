@@ -14,9 +14,7 @@ import type { Species } from "@ou-ca/common/api/entities/species";
 import type { Town } from "@ou-ca/common/api/entities/town";
 import type { Weather } from "@ou-ca/common/api/entities/weather";
 import type { UpsertEntryInput } from "@ou-ca/common/api/entry";
-import { areCoordinatesCustom } from "@ou-ca/common/coordinates-system/coordinates-helper";
-import { GPS_COORDINATES } from "@ou-ca/common/coordinates-system/gps.object";
-import type { Coordinates } from "@ou-ca/common/types/coordinates.object";
+import { areCoordinatesCustom } from "../../../../utils/coordinates-helper.js";
 import { logger } from "../../../../utils/logger.js";
 import { getDateOnlyAsLocalISOString } from "../../../../utils/time-utils.js";
 import { areSetsContainingSameValues, isIdInListIds } from "../../../../utils/utils.js";
@@ -114,15 +112,14 @@ export class ImportDonneeService extends ImportService {
 
     // Get the customized coordinates
     let altitude: number | null = +importedDonnee.altitude;
-    let coordinates: Coordinates | null = {
+    let coordinates: { longitude: number; latitude: number } | null = {
       longitude: +importedDonnee.longitude,
       latitude: +importedDonnee.latitude,
-      system: "gps",
     };
 
     // Round the coordinates
-    coordinates.longitude = +coordinates.longitude.toFixed(GPS_COORDINATES.decimalPlaces);
-    coordinates.latitude = +coordinates.latitude.toFixed(GPS_COORDINATES.decimalPlaces);
+    coordinates.longitude = +coordinates.longitude.toFixed(6);
+    coordinates.latitude = +coordinates.latitude.toFixed(6);
 
     if (!areCoordinatesCustom(lieudit, altitude, coordinates.longitude, coordinates.latitude)) {
       altitude = null;

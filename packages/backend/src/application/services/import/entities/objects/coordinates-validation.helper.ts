@@ -1,5 +1,3 @@
-import { GPS_COORDINATES } from "@ou-ca/common/coordinates-system/gps.object";
-
 const ALTITUDE_MIN_VALUE = 0;
 const ALTITUDE_MAX_VALUE = 65535;
 
@@ -30,12 +28,8 @@ export class CoordinatesValidatorHelper {
 
     const longitude = Number(longitudeStr);
 
-    if (
-      Number.isNaN(longitude) ||
-      longitude < GPS_COORDINATES.longitudeRange.min ||
-      longitude > GPS_COORDINATES.longitudeRange.max
-    ) {
-      return `La longitude du lieu-dit doit être un nombre compris entre ${GPS_COORDINATES.longitudeRange.min} et ${GPS_COORDINATES.longitudeRange.max}`;
+    if (Number.isNaN(longitude) || longitude < -180 || longitude > 180) {
+      return "La longitude du lieu-dit doit être un nombre compris entre -180 et 180";
     }
   }
 
@@ -46,12 +40,8 @@ export class CoordinatesValidatorHelper {
 
     const latitude = Number(latitudeStr);
 
-    if (
-      Number.isNaN(latitude) ||
-      latitude < GPS_COORDINATES.latitudeRange.min ||
-      latitude > GPS_COORDINATES.latitudeRange.max
-    ) {
-      return `La latitude du lieu-dit doit être un entier compris entre ${GPS_COORDINATES.latitudeRange.min} et ${GPS_COORDINATES.latitudeRange.max}`;
+    if (Number.isNaN(latitude) || latitude < -90 || latitude > 90) {
+      return "La latitude du lieu-dit doit être un entier compris entre -90 et 90";
     }
   }
 }

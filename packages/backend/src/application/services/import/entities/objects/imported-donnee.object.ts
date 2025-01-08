@@ -1,6 +1,5 @@
 import type { UpsertEntryInput } from "@ou-ca/common/api/entry";
 import type { UpsertInventoryInput } from "@ou-ca/common/api/inventory";
-import type { Coordinates } from "@ou-ca/common/types/coordinates.object";
 import { getMinutesFromTime } from "@ou-ca/common/utils/time-format-convert";
 import { getDateOnlyAsLocalISOString } from "../../../../../utils/time-utils.js";
 import { getFormattedDate, getFormattedTime, isTimeValid } from "../../../../../utils/utils.js";
@@ -137,7 +136,7 @@ export class ImportedDonnee {
     lieuditId: string,
     meteosIds: Set<string>,
     customizedAltitude: number | null,
-    customizedCoordinates: Coordinates | null,
+    customizedCoordinates: { latitude: number; longitude: number } | null,
   ): UpsertInventoryInput => {
     const customizedCoordinatesStr =
       customizedAltitude != null && customizedCoordinates != null
@@ -145,7 +144,6 @@ export class ImportedDonnee {
             altitude: customizedAltitude,
             latitude: customizedCoordinates?.latitude,
             longitude: customizedCoordinates?.longitude,
-            system: customizedCoordinates?.system,
           }
         : null;
 

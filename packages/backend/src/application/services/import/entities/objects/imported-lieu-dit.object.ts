@@ -1,5 +1,4 @@
 import type { UpsertLocalityInput } from "@ou-ca/common/api/locality";
-import type { CoordinatesSystem } from "@ou-ca/common/coordinates-system/coordinates-system.object";
 import { CoordinatesValidatorHelper } from "./coordinates-validation.helper.js";
 
 const DEPARTEMENT_INDEX = 0;
@@ -18,16 +17,14 @@ export class ImportedLieuDit {
   latitude: string;
   altitude: string;
   longitude: string;
-  coordinatesSystem: CoordinatesSystem;
 
-  constructor(lieuDitTab: string[], coordinatesSystem: CoordinatesSystem) {
+  constructor(lieuDitTab: string[]) {
     this.departement = lieuDitTab[DEPARTEMENT_INDEX].trim();
     this.commune = lieuDitTab[COMMUNE_INDEX].trim();
     this.nom = lieuDitTab[NOM_INDEX].trim();
     this.latitude = lieuDitTab[LATITUDE_INDEX].trim().replace(",", ".");
     this.longitude = lieuDitTab[LONGITUDE_INDEX].trim().replace(",", ".");
     this.altitude = lieuDitTab[ALTITUDE_INDEX].trim().replace(",", ".");
-    this.coordinatesSystem = coordinatesSystem;
   }
 
   buildLieudit = (townId: string): UpsertLocalityInput => {
