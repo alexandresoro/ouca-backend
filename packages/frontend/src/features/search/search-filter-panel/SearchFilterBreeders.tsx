@@ -1,4 +1,4 @@
-import { CERTAIN, type NicheurCode, POSSIBLE, PROBABLE } from "@ou-ca/common/types/nicheur.model";
+import { BehaviorNicheur } from "@ou-ca/api/models";
 import { useAtom } from "jotai";
 import { type ChangeEventHandler, type FunctionComponent, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,17 +12,17 @@ const SearchFilterBreeders: FunctionComponent = () => {
       [
         {
           label: t("breedingStatus.possible"),
-          value: POSSIBLE,
+          value: BehaviorNicheur.possible,
         },
         {
           label: t("breedingStatus.probable"),
-          value: PROBABLE,
+          value: BehaviorNicheur.probable,
         },
         {
           label: t("breedingStatus.certain"),
-          value: CERTAIN,
+          value: BehaviorNicheur.certain,
         },
-      ] satisfies { label: string; value: NicheurCode }[],
+      ] satisfies { label: string; value: NonNullable<BehaviorNicheur> }[],
     [t],
   );
 
@@ -31,7 +31,7 @@ const SearchFilterBreeders: FunctionComponent = () => {
   const handleItemChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { checked, value } = event.target;
     const newSelectedBreeders = checked
-      ? [...selectedBreeders, value as NicheurCode]
+      ? [...selectedBreeders, value as NonNullable<BehaviorNicheur>]
       : selectedBreeders.filter((v) => v !== value);
     setSelectedBreeders(newSelectedBreeders);
   };

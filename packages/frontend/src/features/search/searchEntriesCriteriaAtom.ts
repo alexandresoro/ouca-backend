@@ -1,4 +1,4 @@
-import type { GetV1EntriesParams } from "@ou-ca/api/models";
+import type { BehaviorNicheur, GetV1EntriesParams } from "@ou-ca/api/models";
 import type { Age } from "@ou-ca/common/api/entities/age";
 import type { Behavior } from "@ou-ca/common/api/entities/behavior";
 import type { Department } from "@ou-ca/common/api/entities/department";
@@ -9,7 +9,6 @@ import type { Sex } from "@ou-ca/common/api/entities/sex";
 import type { Species } from "@ou-ca/common/api/entities/species";
 import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class";
 import type { Town } from "@ou-ca/common/api/entities/town";
-import type { NicheurCode } from "@ou-ca/common/types/nicheur.model";
 import { atom } from "jotai";
 
 export const searchEntriesFilterObserversAtom = atom<Observer[]>([]);
@@ -65,7 +64,7 @@ export const searchEntriesFilterAgesAtom = atom<Age[]>([]);
 
 export const searchEntriesFilterBehaviorsAtom = atom<Behavior[]>([]);
 
-export const searchEntriesFilterBreedersAtom = atom<NicheurCode[]>([]);
+export const searchEntriesFilterBreedersAtom = atom<NonNullable<BehaviorNicheur>[]>([]);
 
 export const searchEntriesFilterEnvironmentsAtom = atom<Environment[]>([]);
 

@@ -1,9 +1,8 @@
 import TextInput from "@components/base/TextInput";
 import FormSelect from "@components/form/FormSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { UpsertBehaviorInput } from "@ou-ca/api/models";
+import { BehaviorNicheur, type UpsertBehaviorInput } from "@ou-ca/api/models";
 import { upsertBehaviorInput } from "@ou-ca/common/api/behavior";
-import { CERTAIN, type NicheurCode, POSSIBLE, PROBABLE } from "@ou-ca/common/types/nicheur.model";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -42,17 +41,17 @@ const ComportementEdit: FunctionComponent<ComportementEditProps> = (props) => {
     },
     {
       label: t("breedingStatus.possible"),
-      value: POSSIBLE,
+      value: BehaviorNicheur.possible,
     },
     {
       label: t("breedingStatus.probable"),
-      value: PROBABLE,
+      value: BehaviorNicheur.probable,
     },
     {
       label: t("breedingStatus.certain"),
-      value: CERTAIN,
+      value: BehaviorNicheur.certain,
     },
-  ] satisfies { label: string; value: NicheurCode | null }[];
+  ] satisfies { label: string; value: BehaviorNicheur }[];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
