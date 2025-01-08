@@ -3,13 +3,9 @@ import { useAtomValue } from "jotai";
 
 const API_PATH = "/v1";
 
-export const useApiUrl = (includeApiPath = true) => {
+export const useApiUrl = () => {
   const config = useAtomValue(configAtom);
   const apiUrl = config.apiUrl;
-
-  if (!includeApiPath) {
-    return apiUrl;
-  }
 
   return `${apiUrl}${API_PATH}`;
 };

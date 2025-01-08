@@ -51,12 +51,11 @@ const ImportPage: FunctionComponent = () => {
   );
 
   const submitImport = useApiFetch({
-    path: `/uploads/${importType}`,
+    path: `/import/${importType}`,
     method: "POST",
     schema: z.object({
       uploadId: z.string(),
     }),
-    useApiPath: false,
   });
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
