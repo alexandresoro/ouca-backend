@@ -133,8 +133,8 @@ importers:
         specifier: 4.19.2
         version: 4.19.2
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.3
+        version: 5.7.3
 
   packages/cloudflare-functions:
     devDependencies:
@@ -145,8 +145,8 @@ importers:
         specifier: 4.20241230.0
         version: 4.20241230.0
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.3
+        version: 5.7.3
 
   packages/common:
     dependencies:
@@ -164,8 +164,8 @@ importers:
         specifier: 4.19.2
         version: 4.19.2
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.3
+        version: 5.7.3
 
   packages/frontend:
     dependencies:
@@ -216,7 +216,7 @@ importers:
         version: 6.5.2
       i18next:
         specifier: 24.2.1
-        version: 24.2.1(typescript@5.7.2)
+        version: 24.2.1(typescript@5.7.3)
       i18next-http-backend:
         specifier: 3.0.1
         version: 3.0.1
@@ -249,7 +249,7 @@ importers:
         version: 7.51.5(react@18.3.1)
       react-i18next:
         specifier: 15.4.0
-        version: 15.4.0(i18next@24.2.1(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 15.4.0(i18next@24.2.1(typescript@5.7.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-intersection-observer:
         specifier: 9.14.1
         version: 9.14.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -324,8 +324,8 @@ importers:
         specifier: 4.31.0
         version: 4.31.0
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.3
+        version: 5.7.3
       vite:
         specifier: 6.0.7
         version: 6.0.7(@types/node@20.17.12)(jiti@1.21.7)(tsx@4.19.2)(yaml@2.7.0)
@@ -4347,8 +4347,8 @@ packages:
     peerDependencies:
       typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x || 5.1.x || 5.2.x || 5.3.x || 5.4.x || 5.5.x || 5.6.x
 
-  typescript@5.7.2:
-    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+  typescript@5.7.3:
+    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7455,11 +7455,11 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  i18next@24.2.1(typescript@5.7.2):
+  i18next@24.2.1(typescript@5.7.3):
     dependencies:
       '@babel/runtime': 7.26.0
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.7.3
 
   ieee754@1.2.1: {}
 
@@ -8188,10 +8188,10 @@ snapshots:
       lodash.uniq: 4.5.0
       openapi3-ts: 4.2.2
       string-argv: 0.3.2
-      tsconfck: 2.1.2(typescript@5.7.2)
-      typedoc: 0.26.11(typescript@5.7.2)
-      typedoc-plugin-markdown: 4.2.10(typedoc@0.26.11(typescript@5.7.2))
-      typescript: 5.7.2
+      tsconfck: 2.1.2(typescript@5.7.3)
+      typedoc: 0.26.11(typescript@5.7.3)
+      typedoc-plugin-markdown: 4.2.10(typedoc@0.26.11(typescript@5.7.3))
+      typescript: 5.7.3
     transitivePeerDependencies:
       - encoding
       - openapi-types
@@ -8473,11 +8473,11 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  react-i18next@15.4.0(i18next@24.2.1(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-i18next@15.4.0(i18next@24.2.1(typescript@5.7.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.26.0
       html-parse-stringify: 3.0.1
-      i18next: 24.2.1(typescript@5.7.2)
+      i18next: 24.2.1(typescript@5.7.3)
       react: 18.3.1
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
@@ -9084,9 +9084,9 @@ snapshots:
       normalize-path: 3.0.0
       plimit-lit: 1.6.1
 
-  tsconfck@2.1.2(typescript@5.7.2):
+  tsconfck@2.1.2(typescript@5.7.3):
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.7.3
 
   tslib@1.14.1: {}
 
@@ -9143,20 +9143,20 @@ snapshots:
       possible-typed-array-names: 1.0.0
       reflect.getprototypeof: 1.0.10
 
-  typedoc-plugin-markdown@4.2.10(typedoc@0.26.11(typescript@5.7.2)):
+  typedoc-plugin-markdown@4.2.10(typedoc@0.26.11(typescript@5.7.3)):
     dependencies:
-      typedoc: 0.26.11(typescript@5.7.2)
+      typedoc: 0.26.11(typescript@5.7.3)
 
-  typedoc@0.26.11(typescript@5.7.2):
+  typedoc@0.26.11(typescript@5.7.3):
     dependencies:
       lunr: 2.3.9
       markdown-it: 14.1.0
       minimatch: 9.0.5
       shiki: 1.26.1
-      typescript: 5.7.2
+      typescript: 5.7.3
       yaml: 2.7.0
 
-  typescript@5.7.2: {}
+  typescript@5.7.3: {}
 
   typewise-core@1.2.0: {}
 
