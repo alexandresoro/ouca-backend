@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import type { SortOrder } from "@hooks/usePaginationParams";
-import type { GetV1AgesOrderBy } from "@ou-ca/api/models";
-import type { Age } from "@ou-ca/common/api/entities/age";
+import type { Age, GetV1AgesOrderBy } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import AgeTableRow from "./AgeTableRow";

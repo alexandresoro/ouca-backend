@@ -1,14 +1,17 @@
-import type { BehaviorNicheur, GetV1EntriesParams } from "@ou-ca/api/models";
-import type { Age } from "@ou-ca/common/api/entities/age";
-import type { Behavior } from "@ou-ca/common/api/entities/behavior";
-import type { Department } from "@ou-ca/common/api/entities/department";
-import type { Environment } from "@ou-ca/common/api/entities/environment";
-import type { Locality } from "@ou-ca/common/api/entities/locality";
-import type { Observer } from "@ou-ca/common/api/entities/observer";
-import type { Sex } from "@ou-ca/common/api/entities/sex";
-import type { Species } from "@ou-ca/common/api/entities/species";
-import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class";
-import type { Town } from "@ou-ca/common/api/entities/town";
+import type {
+  Age,
+  Behavior,
+  BehaviorNicheur,
+  Department,
+  Environment,
+  GetV1EntriesParams,
+  Locality,
+  Observer,
+  Sex,
+  Species,
+  SpeciesClass,
+  Town,
+} from "@ou-ca/api/models";
 import { atom } from "jotai";
 
 export const searchEntriesFilterObserversAtom = atom<Observer[]>([]);

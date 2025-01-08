@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { Locality } from "@ou-ca/common/api/entities/locality";
+import type { Locality } from "@ou-ca/api/models";
 import { useApiLocalityInfoQuery } from "@services/api/locality/api-locality-queries";
 import type { FunctionComponent } from "react";
 import TableCellActionButtons from "../common/TableCellActionButtons";

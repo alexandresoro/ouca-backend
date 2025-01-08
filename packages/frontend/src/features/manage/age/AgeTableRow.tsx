@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { Age } from "@ou-ca/common/api/entities/age";
+import type { Age } from "@ou-ca/api/models";
 import { useApiAgeInfoQuery } from "@services/api/age/api-age-queries";
 import type { FunctionComponent } from "react";
 import TableCellActionButtons from "../common/TableCellActionButtons";

@@ -1,4 +1,4 @@
-import type { Inventory } from "@ou-ca/common/api/entities/inventory";
+import type { Inventory } from "@ou-ca/api/models";
 import { useApiLocalityInfoQuery } from "@services/api/locality/api-locality-queries";
 import { getInventaireCoordinates } from "@utils/coordinates-helper";
 import type { FunctionComponent } from "react";

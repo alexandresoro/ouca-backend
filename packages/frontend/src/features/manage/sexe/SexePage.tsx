@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1SexesOrderBy, UpsertSexInput } from "@ou-ca/api/models";
-import type { Sex } from "@ou-ca/common/api/entities/sex";
+import type { GetV1SexesOrderBy, Sex, UpsertSexInput } from "@ou-ca/api/models";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiSexCreate,

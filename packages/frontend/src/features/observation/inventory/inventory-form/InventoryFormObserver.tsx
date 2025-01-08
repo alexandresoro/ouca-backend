@@ -1,6 +1,6 @@
 import Autocomplete from "@components/base/autocomplete/Autocomplete";
 import AutocompleteMultiple from "@components/base/autocomplete/AutocompleteMultiple";
-import type { Observer } from "@ou-ca/common/api/entities/observer";
+import type { Observer } from "@ou-ca/api/models";
 import { useApiObserversQuery } from "@services/api/observer/api-observer-queries";
 import { type FunctionComponent, useEffect, useState } from "react";
 import { type UseFormReturn, useController } from "react-hook-form";

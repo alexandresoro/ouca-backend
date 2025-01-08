@@ -1,5 +1,4 @@
-import type { UpsertWeatherInput } from "@ou-ca/api/models";
-import type { Weather } from "@ou-ca/common/api/entities/weather";
+import type { UpsertWeatherInput, Weather } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import MeteoEdit from "./MeteoEdit";

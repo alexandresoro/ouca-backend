@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1WeathersOrderBy, UpsertWeatherInput } from "@ou-ca/api/models";
-import type { Weather } from "@ou-ca/common/api/entities/weather";
+import type { GetV1WeathersOrderBy, UpsertWeatherInput, Weather } from "@ou-ca/api/models";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiWeatherCreate,

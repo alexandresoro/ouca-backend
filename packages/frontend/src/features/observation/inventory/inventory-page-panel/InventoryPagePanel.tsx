@@ -1,8 +1,7 @@
 import DeletionConfirmationDialog from "@components/common/DeletionConfirmationDialog";
 import { Menu, MenuButton, MenuItem, MenuItems, MenuSection, MenuSeparator } from "@headlessui/react";
 import { useNotifications } from "@hooks/useNotifications";
-import type { UpsertInventoryInput } from "@ou-ca/api/models";
-import type { Inventory } from "@ou-ca/common/api/entities/inventory";
+import type { Inventory, UpsertInventoryInput } from "@ou-ca/api/models";
 import {
   useApiInventoriesQuery,
   useApiInventoryDelete,

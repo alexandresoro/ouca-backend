@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { Weather } from "@ou-ca/common/api/entities/weather";
+import type { Weather } from "@ou-ca/api/models";
 import { useApiWeatherInfoQuery } from "@services/api/weather/api-weather-queries";
 import type { FunctionComponent } from "react";
 import TableCellActionButtons from "../common/TableCellActionButtons";

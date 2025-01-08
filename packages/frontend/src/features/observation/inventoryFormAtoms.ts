@@ -1,5 +1,4 @@
-import type { Inventory } from "@ou-ca/common/api/entities/inventory";
-import type { Locality } from "@ou-ca/common/api/entities/locality";
+import type { Inventory, Locality } from "@ou-ca/api/models";
 import { getAltitudeToDisplay } from "@services/altitude/altitude-service";
 import { apiUrlAtom } from "@services/api/api-url-atom";
 import { oidcUserAtom } from "@services/auth/oidc-config";

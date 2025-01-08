@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1LocalitiesOrderBy, UpsertLocalityInput } from "@ou-ca/api/models";
-import type { Locality } from "@ou-ca/common/api/entities/locality";
+import type { GetV1LocalitiesOrderBy, Locality, UpsertLocalityInput } from "@ou-ca/api/models";
 import { getTownResponse } from "@ou-ca/common/api/town";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {

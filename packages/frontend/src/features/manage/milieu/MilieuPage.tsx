@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1EnvironmentsOrderBy, UpsertEnvironmentInput } from "@ou-ca/api/models";
-import type { Environment } from "@ou-ca/common/api/entities/environment";
+import type { Environment, GetV1EnvironmentsOrderBy, UpsertEnvironmentInput } from "@ou-ca/api/models";
 import {
   useApiEnvironmentCreate,
   useApiEnvironmentDelete,

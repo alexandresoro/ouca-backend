@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserSettings } from "@hooks/useUser";
-import type { UpsertInventoryInput } from "@ou-ca/api/models";
-import type { Inventory } from "@ou-ca/common/api/entities/inventory";
+import type { Inventory, UpsertInventoryInput } from "@ou-ca/api/models";
 import { upsertInventoryInput } from "@ou-ca/common/api/inventory";
 import { getMinutesFromTime } from "@ou-ca/common/utils/time-format-convert";
 import { useApiDepartmentQuery } from "@services/api/department/api-department-queries";

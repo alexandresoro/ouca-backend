@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import type { SortOrder } from "@hooks/usePaginationParams";
-import type { GetV1SexesOrderBy } from "@ou-ca/api/models";
-import type { Sex } from "@ou-ca/common/api/entities/sex";
+import type { GetV1SexesOrderBy, Sex } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import SexTableRow from "./SexTableRow";

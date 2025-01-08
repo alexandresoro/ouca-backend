@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import type { SortOrder } from "@hooks/usePaginationParams";
-import type { GetV1DistanceEstimatesOrderBy } from "@ou-ca/api/models";
-import type { DistanceEstimate } from "@ou-ca/common/api/entities/distance-estimate";
+import type { DistanceEstimate, GetV1DistanceEstimatesOrderBy } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import DistanceEstimateTableRow from "./DistanceEstimateTableRow";

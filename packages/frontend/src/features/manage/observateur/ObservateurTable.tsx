@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import type { SortOrder } from "@hooks/usePaginationParams";
-import type { GetV1ObserversOrderBy } from "@ou-ca/api/models";
-import type { Observer } from "@ou-ca/common/api/entities/observer";
+import type { GetV1ObserversOrderBy, Observer } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import ObserverTableRow from "./ObserverTableRow";

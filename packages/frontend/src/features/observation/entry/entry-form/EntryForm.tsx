@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserSettings } from "@hooks/useUser";
-import type { UpsertEntryInput } from "@ou-ca/api/models";
-import type { Entry } from "@ou-ca/common/api/entities/entry";
+import type { Entry, UpsertEntryInput } from "@ou-ca/api/models";
 import { upsertEntryInput } from "@ou-ca/common/api/entry";
 import { useApiAgeQuery } from "@services/api/age/api-age-queries";
 import { useApiNumberEstimateQuery } from "@services/api/number-estimate/api-number-estimate-queries";

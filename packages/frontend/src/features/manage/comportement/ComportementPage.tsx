@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1BehaviorsOrderBy, UpsertBehaviorInput } from "@ou-ca/api/models";
-import type { Behavior } from "@ou-ca/common/api/entities/behavior";
+import type { Behavior, GetV1BehaviorsOrderBy, UpsertBehaviorInput } from "@ou-ca/api/models";
 import {
   useApiBehaviorCreate,
   useApiBehaviorDelete,

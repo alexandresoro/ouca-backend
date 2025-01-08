@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import { useNotifications } from "@hooks/useNotifications";
-import type { GetV1EntriesOrderBy, GetV1EntriesSortOrder, UpsertEntryInput } from "@ou-ca/api/models";
-import type { Entry } from "@ou-ca/common/api/entities/entry";
+import type { Entry, GetV1EntriesOrderBy, GetV1EntriesSortOrder, UpsertEntryInput } from "@ou-ca/api/models";
 import { useApiEntryDelete, useApiEntryUpdate } from "@services/api/entry/api-entry-queries";
 import { type FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";

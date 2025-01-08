@@ -1,5 +1,5 @@
 import DeletionConfirmationDialog from "@components/common/DeletionConfirmationDialog";
-import type { NumberEstimate } from "@ou-ca/common/api/entities/number-estimate";
+import type { NumberEstimate } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 

@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { NumberEstimate } from "@ou-ca/common/api/entities/number-estimate";
+import type { NumberEstimate } from "@ou-ca/api/models";
 import { useApiNumberEstimateInfoQuery } from "@services/api/number-estimate/api-number-estimate-queries";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";

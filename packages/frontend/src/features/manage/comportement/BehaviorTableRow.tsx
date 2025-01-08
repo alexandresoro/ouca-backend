@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { Behavior } from "@ou-ca/common/api/entities/behavior";
+import type { Behavior } from "@ou-ca/api/models";
 import { useApiBehaviorInfoQuery } from "@services/api/behavior/api-behavior-queries";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";

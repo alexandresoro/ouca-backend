@@ -1,5 +1,4 @@
-import type { UpsertSpeciesClassInput } from "@ou-ca/api/models";
-import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class";
+import type { SpeciesClass, UpsertSpeciesClassInput } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import ClasseEdit from "./ClasseEdit";

@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class";
+import type { SpeciesClass } from "@ou-ca/api/models";
 import { useApiSpeciesClassInfoQuery } from "@services/api/species-class/api-species-class-queries";
 import type { FunctionComponent } from "react";
 import TableCellActionButtons from "../common/TableCellActionButtons";

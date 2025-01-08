@@ -1,5 +1,5 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import type { Entry } from "@ou-ca/common/api/entities/entry";
+import type { Entry } from "@ou-ca/api/models";
 import { useApiInventoryQuery } from "@services/api/inventory/api-inventory-queries";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";

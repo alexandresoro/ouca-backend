@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1NumberEstimatesOrderBy, UpsertNumberEstimateInput } from "@ou-ca/api/models";
-import type { NumberEstimate } from "@ou-ca/common/api/entities/number-estimate";
+import type { GetV1NumberEstimatesOrderBy, NumberEstimate, UpsertNumberEstimateInput } from "@ou-ca/api/models";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiNumberEstimateCreate,

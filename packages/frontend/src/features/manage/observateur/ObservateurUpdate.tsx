@@ -1,5 +1,4 @@
-import type { UpsertObserverInput } from "@ou-ca/api/models";
-import type { Observer } from "@ou-ca/common/api/entities/observer";
+import type { Observer, UpsertObserverInput } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import ObservateurEdit from "./ObservateurEdit";

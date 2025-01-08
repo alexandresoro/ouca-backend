@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { Observer } from "@ou-ca/common/api/entities/observer";
+import type { Observer } from "@ou-ca/api/models";
 import { useApiObserverInfoQuery } from "@services/api/observer/api-observer-queries";
 import type { FunctionComponent } from "react";
 import TableCellActionButtons from "../common/TableCellActionButtons";

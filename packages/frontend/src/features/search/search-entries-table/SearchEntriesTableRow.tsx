@@ -1,5 +1,5 @@
 import IconButton from "@components/base/IconButton";
-import type { Entry } from "@ou-ca/common/api/entities/entry";
+import type { Entry } from "@ou-ca/api/models";
 import { useApiInventoryQuery } from "@services/api/inventory/api-inventory-queries";
 import { useApiLocalityInfoQuery } from "@services/api/locality/api-locality-queries";
 import { Detail, EditAlt, Trash } from "@styled-icons/boxicons-regular";

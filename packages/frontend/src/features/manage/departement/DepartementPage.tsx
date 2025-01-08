@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1DepartmentsOrderBy, UpsertDepartmentInput } from "@ou-ca/api/models";
-import type { Department } from "@ou-ca/common/api/entities/department";
+import type { Department, GetV1DepartmentsOrderBy, UpsertDepartmentInput } from "@ou-ca/api/models";
 import {
   useApiDepartmentCreate,
   useApiDepartmentDelete,

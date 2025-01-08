@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import type { SortOrder } from "@hooks/usePaginationParams";
-import type { GetV1SpeciesOrderBy } from "@ou-ca/api/models";
-import type { Species } from "@ou-ca/common/api/entities/species";
+import type { GetV1SpeciesOrderBy, Species } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import SpeciesTableRow from "./SpeciesTableRow";

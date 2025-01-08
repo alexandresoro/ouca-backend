@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { Department } from "@ou-ca/common/api/entities/department";
+import type { Department } from "@ou-ca/api/models";
 import { useApiDepartmentInfoQuery } from "@services/api/department/api-department-queries";
 import type { FunctionComponent } from "react";
 import TableCellActionButtons from "../common/TableCellActionButtons";

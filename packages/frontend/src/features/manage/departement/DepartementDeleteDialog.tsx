@@ -1,5 +1,5 @@
 import DeletionConfirmationDialog from "@components/common/DeletionConfirmationDialog";
-import type { Department } from "@ou-ca/common/api/entities/department";
+import type { Department } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 

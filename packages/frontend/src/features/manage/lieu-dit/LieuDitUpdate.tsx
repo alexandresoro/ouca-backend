@@ -1,5 +1,4 @@
-import type { UpsertLocalityInput } from "@ou-ca/api/models";
-import type { Locality } from "@ou-ca/common/api/entities/locality";
+import type { Locality, UpsertLocalityInput } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import LieuDitEdit from "./LieuDitEdit";

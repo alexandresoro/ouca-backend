@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1DistanceEstimatesOrderBy, UpsertDistanceEstimateInput } from "@ou-ca/api/models";
-import type { DistanceEstimate } from "@ou-ca/common/api/entities/distance-estimate";
+import type { DistanceEstimate, GetV1DistanceEstimatesOrderBy, UpsertDistanceEstimateInput } from "@ou-ca/api/models";
 import {
   useApiDistanceEstimateCreate,
   useApiDistanceEstimateDelete,

@@ -1,5 +1,5 @@
 import Autocomplete from "@components/base/autocomplete/Autocomplete";
-import type { Environment } from "@ou-ca/common/api/entities/environment";
+import type { Environment } from "@ou-ca/api/models";
 import { useApiEnvironmentsQuery } from "@services/api/environment/api-environment-queries";
 import { findFirstFocusableElement } from "@utils/dom/find-first-focusable-element";
 import { type FunctionComponent, useEffect, useRef, useState } from "react";

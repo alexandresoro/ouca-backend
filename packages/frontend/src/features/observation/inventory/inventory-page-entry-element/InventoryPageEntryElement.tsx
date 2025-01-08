@@ -1,6 +1,6 @@
 import IconButton from "@components/base/IconButton";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
-import type { Entry } from "@ou-ca/common/api/entities/entry";
+import type { Entry } from "@ou-ca/api/models";
 import { CalendarPlus, ChevronDown, EditAlt, MaleSign, Trash } from "@styled-icons/boxicons-regular";
 import { capitalizeFirstLetter } from "@utils/capitalize-first-letter";
 import type { FunctionComponent } from "react";

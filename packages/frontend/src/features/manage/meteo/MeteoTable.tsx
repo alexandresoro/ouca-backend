@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import type { SortOrder } from "@hooks/usePaginationParams";
-import type { GetV1WeathersOrderBy } from "@ou-ca/api/models";
-import type { Weather } from "@ou-ca/common/api/entities/weather";
+import type { GetV1WeathersOrderBy, Weather } from "@ou-ca/api/models";
 import { Cloud, Wind } from "@styled-icons/boxicons-regular";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";

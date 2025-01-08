@@ -1,5 +1,4 @@
-import type { UpsertEnvironmentInput } from "@ou-ca/api/models";
-import type { Environment } from "@ou-ca/common/api/entities/environment";
+import type { Environment, UpsertEnvironmentInput } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import MilieuEdit from "./MilieuEdit";

@@ -1,4 +1,4 @@
-import type { Inventory } from "@ou-ca/common/api/entities/inventory";
+import type { Inventory } from "@ou-ca/api/models";
 import { type FunctionComponent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Marker, Popup, type ViewState } from "react-map-gl/maplibre";

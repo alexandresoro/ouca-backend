@@ -1,8 +1,6 @@
 import TextInput from "@components/base/TextInput";
 import Autocomplete from "@components/base/autocomplete/Autocomplete";
-import type { Department } from "@ou-ca/common/api/entities/department";
-import type { Locality } from "@ou-ca/common/api/entities/locality";
-import type { Town } from "@ou-ca/common/api/entities/town";
+import type { Department, Locality, Town } from "@ou-ca/api/models";
 import { altitudeServiceStatusAtom } from "@services/altitude/altitude-service";
 import { useApiDepartmentQuery, useApiDepartmentsQuery } from "@services/api/department/api-department-queries";
 import { useApiLocalitiesQuery } from "@services/api/locality/api-locality-queries";

@@ -2,8 +2,7 @@ import { useNotifications } from "@hooks/useNotifications";
 import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
-import type { GetV1SpeciesOrderBy, UpsertSpeciesInput } from "@ou-ca/api/models";
-import type { Species } from "@ou-ca/common/api/entities/species";
+import type { GetV1SpeciesOrderBy, Species, UpsertSpeciesInput } from "@ou-ca/api/models";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiSpeciesCreate,

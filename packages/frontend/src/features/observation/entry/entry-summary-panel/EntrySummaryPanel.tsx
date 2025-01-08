@@ -1,4 +1,4 @@
-import type { Entry } from "@ou-ca/common/api/entities/entry";
+import type { Entry } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import EntrySummaryContent from "../entry-summary-content/EntrySummaryContent";
 

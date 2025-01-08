@@ -1,8 +1,7 @@
 import InfiniteTable from "@components/base/table/InfiniteTable";
 import TableSortLabel from "@components/base/table/TableSortLabel";
 import type { SortOrder } from "@hooks/usePaginationParams";
-import type { GetV1EnvironmentsOrderBy } from "@ou-ca/api/models";
-import type { Environment } from "@ou-ca/common/api/entities/environment";
+import type { Environment, GetV1EnvironmentsOrderBy } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import EnvironmentTableRow from "./EnvironmentTableRow";

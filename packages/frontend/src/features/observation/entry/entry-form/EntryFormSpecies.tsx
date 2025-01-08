@@ -1,6 +1,5 @@
 import Autocomplete from "@components/base/autocomplete/Autocomplete";
-import type { Species } from "@ou-ca/common/api/entities/species";
-import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class";
+import type { Species, SpeciesClass } from "@ou-ca/api/models";
 import { useApiSpeciesClassesQuery } from "@services/api/species-class/api-species-class-queries";
 import { useApiSpeciesQueryAll } from "@services/api/species/api-species-queries";
 import { type FunctionComponent, useEffect, useState } from "react";

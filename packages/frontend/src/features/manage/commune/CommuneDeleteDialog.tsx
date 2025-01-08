@@ -1,5 +1,5 @@
 import DeletionConfirmationDialog from "@components/common/DeletionConfirmationDialog";
-import type { Town } from "@ou-ca/common/api/entities/town";
+import type { Town } from "@ou-ca/api/models";
 import { useApiTownInfoQuery } from "@services/api/town/api-town-queries";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";

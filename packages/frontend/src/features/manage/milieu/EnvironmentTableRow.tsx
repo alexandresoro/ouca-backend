@@ -1,6 +1,6 @@
 import AvatarWithUniqueNameAvatar from "@components/common/AvatarWithUniqueName";
 import { useUser } from "@hooks/useUser";
-import type { Environment } from "@ou-ca/common/api/entities/environment";
+import type { Environment } from "@ou-ca/api/models";
 import { useApiEnvironmentInfoQuery } from "@services/api/environment/api-environment-queries";
 import type { FunctionComponent } from "react";
 import TableCellActionButtons from "../common/TableCellActionButtons";

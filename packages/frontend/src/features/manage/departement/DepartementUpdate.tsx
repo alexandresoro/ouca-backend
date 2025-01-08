@@ -1,5 +1,4 @@
-import type { UpsertDepartmentInput } from "@ou-ca/api/models";
-import type { Department } from "@ou-ca/common/api/entities/department";
+import type { Department, UpsertDepartmentInput } from "@ou-ca/api/models";
 import type { FunctionComponent } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import DepartementEdit from "./DepartementEdit";

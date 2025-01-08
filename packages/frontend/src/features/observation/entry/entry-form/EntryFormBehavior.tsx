@@ -1,5 +1,5 @@
 import Autocomplete from "@components/base/autocomplete/Autocomplete";
-import type { Behavior } from "@ou-ca/common/api/entities/behavior";
+import type { Behavior } from "@ou-ca/api/models";
 import { useApiBehaviorsQuery } from "@services/api/behavior/api-behavior-queries";
 import { type FunctionComponent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

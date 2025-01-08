@@ -1,8 +1,6 @@
 import TextInput from "@components/base/TextInput";
 import Autocomplete from "@components/base/autocomplete/Autocomplete";
-import type { Age } from "@ou-ca/common/api/entities/age";
-import type { NumberEstimate } from "@ou-ca/common/api/entities/number-estimate";
-import type { Sex } from "@ou-ca/common/api/entities/sex";
+import type { Age, NumberEstimate, Sex } from "@ou-ca/api/models";
 import { useApiAgesQuery } from "@services/api/age/api-age-queries";
 import { useApiNumberEstimatesQuery } from "@services/api/number-estimate/api-number-estimate-queries";
 import { useApiSexesQuery } from "@services/api/sex/api-sex-queries";

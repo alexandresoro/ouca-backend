@@ -1,6 +1,5 @@
 import { useNotifications } from "@hooks/useNotifications";
-import type { GetV1Entries200, UpsertEntryInput } from "@ou-ca/api/models";
-import type { Entry } from "@ou-ca/common/api/entities/entry";
+import type { Entry, GetV1Entries200, UpsertEntryInput } from "@ou-ca/api/models";
 import { useApiEntryDelete, useApiEntryUpdate } from "@services/api/entry/api-entry-queries";
 import { Plus } from "@styled-icons/boxicons-regular";
 import { Fragment, type FunctionComponent, useState } from "react";
