@@ -13,7 +13,6 @@ export type ApiQueryKey = {
 export type UseApiQueryCommonParams = {
   queryParams?: Record<string, string | number | string[] | number[] | boolean | undefined>;
   paused?: boolean;
-  useApiPath?: boolean;
 };
 
 type UseApiQueryParams<T = unknown> = UseApiQueryCommonParams & {
