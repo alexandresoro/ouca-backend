@@ -48,7 +48,7 @@ jobs:
         id: docker-metadata
         with:
           images: |
-            ${{ secrets.FORGEJO_DOMAIN }}/${{ github.repository }}-backend
+            ${{ secrets.FORGEJO_DOMAIN }}/${{ github.repository }}
           tags: |
             type=ref,event=branch
             type=sha
