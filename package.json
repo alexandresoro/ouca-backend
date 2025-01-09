@@ -1,7 +1,7 @@
 {
-  "name": "@ou-ca/monorepo",
+  "name": "@ou-ca/backend",
   "version": "1.0.0",
-  "description": "Où-ça monorepo",
+  "description": "Où-ça API server",
   "contributors": [
     {
       "name": "Camille Carrier"
