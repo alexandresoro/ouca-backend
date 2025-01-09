@@ -1,7 +1,7 @@
 import Avatar from "@components/common/Avatar";
 import { useUser } from "@hooks/useUser";
 import type { Entry } from "@ou-ca/api/models";
-import { getHighestNicheurStatus } from "@ou-ca/common/helpers/nicheur-helper";
+import { getHighestBreederStatus } from "@utils/breeder-helper";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -12,7 +12,7 @@ type EntrySummaryContentProps = {
 const EntrySummaryContent: FunctionComponent<EntrySummaryContentProps> = ({ entry }) => {
   const { t } = useTranslation();
 
-  const nicheurStatus = getHighestNicheurStatus(entry.behaviors);
+  const nicheurStatus = getHighestBreederStatus(entry.behaviors);
 
   const user = useUser();
 

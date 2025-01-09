@@ -1,5 +1,4 @@
 import { getV1LocalitiesIdResponse } from "@ou-ca/api/zod/location.zod";
-import type { GeoJSONLocality } from "@ou-ca/common/geojson/geojson-localities";
 import { useApiLocalitiesGeoJsonQuery } from "@services/api/locality/api-localities-geojson-queries";
 import { useApiFetch } from "@services/api/useApiFetch";
 import { bbox } from "@turf/bbox";
@@ -33,6 +32,18 @@ import {
   inventoryLocalityAtom,
 } from "../../inventoryFormAtoms";
 import { type LocalitySelectionType, localitySelectionAtom } from "../../inventoryMapAtom";
+
+// TODO: maybe add validation somehow?
+type GeoJSONLocality = {
+  id: string;
+  nom: string;
+  longitude: number;
+  latitude: number;
+  townId: string;
+  townName: string;
+  departmentId: string;
+  departmentCode: string;
+};
 
 type EntryMapProps = {
   initialMapState?: Partial<ViewState>;

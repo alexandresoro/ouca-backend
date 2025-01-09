@@ -17,7 +17,6 @@
     "jsx": "react-jsx",
     "paths": {
       "@ou-ca/api/*": ["./src/services/api/generated/*"],
-      "@ou-ca/common/*": ["../common/src/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@layouts/*": ["./src/layouts/*"],
