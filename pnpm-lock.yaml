@@ -142,8 +142,8 @@ importers:
         specifier: 1.9.4
         version: 1.9.4
       '@cloudflare/workers-types':
-        specifier: 4.20241230.0
-        version: 4.20241230.0
+        specifier: 4.20250109.0
+        version: 4.20250109.0
       typescript:
         specifier: 5.7.3
         version: 5.7.3
@@ -505,8 +505,8 @@ packages:
   '@bull-board/ui@5.23.0':
     resolution: {integrity: sha512-iI/Ssl8T5ZEn9s899Qz67m92M6RU8thf/aqD7cUHB2yHmkCjqbw7s7NaODTsyArAsnyu7DGJMWm7EhbfFXDNgQ==}
 
-  '@cloudflare/workers-types@4.20241230.0':
-    resolution: {integrity: sha512-dtLD4jY35Lb750cCVyO1i/eIfdZJg2Z0i+B1RYX6BVeRPlgaHx/H18ImKAkYmy0g09Ow8R2jZy3hIxMgXun0WQ==}
+  '@cloudflare/workers-types@4.20250109.0':
+    resolution: {integrity: sha512-Y1zgSaEOOevl9ORpzgMcm4j535p3nK2lrblHHvYM2yxR50SBKGh+wvkRFAIxWRfjUGZEU+Fp6923EGioDBbobA==}
 
   '@emotion/is-prop-valid@1.2.2':
     resolution: {integrity: sha512-uNsoYd37AFmaCdXlg6EYD1KaPOaRWRByMCYzbKUX4+hhMfrxdVSelShywL4JVaAeM/eHUOSprYBQls+/neX3pw==}
@@ -4815,7 +4815,7 @@ snapshots:
     dependencies:
       '@bull-board/api': 5.23.0(@bull-board/ui@5.23.0)
 
-  '@cloudflare/workers-types@4.20241230.0': {}
+  '@cloudflare/workers-types@4.20250109.0': {}
 
   '@emotion/is-prop-valid@1.2.2':
     dependencies:
