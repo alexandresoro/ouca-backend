@@ -70,7 +70,7 @@
     "@vitejs/plugin-react": "4.3.4",
     "autoprefixer": "10.4.20",
     "daisyui": "4.12.23",
-    "orval": "7.4.0",
+    "orval": "7.4.1",
     "postcss": "8.4.49",
     "tailwindcss": "3.4.17",
     "tsx": "4.19.2",
