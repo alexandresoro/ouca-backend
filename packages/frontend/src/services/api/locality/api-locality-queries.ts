@@ -1,9 +1,9 @@
 import {
-  getLocalitiesResponse,
-  getLocalityResponse,
-  localityInfoSchema,
-  upsertLocalityResponse,
-} from "@ou-ca/common/api/locality";
+  getV1LocalitiesIdInfoResponse,
+  getV1LocalitiesIdResponse,
+  getV1LocalitiesResponse,
+  putV1LocalitiesIdResponse,
+} from "@ou-ca/api/zod/location.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiLocalityQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getLocalityResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1LocalitiesIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/localitys/${id}` : null,
     {
-      schema: getLocalityResponse,
+      schema: getV1LocalitiesIdResponse,
     },
     {
       ...swrOptions,
@@ -32,12 +32,12 @@ export const useApiLocalityQuery = (
 
 export const useApiLocalityInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof localityInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1LocalitiesIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/localities/${id}/info` : null,
     {
-      schema: localityInfoSchema,
+      schema: getV1LocalitiesIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -47,14 +47,14 @@ export const useApiLocalityInfoQuery = (
 
 export const useApiLocalitiesQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getLocalitiesResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1LocalitiesResponse>>,
   { paused = false } = {},
 ) => {
   return useApiQuery(
     "/localities",
     {
       queryParams,
-      schema: getLocalitiesResponse,
+      schema: getV1LocalitiesResponse,
       paused,
     },
     {
@@ -65,13 +65,13 @@ export const useApiLocalitiesQuery = (
 
 export const useApiLocalitiesInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getLocalityResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1LocalitiesIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/localities",
     {
       queryParams,
-      schema: getLocalitiesResponse,
+      schema: getV1LocalitiesResponse,
     },
     {
       revalidateFirstPage: false,
@@ -84,19 +84,19 @@ export const useApiLocalityCreate = () => {
   return useApiFetch({
     path: "/localities",
     method: "POST",
-    schema: upsertLocalityResponse,
+    schema: putV1LocalitiesIdResponse,
   });
 };
 
 export const useApiLocalityUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertLocalityResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1LocalitiesIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/localities/${id}` : null,
     {
       method: "PUT",
-      schema: upsertLocalityResponse,
+      schema: putV1LocalitiesIdResponse,
     },
     {
       revalidate: false,

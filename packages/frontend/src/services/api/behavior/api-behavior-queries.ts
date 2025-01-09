@@ -1,9 +1,9 @@
 import {
-  behaviorInfoSchema,
-  getBehaviorResponse,
-  getBehaviorsResponse,
-  upsertBehaviorResponse,
-} from "@ou-ca/common/api/behavior";
+  getV1BehaviorsIdInfoResponse,
+  getV1BehaviorsIdResponse,
+  getV1BehaviorsResponse,
+  putV1BehaviorsIdResponse,
+} from "@ou-ca/api/zod/behavior.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiBehaviorQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getBehaviorResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1BehaviorsIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/behaviors/${id}` : null,
     {
-      schema: getBehaviorResponse,
+      schema: getV1BehaviorsIdResponse,
     },
     {
       ...swrOptions,
@@ -32,12 +32,12 @@ export const useApiBehaviorQuery = (
 
 export const useApiBehaviorInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof behaviorInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1BehaviorsIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/behaviors/${id}/info` : null,
     {
-      schema: behaviorInfoSchema,
+      schema: getV1BehaviorsIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -47,13 +47,13 @@ export const useApiBehaviorInfoQuery = (
 
 export const useApiBehaviorsQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getBehaviorsResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1BehaviorsResponse>>,
 ) => {
   return useApiQuery(
     "/behaviors",
     {
       queryParams,
-      schema: getBehaviorsResponse,
+      schema: getV1BehaviorsResponse,
     },
     {
       ...swrOptions,
@@ -63,13 +63,13 @@ export const useApiBehaviorsQuery = (
 
 export const useApiBehaviorsInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getBehaviorResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1BehaviorsIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/behaviors",
     {
       queryParams,
-      schema: getBehaviorsResponse,
+      schema: getV1BehaviorsResponse,
     },
     {
       revalidateFirstPage: false,
@@ -82,19 +82,19 @@ export const useApiBehaviorCreate = () => {
   return useApiFetch({
     path: "/behaviors",
     method: "POST",
-    schema: upsertBehaviorResponse,
+    schema: putV1BehaviorsIdResponse,
   });
 };
 
 export const useApiBehaviorUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertBehaviorResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1BehaviorsIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/behaviors/${id}` : null,
     {
       method: "PUT",
-      schema: upsertBehaviorResponse,
+      schema: putV1BehaviorsIdResponse,
     },
     {
       revalidate: false,

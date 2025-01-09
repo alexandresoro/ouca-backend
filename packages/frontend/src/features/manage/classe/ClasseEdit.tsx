@@ -1,7 +1,7 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UpsertSpeciesClassInput } from "@ou-ca/api/models";
-import { upsertClassInput } from "@ou-ca/common/api/species-class";
+import { putV1ClassesIdBody } from "@ou-ca/api/zod/species.zod";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,7 @@ const ClasseEdit: FunctionComponent<ClasseEditProps> = (props) => {
     defaultValues: defaultValues ?? {
       libelle: "",
     },
-    resolver: zodResolver(upsertClassInput),
+    resolver: zodResolver(putV1ClassesIdBody),
     mode: "onTouched",
   });
 

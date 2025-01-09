@@ -1,4 +1,9 @@
-import { ageInfoSchema, getAgeResponse, getAgesResponse, upsertAgeResponse } from "@ou-ca/common/api/age";
+import {
+  getV1AgesIdInfoResponse,
+  getV1AgesIdResponse,
+  getV1AgesResponse,
+  putV1AgesIdResponse,
+} from "@ou-ca/api/zod/age.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -12,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiAgeQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getAgeResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1AgesIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/ages/${id}` : null,
     {
-      schema: getAgeResponse,
+      schema: getV1AgesIdResponse,
     },
     {
       ...swrOptions,
@@ -27,12 +32,12 @@ export const useApiAgeQuery = (
 
 export const useApiAgeInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof ageInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1AgesIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/ages/${id}/info` : null,
     {
-      schema: ageInfoSchema,
+      schema: getV1AgesIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -42,13 +47,13 @@ export const useApiAgeInfoQuery = (
 
 export const useApiAgesQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getAgesResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1AgesResponse>>,
 ) => {
   return useApiQuery(
     "/ages",
     {
       queryParams,
-      schema: getAgesResponse,
+      schema: getV1AgesResponse,
     },
     {
       ...swrOptions,
@@ -58,13 +63,13 @@ export const useApiAgesQuery = (
 
 export const useApiAgesInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getAgeResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1AgesIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/ages",
     {
       queryParams,
-      schema: getAgesResponse,
+      schema: getV1AgesResponse,
     },
     {
       revalidateFirstPage: false,
@@ -77,19 +82,19 @@ export const useApiAgeCreate = () => {
   return useApiFetch({
     path: "/ages",
     method: "POST",
-    schema: upsertAgeResponse,
+    schema: putV1AgesIdResponse,
   });
 };
 
 export const useApiAgeUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertAgeResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1AgesIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/ages/${id}` : null,
     {
       method: "PUT",
-      schema: upsertAgeResponse,
+      schema: putV1AgesIdResponse,
     },
     {
       revalidate: false,

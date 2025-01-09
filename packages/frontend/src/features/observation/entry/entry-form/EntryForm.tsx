@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserSettings } from "@hooks/useUser";
 import type { Entry, UpsertEntryInput } from "@ou-ca/api/models";
-import { upsertEntryInput } from "@ou-ca/common/api/entry";
+import { putV1EntriesIdBody } from "@ou-ca/api/zod/entry.zod";
 import { useApiAgeQuery } from "@services/api/age/api-age-queries";
 import { useApiNumberEstimateQuery } from "@services/api/number-estimate/api-number-estimate-queries";
 import { useApiSexQuery } from "@services/api/sex/api-sex-queries";
@@ -109,7 +109,7 @@ const EntryForm: FunctionComponent<EntryFormProps> = (props) => {
     defaultValues: defaultFormValues,
     values: defaultFormValues,
     // FIX: case where number is not provided but estimate is not "nonCompte" is considered valid and should not
-    resolver: zodResolver(upsertEntryInput),
+    resolver: zodResolver(putV1EntriesIdBody),
     mode: "onTouched",
   });
 

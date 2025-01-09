@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserSettings } from "@hooks/useUser";
 import type { Inventory, UpsertInventoryInput } from "@ou-ca/api/models";
-import { upsertInventoryInput } from "@ou-ca/common/api/inventory";
+import { putV1InventoriesIdBody } from "@ou-ca/api/zod/inventory.zod";
 import { getMinutesFromTime } from "@ou-ca/common/utils/time-format-convert";
 import { useApiDepartmentQuery } from "@services/api/department/api-department-queries";
 import { useApiObserverQuery } from "@services/api/observer/api-observer-queries";
@@ -29,7 +29,7 @@ type InventoryFormProps = {
   disableIfNoChanges?: boolean;
 };
 
-const upsertInventoryFormInput = upsertInventoryInput.omit({ duration: true }).extend({
+const upsertInventoryFormInput = putV1InventoriesIdBody.omit({ duration: true }).extend({
   duration: z
     .union([z.string(), z.number()])
     .nullable()

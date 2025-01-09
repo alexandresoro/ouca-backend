@@ -1,10 +1,10 @@
 import {
-  deleteObserverResponse,
-  getObserverResponse,
-  getObserversResponse,
-  observerInfoSchema,
-  upsertObserverResponse,
-} from "@ou-ca/common/api/observer";
+  deleteV1ObserversIdResponse,
+  getV1ObserversIdInfoResponse,
+  getV1ObserversIdResponse,
+  getV1ObserversResponse,
+  putV1ObserversIdResponse,
+} from "@ou-ca/api/zod/observer.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -18,12 +18,12 @@ import type { z } from "zod";
 
 export const useApiObserverQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getObserverResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1ObserversIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/observers/${id}` : null,
     {
-      schema: getObserverResponse,
+      schema: getV1ObserversIdResponse,
     },
     {
       ...swrOptions,
@@ -33,12 +33,12 @@ export const useApiObserverQuery = (
 
 export const useApiObserverInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof observerInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1ObserversIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/observers/${id}/info` : null,
     {
-      schema: observerInfoSchema,
+      schema: getV1ObserversIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -48,14 +48,14 @@ export const useApiObserverInfoQuery = (
 
 export const useApiObserversQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getObserversResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1ObserversResponse>>,
   { paused = false } = {},
 ) => {
   return useApiQuery(
     "/observers",
     {
       queryParams,
-      schema: getObserversResponse,
+      schema: getV1ObserversResponse,
       paused,
     },
     {
@@ -66,13 +66,13 @@ export const useApiObserversQuery = (
 
 export const useApiObserversInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getObserverResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1ObserversIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/observers",
     {
       queryParams,
-      schema: getObserversResponse,
+      schema: getV1ObserversResponse,
     },
     {
       revalidateFirstPage: false,
@@ -85,19 +85,19 @@ export const useApiObserverCreate = () => {
   return useApiFetch({
     path: "/observers",
     method: "POST",
-    schema: upsertObserverResponse,
+    schema: putV1ObserversIdResponse,
   });
 };
 
 export const useApiObserverUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertObserverResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1ObserversIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/observers/${id}` : null,
     {
       method: "PUT",
-      schema: upsertObserverResponse,
+      schema: putV1ObserversIdResponse,
     },
     {
       revalidate: false,
@@ -109,13 +109,13 @@ export const useApiObserverUpdate = (
 
 export const useApiObserverDelete = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof deleteObserverResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof deleteV1ObserversIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/observers/${id}` : null,
     {
       method: "DELETE",
-      schema: deleteObserverResponse,
+      schema: deleteV1ObserversIdResponse,
     },
     {
       revalidate: false,

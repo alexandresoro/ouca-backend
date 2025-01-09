@@ -2,7 +2,7 @@ import Checkbox from "@components/base/Checkbox";
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UpsertNumberEstimateInput } from "@ou-ca/api/models";
-import { upsertNumberEstimateInput } from "@ou-ca/common/api/number-estimate";
+import { putV1NumberEstimatesIdBody } from "@ou-ca/api/zod/quantity.zod";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,7 @@ const EstimationNombreEdit: FunctionComponent<EstimationNombreEditProps> = (prop
       libelle: "",
       nonCompte: false,
     },
-    resolver: zodResolver(upsertNumberEstimateInput),
+    resolver: zodResolver(putV1NumberEstimatesIdBody),
     mode: "onTouched",
   });
 

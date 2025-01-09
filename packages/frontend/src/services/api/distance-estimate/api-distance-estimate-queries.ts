@@ -1,9 +1,9 @@
 import {
-  distanceEstimateInfoSchema,
-  getDistanceEstimateResponse,
-  getDistanceEstimatesResponse,
-  upsertDistanceEstimateResponse,
-} from "@ou-ca/common/api/distance-estimate";
+  getV1DistanceEstimatesIdInfoResponse,
+  getV1DistanceEstimatesIdResponse,
+  getV1DistanceEstimatesResponse,
+  putV1DistanceEstimatesIdBody,
+} from "@ou-ca/api/zod/distance.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiDistanceEstimateQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getDistanceEstimateResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1DistanceEstimatesIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/distance-estimates/${id}` : null,
     {
-      schema: getDistanceEstimateResponse,
+      schema: getV1DistanceEstimatesIdResponse,
     },
     {
       ...swrOptions,
@@ -32,12 +32,12 @@ export const useApiDistanceEstimateQuery = (
 
 export const useApiDistanceEstimateInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof distanceEstimateInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1DistanceEstimatesIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/distance-estimates/${id}/info` : null,
     {
-      schema: distanceEstimateInfoSchema,
+      schema: getV1DistanceEstimatesIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -47,14 +47,14 @@ export const useApiDistanceEstimateInfoQuery = (
 
 export const useApiDistanceEstimatesQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getDistanceEstimatesResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1DistanceEstimatesResponse>>,
   { paused = false } = {},
 ) => {
   return useApiQuery(
     "/distance-estimates",
     {
       queryParams,
-      schema: getDistanceEstimatesResponse,
+      schema: getV1DistanceEstimatesResponse,
       paused,
     },
     {
@@ -65,13 +65,13 @@ export const useApiDistanceEstimatesQuery = (
 
 export const useApiDistanceEstimatesInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getDistanceEstimateResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1DistanceEstimatesIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/distance-estimates",
     {
       queryParams,
-      schema: getDistanceEstimatesResponse,
+      schema: getV1DistanceEstimatesResponse,
     },
     {
       revalidateFirstPage: false,
@@ -84,19 +84,19 @@ export const useApiDistanceEstimateCreate = () => {
   return useApiFetch({
     path: "/distance-estimates",
     method: "POST",
-    schema: upsertDistanceEstimateResponse,
+    schema: putV1DistanceEstimatesIdBody,
   });
 };
 
 export const useApiDistanceEstimateUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertDistanceEstimateResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1DistanceEstimatesIdBody>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/distance-estimates/${id}` : null,
     {
       method: "PUT",
-      schema: upsertDistanceEstimateResponse,
+      schema: putV1DistanceEstimatesIdBody,
     },
     {
       revalidate: false,

@@ -1,9 +1,9 @@
 import {
-  getNumberEstimateResponse,
-  getNumberEstimatesResponse,
-  numberEstimateInfoSchema,
-  upsertNumberEstimateResponse,
-} from "@ou-ca/common/api/number-estimate";
+  getV1NumberEstimatesIdInfoResponse,
+  getV1NumberEstimatesIdResponse,
+  getV1NumberEstimatesResponse,
+  putV1NumberEstimatesIdResponse,
+} from "@ou-ca/api/zod/quantity.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiNumberEstimateQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getNumberEstimateResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1NumberEstimatesIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/number-estimates/${id}` : null,
     {
-      schema: getNumberEstimateResponse,
+      schema: getV1NumberEstimatesIdResponse,
     },
     {
       ...swrOptions,
@@ -32,12 +32,12 @@ export const useApiNumberEstimateQuery = (
 
 export const useApiNumberEstimateInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof numberEstimateInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1NumberEstimatesIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/number-estimates/${id}/info` : null,
     {
-      schema: numberEstimateInfoSchema,
+      schema: getV1NumberEstimatesIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -47,13 +47,13 @@ export const useApiNumberEstimateInfoQuery = (
 
 export const useApiNumberEstimatesQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getNumberEstimatesResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1NumberEstimatesResponse>>,
 ) => {
   return useApiQuery(
     "/number-estimates",
     {
       queryParams,
-      schema: getNumberEstimatesResponse,
+      schema: getV1NumberEstimatesResponse,
     },
     {
       ...swrOptions,
@@ -63,13 +63,13 @@ export const useApiNumberEstimatesQuery = (
 
 export const useApiNumberEstimatesInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getNumberEstimateResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1NumberEstimatesIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/number-estimates",
     {
       queryParams,
-      schema: getNumberEstimatesResponse,
+      schema: getV1NumberEstimatesResponse,
     },
     {
       revalidateFirstPage: false,
@@ -82,19 +82,19 @@ export const useApiNumberEstimateCreate = () => {
   return useApiFetch({
     path: "/number-estimates",
     method: "POST",
-    schema: upsertNumberEstimateResponse,
+    schema: putV1NumberEstimatesIdResponse,
   });
 };
 
 export const useApiNumberEstimateUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertNumberEstimateResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1NumberEstimatesIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/number-estimates/${id}` : null,
     {
       method: "PUT",
-      schema: upsertNumberEstimateResponse,
+      schema: putV1NumberEstimatesIdResponse,
     },
     {
       revalidate: false,

@@ -1,4 +1,4 @@
-import { getLocalityResponse } from "@ou-ca/common/api/locality";
+import { getV1LocalitiesIdResponse } from "@ou-ca/api/zod/location.zod";
 import type { GeoJSONLocality } from "@ou-ca/common/geojson/geojson-localities";
 import { useApiLocalitiesGeoJsonQuery } from "@services/api/locality/api-localities-geojson-queries";
 import { useApiFetch } from "@services/api/useApiFetch";
@@ -166,7 +166,7 @@ const EntryMap: FunctionComponent<EntryMapProps> = ({ initialMapState }) => {
   }, [localitySelection, selectionFeatureCollectionPolygon]);
 
   const fetchLocality = useApiFetch({
-    schema: getLocalityResponse,
+    schema: getV1LocalitiesIdResponse,
   });
 
   const [hoverLocalityProperties, setHoverLocalityProperties] = useState<{

@@ -7,7 +7,7 @@ import { useUserSettings } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
 import StyledPanelHeader from "@layouts/StyledPanelHeader";
 import type { PutV1MeBody } from "@ou-ca/api/models";
-import { putMeInput } from "@ou-ca/common/api/me";
+import { putV1MeBody } from "@ou-ca/api/zod/user.zod";
 import { useApiAgesQuery } from "@services/api/age/api-age-queries";
 import { useApiDepartmentsQuery } from "@services/api/department/api-department-queries";
 import { useApiSettingsUpdate } from "@services/api/me/api-me-queries";
@@ -89,7 +89,7 @@ const SettingsPage: FunctionComponent = () => {
       isMeteoDisplayed: false,
       isDistanceDisplayed: false,
     },
-    resolver: zodResolver(putMeInput),
+    resolver: zodResolver(putV1MeBody),
   });
 
   useEffect(() => {

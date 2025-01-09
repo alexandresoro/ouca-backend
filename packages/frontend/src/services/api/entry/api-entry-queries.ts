@@ -1,4 +1,4 @@
-import { getEntriesResponse, type getEntryResponse, upsertEntryResponse } from "@ou-ca/common/api/entry";
+import { type getV1EntriesIdResponse, getV1EntriesResponse, putV1EntriesIdResponse } from "@ou-ca/api/zod/entry.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -12,14 +12,14 @@ import type { z } from "zod";
 
 export const useApiEntriesQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getEntriesResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1EntriesResponse>>,
   { paused = false } = {},
 ) =>
   useApiQuery(
     "/entries",
     {
       queryParams,
-      schema: getEntriesResponse,
+      schema: getV1EntriesResponse,
       paused,
     },
     swrOptions,
@@ -27,14 +27,14 @@ export const useApiEntriesQuery = (
 
 export const useApiEntriesInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getEntryResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1EntriesIdResponse>,
   { paused = false } = {},
 ) => {
   return useApiInfiniteQuery(
     paused ? null : "/entries",
     {
       queryParams,
-      schema: getEntriesResponse,
+      schema: getV1EntriesResponse,
     },
     {
       revalidateFirstPage: false,
@@ -47,19 +47,19 @@ export const useApiEntryCreate = () => {
   return useApiFetch({
     path: "/entries",
     method: "POST",
-    schema: upsertEntryResponse,
+    schema: putV1EntriesIdResponse,
   });
 };
 
 export const useApiEntryUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertEntryResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1EntriesIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/entries/${id}` : null,
     {
       method: "PUT",
-      schema: upsertEntryResponse,
+      schema: putV1EntriesIdResponse,
     },
     {
       revalidate: false,

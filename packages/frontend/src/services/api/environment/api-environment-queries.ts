@@ -1,9 +1,9 @@
 import {
-  environmentInfoSchema,
-  getEnvironmentResponse,
-  getEnvironmentsResponse,
-  upsertEnvironmentResponse,
-} from "@ou-ca/common/api/environment";
+  getV1EnvironmentsIdInfoResponse,
+  getV1EnvironmentsIdResponse,
+  getV1EnvironmentsResponse,
+  putV1EnvironmentsIdResponse,
+} from "@ou-ca/api/zod/environment.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiEnvironmentQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getEnvironmentResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1EnvironmentsIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/environments/${id}` : null,
     {
-      schema: getEnvironmentResponse,
+      schema: getV1EnvironmentsIdResponse,
     },
     {
       ...swrOptions,
@@ -32,12 +32,12 @@ export const useApiEnvironmentQuery = (
 
 export const useApiEnvironmentInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof environmentInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1EnvironmentsIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/environments/${id}/info` : null,
     {
-      schema: environmentInfoSchema,
+      schema: getV1EnvironmentsIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -47,13 +47,13 @@ export const useApiEnvironmentInfoQuery = (
 
 export const useApiEnvironmentsQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getEnvironmentsResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1EnvironmentsResponse>>,
 ) => {
   return useApiQuery(
     "/environments",
     {
       queryParams,
-      schema: getEnvironmentsResponse,
+      schema: getV1EnvironmentsResponse,
     },
     {
       ...swrOptions,
@@ -63,13 +63,13 @@ export const useApiEnvironmentsQuery = (
 
 export const useApiEnvironmentsInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getEnvironmentResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1EnvironmentsIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/environments",
     {
       queryParams,
-      schema: getEnvironmentsResponse,
+      schema: getV1EnvironmentsResponse,
     },
     {
       revalidateFirstPage: false,
@@ -82,19 +82,19 @@ export const useApiEnvironmentCreate = () => {
   return useApiFetch({
     path: "/environments",
     method: "POST",
-    schema: upsertEnvironmentResponse,
+    schema: putV1EnvironmentsIdResponse,
   });
 };
 
 export const useApiEnvironmentUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertEnvironmentResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1EnvironmentsIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/environments/${id}` : null,
     {
       method: "PUT",
-      schema: upsertEnvironmentResponse,
+      schema: putV1EnvironmentsIdResponse,
     },
     {
       revalidate: false,

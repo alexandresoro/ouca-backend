@@ -1,7 +1,7 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UpsertObserverInput } from "@ou-ca/api/models";
-import { upsertObserverInput } from "@ou-ca/common/api/observer";
+import { putV1ObserversIdBody } from "@ou-ca/api/zod/observer.zod";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,7 @@ const ObservateurEdit: FunctionComponent<ObservateurEditProps> = (props) => {
     defaultValues: defaultValues ?? {
       libelle: "",
     },
-    resolver: zodResolver(upsertObserverInput),
+    resolver: zodResolver(putV1ObserversIdBody),
     mode: "onTouched",
   });
 

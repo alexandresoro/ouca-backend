@@ -3,7 +3,7 @@ import FormSelect from "@components/form/FormSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNotifications } from "@hooks/useNotifications";
 import type { UpsertSpeciesInput } from "@ou-ca/api/models";
-import { upsertSpeciesInput } from "@ou-ca/common/api/species";
+import { putV1SpeciesIdBody } from "@ou-ca/api/zod/species.zod";
 import { useApiSpeciesClassesQuery } from "@services/api/species-class/api-species-class-queries";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -35,7 +35,7 @@ const EspeceEdit: FunctionComponent<EspeceEditProps> = (props) => {
       nomLatin: "",
       classId: undefined,
     },
-    resolver: zodResolver(upsertSpeciesInput),
+    resolver: zodResolver(putV1SpeciesIdBody),
     mode: "onTouched",
   });
 

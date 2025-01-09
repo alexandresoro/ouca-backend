@@ -1,7 +1,7 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UpsertEnvironmentInput } from "@ou-ca/api/models";
-import { upsertEnvironmentInput } from "@ou-ca/common/api/environment";
+import { putV1EnvironmentsIdBody } from "@ou-ca/api/zod/environment.zod";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,7 @@ const MilieuEdit: FunctionComponent<MilieuEditProps> = (props) => {
       code: "",
       libelle: "",
     },
-    resolver: zodResolver(upsertEnvironmentInput),
+    resolver: zodResolver(putV1EnvironmentsIdBody),
     mode: "onTouched",
   });
 

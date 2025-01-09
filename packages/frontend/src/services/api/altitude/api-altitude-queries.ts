@@ -1,4 +1,4 @@
-import { getAltitudeResponse } from "@ou-ca/common/api/altitude";
+import { getV1AltitudeResponse } from "@ou-ca/api/zod/location.zod";
 import { fetchApi } from "@utils/fetch-api";
 
 export const fetchApiAltitude = async (
@@ -21,6 +21,6 @@ export const fetchApiAltitude = async (
   return fetchApi({
     url,
     token,
-    schema: getAltitudeResponse,
+    schema: getV1AltitudeResponse,
   });
 };

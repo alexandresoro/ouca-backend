@@ -1,4 +1,9 @@
-import { getTownResponse, getTownsResponse, townInfoSchema, upsertTownResponse } from "@ou-ca/common/api/town";
+import {
+  getV1TownsIdInfoResponse,
+  getV1TownsIdResponse,
+  getV1TownsResponse,
+  putV1TownsIdResponse,
+} from "@ou-ca/api/zod/location.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -12,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiTownQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getTownResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1TownsIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/towns/${id}` : null,
     {
-      schema: getTownResponse,
+      schema: getV1TownsIdResponse,
     },
     {
       ...swrOptions,
@@ -27,12 +32,12 @@ export const useApiTownQuery = (
 
 export const useApiTownInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof townInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1TownsIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/towns/${id}/info` : null,
     {
-      schema: townInfoSchema,
+      schema: getV1TownsIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -42,14 +47,14 @@ export const useApiTownInfoQuery = (
 
 export const useApiTownsQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getTownsResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1TownsResponse>>,
   { paused = false } = {},
 ) => {
   return useApiQuery(
     "/towns",
     {
       queryParams,
-      schema: getTownsResponse,
+      schema: getV1TownsResponse,
       paused,
     },
     {
@@ -60,13 +65,13 @@ export const useApiTownsQuery = (
 
 export const useApiTownsInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getTownResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1TownsIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/towns",
     {
       queryParams,
-      schema: getTownsResponse,
+      schema: getV1TownsResponse,
     },
     {
       revalidateFirstPage: false,
@@ -79,19 +84,19 @@ export const useApiTownCreate = () => {
   return useApiFetch({
     path: "/towns",
     method: "POST",
-    schema: upsertTownResponse,
+    schema: putV1TownsIdResponse,
   });
 };
 
 export const useApiTownUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertTownResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1TownsIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/towns/${id}` : null,
     {
       method: "PUT",
-      schema: upsertTownResponse,
+      schema: putV1TownsIdResponse,
     },
     {
       revalidate: false,

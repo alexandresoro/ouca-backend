@@ -1,4 +1,4 @@
-import { getInventoriesResponse } from "@ou-ca/common/api/inventory";
+import { getV1InventoriesResponse } from "@ou-ca/api/zod/inventory.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import { InfoCircle } from "@styled-icons/boxicons-regular";
 import { type FunctionComponent, useEffect, useState } from "react";
@@ -9,7 +9,7 @@ const LastInventory: FunctionComponent = () => {
   const { t } = useTranslation();
 
   const fetchLastInventory = useApiFetch({
-    schema: getInventoriesResponse,
+    schema: getV1InventoriesResponse,
   });
 
   const [inventoryId, setInventoryId] = useState<string | null | undefined>();

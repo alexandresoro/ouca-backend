@@ -3,7 +3,7 @@ import FormSelect from "@components/form/FormSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNotifications } from "@hooks/useNotifications";
 import type { UpsertTownInput } from "@ou-ca/api/models";
-import { upsertTownInput } from "@ou-ca/common/api/town";
+import { putV1TownsIdBody } from "@ou-ca/api/zod/location.zod";
 import { useApiDepartmentsQuery } from "@services/api/department/api-department-queries";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -34,7 +34,7 @@ const CommuneEdit: FunctionComponent<CommuneEditProps> = (props) => {
       nom: "",
       departmentId: undefined,
     },
-    resolver: zodResolver(upsertTownInput),
+    resolver: zodResolver(putV1TownsIdBody),
     mode: "onTouched",
   });
 
@@ -65,7 +65,13 @@ const CommuneEdit: FunctionComponent<CommuneEditProps> = (props) => {
         renderValue={({ code }) => code}
       />
 
-      <TextInput label={t("townCode")} type="text" required {...register("code")} hasError={!!errors.code} />
+      <TextInput
+        label={t("townCode")}
+        type="text"
+        required
+        {...register("code", { valueAsNumber: true })}
+        hasError={!!errors.code}
+      />
       <TextInput label={t("townName")} type="text" required {...register("nom")} hasError={!!errors.nom} />
 
       <EntityUpsertFormActionButtons

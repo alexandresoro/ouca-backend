@@ -2,7 +2,7 @@ import TextInput from "@components/base/TextInput";
 import FormSelect from "@components/form/FormSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BehaviorNicheur, type UpsertBehaviorInput } from "@ou-ca/api/models";
-import { upsertBehaviorInput } from "@ou-ca/common/api/behavior";
+import { putV1BehaviorsIdBody } from "@ou-ca/api/zod/behavior.zod";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -30,7 +30,7 @@ const ComportementEdit: FunctionComponent<ComportementEditProps> = (props) => {
       libelle: "",
       nicheur: null,
     },
-    resolver: zodResolver(upsertBehaviorInput),
+    resolver: zodResolver(putV1BehaviorsIdBody),
     mode: "onTouched",
   });
 

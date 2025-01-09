@@ -1,7 +1,7 @@
 import TextInput from "@components/base/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UpsertWeatherInput } from "@ou-ca/api/models";
-import { upsertWeatherInput } from "@ou-ca/common/api/weather";
+import { putV1WeathersIdBody } from "@ou-ca/api/zod/weather.zod";
 import type { FunctionComponent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,7 @@ const MeteoEdit: FunctionComponent<MeteoEditProps> = (props) => {
     defaultValues: defaultValues ?? {
       libelle: "",
     },
-    resolver: zodResolver(upsertWeatherInput),
+    resolver: zodResolver(putV1WeathersIdBody),
     mode: "onTouched",
   });
 

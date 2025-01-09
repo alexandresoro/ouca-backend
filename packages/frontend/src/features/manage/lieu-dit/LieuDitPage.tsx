@@ -3,7 +3,7 @@ import usePaginationParams from "@hooks/usePaginationParams";
 import { useUser } from "@hooks/useUser";
 import ContentContainerLayout from "@layouts/ContentContainerLayout";
 import type { GetV1LocalitiesOrderBy, Locality, UpsertLocalityInput } from "@ou-ca/api/models";
-import { getTownResponse } from "@ou-ca/common/api/town";
+import { getV1TownsIdResponse } from "@ou-ca/api/zod/location.zod";
 import { useApiDownloadExport } from "@services/api/export/api-export-queries";
 import {
   useApiLocalitiesInfiniteQuery,
@@ -79,7 +79,7 @@ const LieuDitPage: FunctionComponent = () => {
   };
 
   const fetchTown = useApiFetch({
-    schema: getTownResponse,
+    schema: getV1TownsIdResponse,
   });
 
   const { trigger: updateLocality } = useApiLocalityUpdate(

@@ -1,4 +1,4 @@
-import { getMeResponse } from "@ou-ca/common/api/me";
+import { getV1MeResponse, putV1MeResponse } from "@ou-ca/api/zod/user.zod";
 import { useApiMutation } from "@services/api/useApiMutation";
 import { type UseApiQuerySWROptions, useApiQuery } from "@services/api/useApiQuery";
 import { FetchError } from "@utils/fetch-api";
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import type { SWRMutationConfiguration } from "swr/dist/mutation";
 import type { z } from "zod";
 
-export const useApiMe = (swrOptions?: UseApiQuerySWROptions<z.infer<typeof getMeResponse>>) => {
+export const useApiMe = (swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1MeResponse>>) => {
   const { onError, ...restSwrOptions } = swrOptions ?? {};
 
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export const useApiMe = (swrOptions?: UseApiQuerySWROptions<z.infer<typeof getMe
   return useApiQuery(
     "/me",
     {
-      schema: getMeResponse,
+      schema: getV1MeResponse,
     },
     {
       revalidateOnFocus: false,
@@ -35,12 +35,14 @@ export const useApiMe = (swrOptions?: UseApiQuerySWROptions<z.infer<typeof getMe
   );
 };
 
-export const useApiSettingsUpdate = (swrOptions?: SWRMutationConfiguration<z.infer<typeof getMeResponse>, unknown>) => {
+export const useApiSettingsUpdate = (
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1MeResponse>, unknown>,
+) => {
   return useApiMutation(
     "/me",
     {
       method: "PUT",
-      schema: getMeResponse,
+      schema: putV1MeResponse,
     },
     {
       ...swrOptions,

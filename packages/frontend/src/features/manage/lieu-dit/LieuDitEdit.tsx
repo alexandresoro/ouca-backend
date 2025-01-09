@@ -4,7 +4,7 @@ import FormSelect from "@components/form/FormSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNotifications } from "@hooks/useNotifications";
 import type { Department, UpsertLocalityInput } from "@ou-ca/api/models";
-import { upsertLocalityInput } from "@ou-ca/common/api/locality";
+import { putV1LocalitiesIdBody } from "@ou-ca/api/zod/location.zod";
 import { useApiDepartmentsQuery } from "@services/api/department/api-department-queries";
 import { useApiTownsQuery } from "@services/api/town/api-town-queries";
 import { type FunctionComponent, useState } from "react";
@@ -42,7 +42,7 @@ const LieuDitEdit: FunctionComponent<LieuDitEditProps> = (props) => {
       townId: "",
       ...defaultValues,
     },
-    resolver: zodResolver(upsertLocalityInput),
+    resolver: zodResolver(putV1LocalitiesIdBody),
     mode: "onTouched",
   });
 

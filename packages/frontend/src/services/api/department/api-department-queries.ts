@@ -1,9 +1,9 @@
 import {
-  departmentInfoSchema,
-  getDepartmentResponse,
-  getDepartmentsResponse,
-  upsertDepartmentResponse,
-} from "@ou-ca/common/api/department";
+  getV1DepartmentsIdInfoResponse,
+  getV1DepartmentsIdResponse,
+  getV1DepartmentsResponse,
+  putV1DepartmentsIdResponse,
+} from "@ou-ca/api/zod/location.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiDepartmentQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getDepartmentResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1DepartmentsIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/departments/${id}` : null,
     {
-      schema: getDepartmentResponse,
+      schema: getV1DepartmentsIdResponse,
     },
     {
       ...swrOptions,
@@ -32,12 +32,12 @@ export const useApiDepartmentQuery = (
 
 export const useApiDepartmentInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof departmentInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1DepartmentsIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/departments/${id}/info` : null,
     {
-      schema: departmentInfoSchema,
+      schema: getV1DepartmentsIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -47,13 +47,13 @@ export const useApiDepartmentInfoQuery = (
 
 export const useApiDepartmentsQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getDepartmentsResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1DepartmentsResponse>>,
 ) => {
   return useApiQuery(
     "/departments",
     {
       queryParams,
-      schema: getDepartmentsResponse,
+      schema: getV1DepartmentsResponse,
     },
     {
       ...swrOptions,
@@ -63,13 +63,13 @@ export const useApiDepartmentsQuery = (
 
 export const useApiDepartmentsInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getDepartmentResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1DepartmentsIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/departments",
     {
       queryParams,
-      schema: getDepartmentsResponse,
+      schema: getV1DepartmentsResponse,
     },
     {
       revalidateFirstPage: false,
@@ -82,19 +82,19 @@ export const useApiDepartmentCreate = () => {
   return useApiFetch({
     path: "/departments",
     method: "POST",
-    schema: upsertDepartmentResponse,
+    schema: putV1DepartmentsIdResponse,
   });
 };
 
 export const useApiDepartmentUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertDepartmentResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1DepartmentsIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/departments/${id}` : null,
     {
       method: "PUT",
-      schema: upsertDepartmentResponse,
+      schema: putV1DepartmentsIdResponse,
     },
     {
       revalidate: false,

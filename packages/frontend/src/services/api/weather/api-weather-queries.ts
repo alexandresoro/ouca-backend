@@ -1,9 +1,9 @@
 import {
-  getWeatherResponse,
-  getWeathersResponse,
-  upsertWeatherResponse,
-  weatherInfoSchema,
-} from "@ou-ca/common/api/weather";
+  getV1WeathersIdInfoResponse,
+  getV1WeathersIdResponse,
+  getV1WeathersResponse,
+  putV1WeathersIdResponse,
+} from "@ou-ca/api/zod/weather.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiWeatherQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getWeatherResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1WeathersIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/weathers/${id}` : null,
     {
-      schema: getWeatherResponse,
+      schema: getV1WeathersIdResponse,
     },
     {
       ...swrOptions,
@@ -32,12 +32,12 @@ export const useApiWeatherQuery = (
 
 export const useApiWeatherInfoQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof weatherInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1WeathersIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/weathers/${id}/info` : null,
     {
-      schema: weatherInfoSchema,
+      schema: getV1WeathersIdInfoResponse,
     },
     {
       ...swrOptions,
@@ -47,13 +47,13 @@ export const useApiWeatherInfoQuery = (
 
 export const useApiWeathersQuery = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getWeathersResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1WeathersResponse>>,
 ) => {
   return useApiQuery(
     "/weathers",
     {
       queryParams,
-      schema: getWeathersResponse,
+      schema: getV1WeathersResponse,
     },
     {
       ...swrOptions,
@@ -63,13 +63,13 @@ export const useApiWeathersQuery = (
 
 export const useApiWeathersInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getWeatherResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1WeathersIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/weathers",
     {
       queryParams,
-      schema: getWeathersResponse,
+      schema: getV1WeathersResponse,
     },
     {
       revalidateFirstPage: false,
@@ -82,19 +82,19 @@ export const useApiWeatherCreate = () => {
   return useApiFetch({
     path: "/weathers",
     method: "POST",
-    schema: upsertWeatherResponse,
+    schema: putV1WeathersIdResponse,
   });
 };
 
 export const useApiWeatherUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertWeatherResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1WeathersIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/weathers/${id}` : null,
     {
       method: "PUT",
-      schema: upsertWeatherResponse,
+      schema: putV1WeathersIdResponse,
     },
     {
       revalidate: false,

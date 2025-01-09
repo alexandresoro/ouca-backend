@@ -1,9 +1,9 @@
 import {
-  getSpeciesPaginatedResponse,
-  getSpeciesResponse,
-  speciesInfoSchema,
-  upsertSpeciesResponse,
-} from "@ou-ca/common/api/species";
+  getV1SpeciesIdInfoResponse,
+  getV1SpeciesIdResponse,
+  getV1SpeciesResponse,
+  putV1SpeciesIdResponse,
+} from "@ou-ca/api/zod/species.zod";
 import { useApiFetch } from "@services/api/useApiFetch";
 import {
   type UseApiInfiniteQueryCommonParams,
@@ -17,12 +17,12 @@ import type { z } from "zod";
 
 export const useApiSpeciesQuery = (
   id: string | null,
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getSpeciesResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1SpeciesIdResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/species/${id}` : null,
     {
-      schema: getSpeciesResponse,
+      schema: getV1SpeciesIdResponse,
     },
     {
       ...swrOptions,
@@ -33,12 +33,12 @@ export const useApiSpeciesQuery = (
 export const useApiSpeciesInfoQuery = (
   id: string | null,
   queryParams?: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof speciesInfoSchema>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1SpeciesIdInfoResponse>>,
 ) => {
   return useApiQuery(
     id != null ? `/species/${id}/info` : null,
     {
-      schema: speciesInfoSchema,
+      schema: getV1SpeciesIdInfoResponse,
       queryParams,
     },
     {
@@ -49,26 +49,26 @@ export const useApiSpeciesInfoQuery = (
 
 export const useApiSpeciesQueryAll = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getSpeciesPaginatedResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1SpeciesResponse>>,
 ) =>
   useApiQuery(
     "/species",
     {
       queryParams,
-      schema: getSpeciesPaginatedResponse,
+      schema: getV1SpeciesResponse,
     },
     swrOptions,
   );
 
 export const useApiSpeciesInfiniteQuery = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getSpeciesResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1SpeciesIdResponse>,
 ) => {
   return useApiInfiniteQuery(
     "/species",
     {
       queryParams,
-      schema: getSpeciesPaginatedResponse,
+      schema: getV1SpeciesResponse,
     },
     {
       revalidateFirstPage: false,
@@ -81,19 +81,19 @@ export const useApiSpeciesCreate = () => {
   return useApiFetch({
     path: "/species",
     method: "POST",
-    schema: upsertSpeciesResponse,
+    schema: putV1SpeciesIdResponse,
   });
 };
 
 export const useApiSpeciesUpdate = (
   id: string | null,
-  swrOptions?: SWRMutationConfiguration<z.infer<typeof upsertSpeciesResponse>, unknown>,
+  swrOptions?: SWRMutationConfiguration<z.infer<typeof putV1SpeciesIdResponse>, unknown>,
 ) => {
   return useApiMutation(
     id ? `/species/${id}` : null,
     {
       method: "PUT",
-      schema: upsertSpeciesResponse,
+      schema: putV1SpeciesIdResponse,
     },
     {
       revalidate: false,

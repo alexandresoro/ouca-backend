@@ -1,4 +1,4 @@
-import { getSpeciesPaginatedResponse, type getSpeciesResponse } from "@ou-ca/common/api/species";
+import { getV1SearchSpeciesResponse, type getV1SpeciesIdResponse } from "@ou-ca/api/zod/species.zod";
 import {
   type UseApiInfiniteQueryCommonParams,
   type UseApiQuerySWRInfiniteOptions,
@@ -9,14 +9,14 @@ import type { z } from "zod";
 
 export const useApiSearchSpecies = (
   queryParams: UseApiQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getSpeciesPaginatedResponse>>,
+  swrOptions?: UseApiQuerySWROptions<z.infer<typeof getV1SearchSpeciesResponse>>,
   { paused = false } = {},
 ) =>
   useApiQuery(
     "/search/species",
     {
       queryParams,
-      schema: getSpeciesPaginatedResponse,
+      schema: getV1SearchSpeciesResponse,
       paused,
     },
     swrOptions,
@@ -24,13 +24,13 @@ export const useApiSearchSpecies = (
 
 export const useApiSearchInfiniteSpecies = (
   queryParams: UseApiInfiniteQueryCommonParams["queryParams"],
-  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getSpeciesResponse>,
+  swrOptions?: UseApiQuerySWRInfiniteOptions<typeof getV1SpeciesIdResponse>,
 ) =>
   useApiInfiniteQuery(
     "/search/species",
     {
       queryParams,
-      schema: getSpeciesPaginatedResponse,
+      schema: getV1SearchSpeciesResponse,
     },
     {
       revalidateFirstPage: false,
