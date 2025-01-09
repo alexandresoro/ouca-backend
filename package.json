@@ -14,12 +14,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "pnpm -r test",
-    "lint": "pnpm -r run lint",
-    "typecheck": "pnpm -r run typecheck",
-    "biome:ci": "pnpm -r run biome:ci",
-    "backend": "pnpm --dir './packages/backend'",
-    "build:ci": "pnpm -r run build"
+    "build": "pnpm run compile:tsc",
+    "start": "tsx watch -r dotenv/config src/main.ts",
+    "start:tsc": "pnpm run compile:tsc:dev && node -r dotenv/config dist/main",
+    "test": "find ./src -name '*.test.ts' | tr '\\n' ' ' | xargs node --import tsx --test",
+    "lint": "biome lint *",
+    "typecheck": "tsc --project tsconfig.build.json --noEmit",
+    "biome:ci": "biome ci *",
+    "compile:tsc": "tsc --project tsconfig.build.json && tsc-alias",
+    "compile:tsc:dev": "tsc --project tsconfig.dev.json && tsc-alias",
+    "umzug": "node dist/umzug",
+    "umzug:dev": "tsx -r dotenv/config src/umzug.ts"
   },
   "dependencies": {
     "@bull-board/api": "5.23.0",
@@ -31,7 +36,6 @@
     "@fastify/swagger": "8.15.0",
     "@fastify/swagger-ui": "4.2.0",
     "@fastify/under-pressure": "8.5.2",
-    "@ou-ca/common": "workspace:*",
     "@sentry/node": "8.48.0",
     "@turf/helpers": "7.2.0",
     "bullmq": "5.34.8",

@@ -7,12 +7,12 @@ runs:
   steps:
     - name: Biome
       shell: bash
-      run: pnpm --aggregate-output --recursive run biome:ci
+      run: pnpm biome:ci
 
     - name: Test
       shell: bash
-      run: pnpm --aggregate-output --recursive run test
+      run: pnpm test
 
     - name: Typecheck
       shell: bash
-      run: pnpm --aggregate-output --recursive run typecheck
+      run: pnpm typecheck

@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.build.json",
-  "compilerOptions": {
-    "sourceMap": true
-  },
-  "references": [{ "path": "../common/tsconfig.ref.json" }]
-}

@@ -10,8 +10,8 @@ RUN corepack enable
 
 COPY ./ /app/
 
-RUN pnpm i --filter @ou-ca/backend... --frozen-lockfile
-RUN pnpm run backend build
+RUN pnpm i --frozen-lockfile
+RUN pnpm build
 
 # 2. Run the NodeJS backend
 FROM node:${NODE_IMAGE_VERSION}-alpine as final
@@ -26,19 +26,17 @@ WORKDIR /app
 # In the container, listen to outside localhost by default
 ENV OUCA_SERVER_HOST 0.0.0.0
 
-COPY /packages/backend/migrations/ packages/backend/migrations/
+COPY /migrations/ migrations/
 
 COPY package.json pnpm-*.yaml ./
 
-COPY /packages/common/package.json packages/common/package.json
-COPY /packages/backend/package.json packages/backend/package.json
+COPY /package.json package.json
 
-RUN pnpm i --filter @ou-ca/backend... --frozen-lockfile
+RUN pnpm i --frozen-lockfile
 
-COPY --from=build /app/packages/common/dist/ packages/common/dist/
-COPY --from=build /app/packages/backend/dist/ packages/backend/dist/
+COPY --from=build /app/dist/ dist/
 
-WORKDIR /app/packages/backend/dist
+WORKDIR /app/dist
 
 ARG GIT_SHA
 ENV SENTRY_RELEASE ${GIT_SHA}

@@ -1,2 +1,2 @@
-packages/backend/src/__fixtures__/**/*
-packages/backend/src/__fixtures__
+src/__fixtures__/**/*
+src/__fixtures__

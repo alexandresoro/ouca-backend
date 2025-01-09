@@ -4,9 +4,5 @@ pre-commit:
     biome:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
       run: pnpm biome check --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
-    test-common:
-      root: "packages/common/"
-      run: pnpm test
-    test-backend:
-      root: "packages/backend/"
+    test:
       run: pnpm test
