@@ -10,4 +10,18 @@ Sentry.init({
   environment: sentryConfig.environment,
   release: sentryConfig.release,
   tracesSampleRate: sentryConfig.tracesSampleRate,
+  beforeSend: (event, hint) => {
+    if (
+      typeof hint.originalException === "object" &&
+      hint.originalException !== null &&
+      "statusCode" in hint.originalException &&
+      typeof hint.originalException.statusCode === "number" &&
+      hint.originalException.statusCode >= 400 &&
+      hint.originalException.statusCode < 500
+    ) {
+      return null;
+    }
+
+    return event;
+  },
 });
