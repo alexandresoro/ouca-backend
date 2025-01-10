@@ -12,5 +12,5 @@
       "name": "biome"
     }
   },
-  "language_servers": ["!eslint", "..."]
+  "language_servers": ["!eslint", "!prettier", "!typescript-language-server", "..."]
 }
