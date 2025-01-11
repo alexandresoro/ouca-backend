@@ -102,7 +102,7 @@ jobs:
 
       - name: Dispatch backend image update to forgejo
         run: >
-          curl -v --trace-ascii - --fail-with-body
+          curl -v --trace-ascii - --fail
           -H 'accept: application/json'
           -H 'Authorization: token ${{ secrets.FORGEJO_TOKEN }}'
           -H 'Content-Type: application/json'
