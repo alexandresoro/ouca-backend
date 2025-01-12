@@ -79,6 +79,7 @@ jobs:
           build-args: |
             NODE_IMAGE_VERSION=${{ env.NODE_IMAGE_VERSION }}
             GIT_SHA=${{ github.sha }}
+            REGISTRY_URL=${{ secrets.HARBOR_REGISTRY_URL }}/docker.io/library
           containerfiles: |
             ./Dockerfile
           # Disable caching as it's slower than building from scratch
