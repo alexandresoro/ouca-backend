@@ -38,6 +38,8 @@ jobs:
     steps:
       - run: apt update && apt install -y podman
 
+      - run: podman login ${{ secrets.HARBOR_REGISTRY_URL }} -u ${{ secrets.HARBOR_USER }} -p ${{ secrets.HARBOR_PASSWORD }} --verbose
+
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
@@ -63,8 +65,6 @@ jobs:
         id: rewrite-node-version
         run: |
           echo "NODE_IMAGE_VERSION=$(echo '${{ steps.setup-node.outputs.node-version }}' | cut -c2- )" >> $GITHUB_ENV
-
-      - run: podman login ${{ secrets.HARBOR_REGISTRY_URL }} -u ${{ secrets.HARBOR_USER }} -p ${{ secrets.HARBOR_PASSWORD }} --verbose
 
       - uses: https://github.com/redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         id: build-image
