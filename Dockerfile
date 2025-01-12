@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1@sha256:93bfd3b68c109427185cd78b4779fc82b484b0b7618e36d0f104d4d801e66d25
+ARG REGISTRY_URL="docker.io/library"
 ARG NODE_IMAGE_VERSION=20
 
 # 1. Transpile the project
-FROM node:${NODE_IMAGE_VERSION}-alpine as build
+FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as build
 
 WORKDIR /app
 
@@ -14,7 +15,7 @@ RUN pnpm i --frozen-lockfile
 RUN pnpm build
 
 # 2. Run the NodeJS backend
-FROM node:${NODE_IMAGE_VERSION}-alpine as final
+FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as final
 
 RUN corepack enable
 
