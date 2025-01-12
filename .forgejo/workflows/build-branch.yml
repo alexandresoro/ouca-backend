@@ -65,7 +65,7 @@ jobs:
           echo "NODE_IMAGE_VERSION=$(echo '${{ steps.setup-node.outputs.node-version }}' | cut -c2- )" >> $GITHUB_ENV
 
       - name: Log in to Harbor
-        uses: redhat-actions/podman-login@v1
+        uses: https://github.com/redhat-actions/podman-login@v1
         with:
           registry: ${{ secrets.HARBOR_REGISTRY_URL }}
           username: ${{ secrets.HARBOR_USER }}
