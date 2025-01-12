@@ -1,7 +1,7 @@
 import type { InventoryCreateInput } from "@domain/inventory/inventory.js";
 import type { Locality } from "@domain/locality/locality.js";
 import type { UpsertInventoryInput } from "@ou-ca/common/api/inventory.js";
-import { getHumanFriendlyTimeFromMinutes } from "@ou-ca/common/utils/time-format-convert.js";
+import { getHumanFriendlyTimeFromMinutes } from "../../../utils/time-format-convert.js";
 
 export const reshapeInputInventoryUpsertData = (
   inventory: UpsertInventoryInput,

@@ -1,5 +1,5 @@
+import { BREEDER_CODES } from "@domain/behavior/breeder.js";
 import { z } from "zod";
-import { NICHEUR_CODES } from "../types/nicheur.model.js";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -44,7 +44,7 @@ export const getBehaviorsResponse = getPaginatedResponseSchema(behaviorSchema);
 export const upsertBehaviorInput = z.object({
   code: z.string().trim().min(1),
   libelle: z.string().trim().min(1),
-  nicheur: z.enum(NICHEUR_CODES).nullable(),
+  nicheur: z.enum(BREEDER_CODES).nullable(),
 });
 
 export type UpsertBehaviorInput = z.infer<typeof upsertBehaviorInput>;

@@ -1,5 +1,5 @@
+import { BREEDER_CODES } from "@domain/behavior/breeder.js";
 import { z } from "zod";
-import { NICHEUR_CODES } from "../../types/nicheur.model.js";
 
 export const getSearchCriteriaParamsSchema = z.object({
   entryId: z.string().optional(),
@@ -24,7 +24,7 @@ export const getSearchCriteriaParamsSchema = z.object({
   fromDate: z.string().optional(),
   toDate: z.string().optional(),
   comment: z.string().optional(),
-  breeders: z.union([z.array(z.enum(NICHEUR_CODES)), z.enum(NICHEUR_CODES).transform((value) => [value])]).optional(),
+  breeders: z.union([z.array(z.enum(BREEDER_CODES)), z.enum(BREEDER_CODES).transform((value) => [value])]).optional(),
   behaviorIds: z.union([z.array(z.string()), z.string().transform((value) => [value])]).optional(),
   environmentIds: z.union([z.array(z.string()), z.string().transform((value) => [value])]).optional(),
   fromAllUsers: z

@@ -1,6 +1,6 @@
 import type { UpsertEntryInput } from "@ou-ca/common/api/entry.js";
 import type { UpsertInventoryInput } from "@ou-ca/common/api/inventory.js";
-import { getMinutesFromTime } from "@ou-ca/common/utils/time-format-convert.js";
+import { getMinutesFromTime } from "../../../../../utils/time-format-convert.js";
 import { getDateOnlyAsLocalISOString } from "../../../../../utils/time-utils.js";
 import { getFormattedDate, getFormattedTime, isTimeValid } from "../../../../../utils/utils.js";
 import { CoordinatesValidatorHelper } from "./coordinates-validation.helper.js";

@@ -8,9 +8,9 @@ import type { EntryRepository } from "@interfaces/entry-repository-interface.js"
 import type { InventoryRepository } from "@interfaces/inventory-repository-interface.js";
 import type { LocalityRepository } from "@interfaces/locality-repository-interface.js";
 import type { InventoriesSearchParams } from "@ou-ca/common/api/inventory.js";
-import { getHumanFriendlyTimeFromMinutes } from "@ou-ca/common/utils/time-format-convert.js";
 import { err, ok } from "neverthrow";
 import { mock } from "../../../utils/mock.js";
+import { getHumanFriendlyTimeFromMinutes } from "../../../utils/time-format-convert.js";
 import { buildInventoryService } from "./inventory-service.js";
 
 const inventoryRepository = mock<InventoryRepository>();
