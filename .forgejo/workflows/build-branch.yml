@@ -64,14 +64,7 @@ jobs:
         run: |
           echo "NODE_IMAGE_VERSION=$(echo '${{ steps.setup-node.outputs.node-version }}' | cut -c2- )" >> $GITHUB_ENV
 
-      - name: Log in to Harbor
-        uses: https://github.com/redhat-actions/podman-login@v1
-        with:
-          registry: ${{ secrets.HARBOR_REGISTRY_URL }}
-          username: ${{ secrets.HARBOR_USER }}
-          password: ${{ secrets.HARBOR_PASSWORD }}
-          # https://github.com/redhat-actions/podman-login/issues/41
-          auth_file_path: /run/containers/0/auth.json
+      - run: podman login ${{ secrets.HARBOR_REGISTRY_URL }} -u ${{ secrets.HARBOR_USER }} -p ${{ secrets.HARBOR_PASSWORD }} --verbose
 
       - uses: https://github.com/redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         id: build-image
