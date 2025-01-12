@@ -26,11 +26,11 @@ WORKDIR /app
 # In the container, listen to outside localhost by default
 ENV OUCA_SERVER_HOST 0.0.0.0
 
+COPY .npmrc ./
+
 COPY /migrations/ migrations/
 
 COPY package.json pnpm-*.yaml ./
-
-COPY /package.json package.json
 
 RUN pnpm i --frozen-lockfile
 
