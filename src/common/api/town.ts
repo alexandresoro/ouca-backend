@@ -1,14 +1,6 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { townSchema } from "./entities/town.js";
-
-/**
- * `GET` `/town/:id`
- *  Retrieve town entity
- */
-export const getTownResponse = townSchema;
 
 /**
  * `GET` `/towns/:id/info`
@@ -32,8 +24,6 @@ export const getTownsQueryParamsSchema = entitiesCommonQueryParamsSchema.extend(
 
 export type TownsSearchParams = z.infer<typeof getTownsQueryParamsSchema>;
 
-export const getTownsResponse = getPaginatedResponseSchema(townSchema);
-
 /**
  * `PUT` `/town/:id` Update of town entity
  * `POST` `/town` Create new town entity
@@ -45,5 +35,3 @@ export const upsertTownInput = z.object({
 });
 
 export type UpsertTownInput = z.infer<typeof upsertTownInput>;
-
-export const upsertTownResponse = townSchema;

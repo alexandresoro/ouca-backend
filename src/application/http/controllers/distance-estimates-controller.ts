@@ -1,18 +1,16 @@
 import {
   distanceEstimateInfoSchema,
-  getDistanceEstimateResponse,
   getDistanceEstimatesQueryParamsSchema,
-  getDistanceEstimatesResponse,
   upsertDistanceEstimateInput,
-  upsertDistanceEstimateResponse,
 } from "@ou-ca/common/api/distance-estimate.js";
+import { distanceEstimateSchema } from "@ou-ca/common/api/entities/distance-estimate.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const distanceEstimatesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +25,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Distance"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getDistanceEstimateResponse,
+          200: distanceEstimateSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +93,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Distance"],
         querystring: getDistanceEstimatesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getDistanceEstimatesResponse,
+          200: getPaginatedResponseSchema(distanceEstimateSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +128,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Distance"],
         body: upsertDistanceEstimateInput,
         response: withAuthenticationErrorResponses({
-          200: upsertDistanceEstimateResponse,
+          200: distanceEstimateSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +158,7 @@ export const distanceEstimatesController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertDistanceEstimateInput,
         response: withAuthenticationErrorResponses({
-          200: upsertDistanceEstimateResponse,
+          200: distanceEstimateSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

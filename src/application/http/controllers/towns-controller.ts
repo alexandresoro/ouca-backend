@@ -1,18 +1,12 @@
-import {
-  getTownResponse,
-  getTownsQueryParamsSchema,
-  getTownsResponse,
-  townInfoSchema,
-  upsertTownInput,
-  upsertTownResponse,
-} from "@ou-ca/common/api/town.js";
+import { townSchema } from "@ou-ca/common/api/entities/town.js";
+import { getTownsQueryParamsSchema, townInfoSchema, upsertTownInput } from "@ou-ca/common/api/town.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const townsController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +21,7 @@ export const townsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getTownResponse,
+          200: townSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -103,7 +97,7 @@ export const townsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         querystring: getTownsQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getTownsResponse,
+          200: getPaginatedResponseSchema(townSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -138,7 +132,7 @@ export const townsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         body: upsertTownInput,
         response: withAuthenticationErrorResponses({
-          200: upsertTownResponse,
+          200: townSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -168,7 +162,7 @@ export const townsController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertTownInput,
         response: withAuthenticationErrorResponses({
-          200: upsertTownResponse,
+          200: townSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

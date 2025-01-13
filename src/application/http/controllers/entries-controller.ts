@@ -1,17 +1,12 @@
-import {
-  getEntriesQueryParamsSchema,
-  getEntriesResponse,
-  getEntryResponse,
-  upsertEntryInput,
-  upsertEntryResponse,
-} from "@ou-ca/common/api/entry.js";
+import { entrySchema } from "@ou-ca/common/api/entities/entry.js";
+import { getEntriesQueryParamsSchema, upsertEntryInput } from "@ou-ca/common/api/entry.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 import { enrichedEntry } from "./entries-enricher.js";
 
 export const entriesController: FastifyPluginCallbackZod<{
@@ -27,7 +22,7 @@ export const entriesController: FastifyPluginCallbackZod<{
         tags: ["Entry"],
         params: idParamSchema,
         response: withAuthenticationErrorResponses({
-          200: getEntryResponse,
+          200: entrySchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -71,7 +66,7 @@ export const entriesController: FastifyPluginCallbackZod<{
         tags: ["Entry"],
         querystring: getEntriesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getEntriesResponse,
+          200: getPaginatedResponseSchema(entrySchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -119,7 +114,7 @@ export const entriesController: FastifyPluginCallbackZod<{
         tags: ["Entry"],
         body: upsertEntryInput,
         response: withAuthenticationErrorResponses({
-          200: upsertEntryResponse,
+          200: entrySchema,
           409: z.object({ correspondingEntryFound: z.string() }),
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
@@ -167,7 +162,7 @@ export const entriesController: FastifyPluginCallbackZod<{
         params: idParamSchema,
         body: upsertEntryInput,
         response: withAuthenticationErrorResponses({
-          200: upsertEntryResponse,
+          200: entrySchema,
           409: z.object({ correspondingEntryFound: z.string() }),
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),

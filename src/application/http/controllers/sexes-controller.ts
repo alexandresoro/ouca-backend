@@ -1,18 +1,12 @@
-import {
-  getSexResponse,
-  getSexesQueryParamsSchema,
-  getSexesResponse,
-  sexInfoSchema,
-  upsertSexInput,
-  upsertSexResponse,
-} from "@ou-ca/common/api/sex.js";
+import { sexSchema } from "@ou-ca/common/api/entities/sex.js";
+import { getSexesQueryParamsSchema, sexInfoSchema, upsertSexInput } from "@ou-ca/common/api/sex.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const sexesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +21,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         tags: ["Sex"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getSexResponse,
+          200: sexSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +89,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         tags: ["Sex"],
         querystring: getSexesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getSexesResponse,
+          200: getPaginatedResponseSchema(sexSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +124,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         tags: ["Sex"],
         body: upsertSexInput,
         response: withAuthenticationErrorResponses({
-          200: upsertSexResponse,
+          200: sexSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +154,7 @@ export const sexesController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertSexInput,
         response: withAuthenticationErrorResponses({
-          200: upsertSexResponse,
+          200: sexSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

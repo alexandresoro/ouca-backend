@@ -1,14 +1,6 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { departmentSchema } from "./entities/department.js";
-
-/**
- * `GET` `/department/:id`
- *  Retrieve department entity
- */
-export const getDepartmentResponse = departmentSchema;
 
 /**
  * `GET` `/department/:id/info`
@@ -31,8 +23,6 @@ export const getDepartmentsQueryParamsSchema = entitiesCommonQueryParamsSchema.e
 
 export type DepartmentsSearchParams = z.infer<typeof getDepartmentsQueryParamsSchema>;
 
-export const getDepartmentsResponse = getPaginatedResponseSchema(departmentSchema);
-
 /**
  * `PUT` `/department/:id` Update of department entity
  * `POST` `/department` Create new department entity
@@ -42,5 +32,3 @@ export const upsertDepartmentInput = z.object({
 });
 
 export type UpsertDepartmentInput = z.infer<typeof upsertDepartmentInput>;
-
-export const upsertDepartmentResponse = departmentSchema;

@@ -1,11 +1,9 @@
+import { speciesSchema } from "@ou-ca/common/api/entities/species.js";
 import {
-  getSpeciesPaginatedResponse,
   getSpeciesQueryParamsSchema,
-  getSpeciesResponse,
   speciesInfoQueryParamsSchema,
   speciesInfoSchema,
   upsertSpeciesInput,
-  upsertSpeciesResponse,
 } from "@ou-ca/common/api/species.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
@@ -13,7 +11,7 @@ import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const speciesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -28,7 +26,7 @@ export const speciesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getSpeciesResponse,
+          200: speciesSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -118,7 +116,7 @@ export const speciesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         querystring: getSpeciesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getSpeciesPaginatedResponse,
+          200: getPaginatedResponseSchema(speciesSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -153,7 +151,7 @@ export const speciesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         body: upsertSpeciesInput,
         response: withAuthenticationErrorResponses({
-          200: upsertSpeciesResponse,
+          200: speciesSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -183,7 +181,7 @@ export const speciesController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertSpeciesInput,
         response: withAuthenticationErrorResponses({
-          200: upsertSpeciesResponse,
+          200: speciesSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

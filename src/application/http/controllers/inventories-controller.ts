@@ -1,11 +1,9 @@
+import { inventorySchema } from "@ou-ca/common/api/entities/inventory.js";
 import {
   getInventoriesQueryParamsSchema,
-  getInventoriesResponse,
   getInventoryIndexParamsSchema,
   getInventoryIndexResponse,
-  getInventoryResponse,
   upsertInventoryInput,
-  upsertInventoryResponse,
 } from "@ou-ca/common/api/inventory.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
@@ -14,7 +12,7 @@ import { logger } from "../../../utils/logger.js";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 import { enrichedInventory } from "./inventories-enricher.js";
 
 export const inventoriesController: FastifyPluginCallbackZod<{
@@ -30,7 +28,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         tags: ["Inventory"],
         params: idParamSchema,
         response: withAuthenticationErrorResponses({
-          200: getInventoryResponse,
+          200: inventorySchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -107,7 +105,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         tags: ["Inventory"],
         querystring: getInventoriesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getInventoriesResponse,
+          200: getPaginatedResponseSchema(inventorySchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -149,7 +147,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         tags: ["Inventory"],
         body: upsertInventoryInput,
         response: withAuthenticationErrorResponses({
-          200: upsertInventoryResponse,
+          200: inventorySchema,
           ...buildFastifyDefaultErrorResponses([403, 404, 422, 500]),
         }),
       },
@@ -198,7 +196,7 @@ export const inventoriesController: FastifyPluginCallbackZod<{
         params: idParamSchema,
         body: upsertInventoryInput,
         response: withAuthenticationErrorResponses({
-          200: upsertInventoryResponse,
+          200: inventorySchema,
           409: z.object({ correspondingInventoryFound: z.string() }),
           ...buildFastifyDefaultErrorResponses([403, 404, 422, 500]),
         }),

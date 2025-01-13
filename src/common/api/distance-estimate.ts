@@ -1,17 +1,9 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
 } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { distanceEstimateSchema } from "./entities/distance-estimate.js";
-
-/**
- * `GET` `/distance-estimate/:id`
- *  Retrieve distance estimate entity
- */
-export const getDistanceEstimateResponse = distanceEstimateSchema;
 
 /**
  * `GET` `/distance-estimates/:id/info`
@@ -29,8 +21,6 @@ export const getDistanceEstimatesQueryParamsSchema = entitiesCommonQueryParamsSc
 
 export type DistanceEstimatesSearchParams = z.infer<typeof getDistanceEstimatesQueryParamsSchema>;
 
-export const getDistanceEstimatesResponse = getPaginatedResponseSchema(distanceEstimateSchema);
-
 /**
  * `PUT` `/distance-estimate/:id` Update of distance estimate entity
  * `POST` `/distance-estimate` Create new distance estimate entity
@@ -40,5 +30,3 @@ export const upsertDistanceEstimateInput = z.object({
 });
 
 export type UpsertDistanceEstimateInput = z.infer<typeof upsertDistanceEstimateInput>;
-
-export const upsertDistanceEstimateResponse = distanceEstimateSchema;

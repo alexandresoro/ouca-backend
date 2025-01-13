@@ -1,16 +1,6 @@
 import { z } from "zod";
-import {
-  getPaginatedResponseSchema,
-  paginationQueryParamsSchema,
-} from "../../application/http/controllers/common/pagination.js";
+import { paginationQueryParamsSchema } from "../../application/http/controllers/common/pagination.js";
 import { coordinatesSchema } from "./entities/coordinates.js";
-import { inventorySchema } from "./entities/inventory.js";
-
-/**
- * `GET` `/inventory/:id`
- *  Retrieve inventory
- */
-export const getInventoryResponse = inventorySchema;
 
 /**
  * `GET` `/inventories`
@@ -24,8 +14,6 @@ export const getInventoriesQueryParamsSchema = paginationQueryParamsSchema.requi
 });
 
 export type InventoriesSearchParams = z.infer<typeof getInventoriesQueryParamsSchema>;
-
-export const getInventoriesResponse = getPaginatedResponseSchema(inventorySchema);
 
 export const getInventoryIndexParamsSchema = z.object({
   orderBy: z.enum(INVENTORIES_ORDER_BY_ELEMENTS),
@@ -62,5 +50,3 @@ export const upsertInventoryInput = z.object({
 });
 
 export type UpsertInventoryInput = z.infer<typeof upsertInventoryInput>;
-
-export const upsertInventoryResponse = inventorySchema;

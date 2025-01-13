@@ -1,17 +1,9 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
 } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { numberEstimateSchema } from "./entities/number-estimate.js";
-
-/**
- * `GET` `/number-estimate/:id`
- *  Retrieve number estimate entity
- */
-export const getNumberEstimateResponse = numberEstimateSchema;
 
 /**
  * `GET` `/number-estimates/:id/info`
@@ -31,8 +23,6 @@ export const getNumberEstimatesQueryParamsSchema = entitiesCommonQueryParamsSche
 
 export type NumberEstimatesSearchParams = z.infer<typeof getNumberEstimatesQueryParamsSchema>;
 
-export const getNumberEstimatesResponse = getPaginatedResponseSchema(numberEstimateSchema);
-
 /**
  * `PUT` `/number-estimate/:id` Update of number estimate entity
  * `POST` `/number-estimate` Create new number estimate entity
@@ -43,5 +33,3 @@ export const upsertNumberEstimateInput = z.object({
 });
 
 export type UpsertNumberEstimateInput = z.infer<typeof upsertNumberEstimateInput>;
-
-export const upsertNumberEstimateResponse = numberEstimateSchema;

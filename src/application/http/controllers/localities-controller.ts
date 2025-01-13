@@ -1,18 +1,12 @@
-import {
-  getLocalitiesQueryParamsSchema,
-  getLocalitiesResponse,
-  getLocalityResponse,
-  localityInfoSchema,
-  upsertLocalityInput,
-  upsertLocalityResponse,
-} from "@ou-ca/common/api/locality.js";
+import { localitySchema } from "@ou-ca/common/api/entities/locality.js";
+import { getLocalitiesQueryParamsSchema, localityInfoSchema, upsertLocalityInput } from "@ou-ca/common/api/locality.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const localitiesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +21,7 @@ export const localitiesController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getLocalityResponse,
+          200: localitySchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -116,7 +110,7 @@ export const localitiesController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         querystring: getLocalitiesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getLocalitiesResponse,
+          200: getPaginatedResponseSchema(localitySchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -151,7 +145,7 @@ export const localitiesController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         body: upsertLocalityInput,
         response: withAuthenticationErrorResponses({
-          200: upsertLocalityResponse,
+          200: localitySchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -181,7 +175,7 @@ export const localitiesController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertLocalityInput,
         response: withAuthenticationErrorResponses({
-          200: upsertLocalityResponse,
+          200: localitySchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

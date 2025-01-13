@@ -1,18 +1,12 @@
-import {
-  getWeatherResponse,
-  getWeathersQueryParamsSchema,
-  getWeathersResponse,
-  upsertWeatherInput,
-  upsertWeatherResponse,
-  weatherInfoSchema,
-} from "@ou-ca/common/api/weather.js";
+import { weatherSchema } from "@ou-ca/common/api/entities/weather.js";
+import { getWeathersQueryParamsSchema, upsertWeatherInput, weatherInfoSchema } from "@ou-ca/common/api/weather.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const weathersController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +21,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         tags: ["Weather"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getWeatherResponse,
+          200: weatherSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +89,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         tags: ["Weather"],
         querystring: getWeathersQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getWeathersResponse,
+          200: getPaginatedResponseSchema(weatherSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +124,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         tags: ["Weather"],
         body: upsertWeatherInput,
         response: withAuthenticationErrorResponses({
-          200: upsertWeatherResponse,
+          200: weatherSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +154,7 @@ export const weathersController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertWeatherInput,
         response: withAuthenticationErrorResponses({
-          200: upsertWeatherResponse,
+          200: weatherSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

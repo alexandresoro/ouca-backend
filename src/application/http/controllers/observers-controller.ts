@@ -1,18 +1,12 @@
-import {
-  getObserverResponse,
-  getObserversQueryParamsSchema,
-  getObserversResponse,
-  observerInfoSchema,
-  upsertObserverInput,
-  upsertObserverResponse,
-} from "@ou-ca/common/api/observer.js";
+import { observerSchema } from "@ou-ca/common/api/entities/observer.js";
+import { getObserversQueryParamsSchema, observerInfoSchema, upsertObserverInput } from "@ou-ca/common/api/observer.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const observersController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +21,7 @@ export const observersController: FastifyPluginCallbackZod<{
         tags: ["Observer"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getObserverResponse,
+          200: observerSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +89,7 @@ export const observersController: FastifyPluginCallbackZod<{
         tags: ["Observer"],
         querystring: getObserversQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getObserversResponse,
+          200: getPaginatedResponseSchema(observerSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +124,7 @@ export const observersController: FastifyPluginCallbackZod<{
         tags: ["Observer"],
         body: upsertObserverInput,
         response: withAuthenticationErrorResponses({
-          200: upsertObserverResponse,
+          200: observerSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +154,7 @@ export const observersController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertObserverInput,
         response: withAuthenticationErrorResponses({
-          200: upsertObserverResponse,
+          200: observerSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

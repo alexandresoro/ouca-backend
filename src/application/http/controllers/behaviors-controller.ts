@@ -1,18 +1,12 @@
-import {
-  behaviorInfoSchema,
-  getBehaviorResponse,
-  getBehaviorsQueryParamsSchema,
-  getBehaviorsResponse,
-  upsertBehaviorInput,
-  upsertBehaviorResponse,
-} from "@ou-ca/common/api/behavior.js";
+import { behaviorInfoSchema, getBehaviorsQueryParamsSchema, upsertBehaviorInput } from "@ou-ca/common/api/behavior.js";
+import { behaviorSchema } from "@ou-ca/common/api/entities/behavior.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const behaviorsController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +21,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         tags: ["Behavior"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getBehaviorResponse,
+          200: behaviorSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +89,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         tags: ["Behavior"],
         querystring: getBehaviorsQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getBehaviorsResponse,
+          200: getPaginatedResponseSchema(behaviorSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +124,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         tags: ["Behavior"],
         body: upsertBehaviorInput,
         response: withAuthenticationErrorResponses({
-          200: upsertBehaviorResponse,
+          200: behaviorSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +154,7 @@ export const behaviorsController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertBehaviorInput,
         response: withAuthenticationErrorResponses({
-          200: upsertBehaviorResponse,
+          200: behaviorSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

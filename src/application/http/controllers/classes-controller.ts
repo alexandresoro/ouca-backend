@@ -1,10 +1,8 @@
+import { speciesClassSchema } from "@ou-ca/common/api/entities/species-class.js";
 import {
-  getClassResponse,
   getClassesQueryParamsSchema,
-  getClassesResponse,
   speciesClassInfoSchema,
   upsertClassInput,
-  upsertClassResponse,
 } from "@ou-ca/common/api/species-class.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
@@ -12,7 +10,7 @@ import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const classesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +25,7 @@ export const classesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getClassResponse,
+          200: speciesClassSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -97,7 +95,7 @@ export const classesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         querystring: getClassesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getClassesResponse,
+          200: getPaginatedResponseSchema(speciesClassSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -132,7 +130,7 @@ export const classesController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         body: upsertClassInput,
         response: withAuthenticationErrorResponses({
-          200: upsertClassResponse,
+          200: speciesClassSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -162,7 +160,7 @@ export const classesController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertClassInput,
         response: withAuthenticationErrorResponses({
-          200: upsertClassResponse,
+          200: speciesClassSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

@@ -1,18 +1,12 @@
-import {
-  ageInfoSchema,
-  getAgeResponse,
-  getAgesQueryParamsSchema,
-  getAgesResponse,
-  upsertAgeInput,
-  upsertAgeResponse,
-} from "@ou-ca/common/api/age.js";
+import { ageInfoSchema, getAgesQueryParamsSchema, upsertAgeInput } from "@ou-ca/common/api/age.js";
+import { ageSchema } from "@ou-ca/common/api/entities/age.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const agesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +21,7 @@ export const agesController: FastifyPluginCallbackZod<{
         tags: ["Age"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getAgeResponse,
+          200: ageSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +89,7 @@ export const agesController: FastifyPluginCallbackZod<{
         tags: ["Age"],
         querystring: getAgesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getAgesResponse,
+          200: getPaginatedResponseSchema(ageSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +124,7 @@ export const agesController: FastifyPluginCallbackZod<{
         tags: ["Age"],
         body: upsertAgeInput,
         response: withAuthenticationErrorResponses({
-          200: upsertAgeResponse,
+          200: ageSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +154,7 @@ export const agesController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertAgeInput,
         response: withAuthenticationErrorResponses({
-          200: upsertAgeResponse,
+          200: ageSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

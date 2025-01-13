@@ -1,15 +1,7 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
 import { getSearchCriteriaParamsSchema } from "./common/search-criteria.js";
-import { speciesSchema } from "./entities/species.js";
-
-/**
- * `GET` `/species/:id`
- *  Retrieve species entity
- */
-export const getSpeciesResponse = speciesSchema;
 
 /**
  * `GET` `/species/:id/info`
@@ -35,8 +27,6 @@ export const getSpeciesQueryParamsSchema = entitiesCommonQueryParamsSchema
 
 export type SpeciesSearchParams = z.infer<typeof getSpeciesQueryParamsSchema>;
 
-export const getSpeciesPaginatedResponse = getPaginatedResponseSchema(speciesSchema);
-
 /**
  * `PUT` `/species/:id` Update of species entity
  * `POST` `/species` Create new species entity
@@ -49,5 +39,3 @@ export const upsertSpeciesInput = z.object({
 });
 
 export type UpsertSpeciesInput = z.infer<typeof upsertSpeciesInput>;
-
-export const upsertSpeciesResponse = speciesSchema;

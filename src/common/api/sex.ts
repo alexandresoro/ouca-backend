@@ -1,17 +1,9 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
 } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { sexSchema } from "./entities/sex.js";
-
-/**
- * `GET` `/sex/:id`
- *  Retrieve sex entity
- */
-export const getSexResponse = sexSchema;
 
 /**
  * `GET` `/sexes/:id/info`
@@ -29,8 +21,6 @@ export const getSexesQueryParamsSchema = entitiesCommonQueryParamsSchema.extend(
 
 export type SexesSearchParams = z.infer<typeof getSexesQueryParamsSchema>;
 
-export const getSexesResponse = getPaginatedResponseSchema(sexSchema);
-
 /**
  * `PUT` `/sex/:id` Update of sex entity
  * `POST` `/sex` Create new sex entity
@@ -40,5 +30,3 @@ export const upsertSexInput = z.object({
 });
 
 export type UpsertSexInput = z.infer<typeof upsertSexInput>;
-
-export const upsertSexResponse = sexSchema;

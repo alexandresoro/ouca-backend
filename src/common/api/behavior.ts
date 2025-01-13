@@ -1,18 +1,10 @@
 import { BREEDER_CODES } from "@domain/behavior/breeder.js";
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
 } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { behaviorSchema } from "./entities/behavior.js";
-
-/**
- * `GET` `/behavior/:id`
- *  Retrieve behavior entity
- */
-export const getBehaviorResponse = behaviorSchema;
 
 /**
  * `GET` `/behavior/:id/info`
@@ -32,8 +24,6 @@ export const getBehaviorsQueryParamsSchema = entitiesCommonQueryParamsSchema.ext
 
 export type BehaviorsSearchParams = z.infer<typeof getBehaviorsQueryParamsSchema>;
 
-export const getBehaviorsResponse = getPaginatedResponseSchema(behaviorSchema);
-
 /**
  * `PUT` `/behavior/:id` Update of behavior entity
  * `POST` `/behavior` Create new behavior entity
@@ -45,5 +35,3 @@ export const upsertBehaviorInput = z.object({
 });
 
 export type UpsertBehaviorInput = z.infer<typeof upsertBehaviorInput>;
-
-export const upsertBehaviorResponse = behaviorSchema;

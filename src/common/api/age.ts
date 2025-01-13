@@ -1,17 +1,9 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
 } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { ageSchema } from "./entities/age.js";
-
-/**
- * `GET` `/age/:id`
- *  Retrieve age entity
- */
-export const getAgeResponse = ageSchema;
 
 /**
  * `GET` `/ages/:id/info`
@@ -29,8 +21,6 @@ export const getAgesQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
 
 export type AgesSearchParams = z.infer<typeof getAgesQueryParamsSchema>;
 
-export const getAgesResponse = getPaginatedResponseSchema(ageSchema);
-
 /**
  * `PUT` `/age/:id` Update of age entity
  * `POST` `/age` Create new age entity
@@ -40,5 +30,3 @@ export const upsertAgeInput = z.object({
 });
 
 export type UpsertAgeInput = z.infer<typeof upsertAgeInput>;
-
-export const upsertAgeResponse = ageSchema;

@@ -1,17 +1,9 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
 } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { observerSchema } from "./entities/observer.js";
-
-/**
- * `GET` `/observer/:id`
- *  Retrieve observer entity
- */
-export const getObserverResponse = observerSchema;
 
 /**
  * `GET` `/observers/:id/info`
@@ -29,8 +21,6 @@ export const getObserversQueryParamsSchema = entitiesCommonQueryParamsSchema.ext
 
 export type ObserversSearchParams = z.infer<typeof getObserversQueryParamsSchema>;
 
-export const getObserversResponse = getPaginatedResponseSchema(observerSchema);
-
 /**
  * `PUT` `/observer/:id` Update of observer entity
  * `POST` `/observer` Create new observer entity
@@ -40,5 +30,3 @@ export const upsertObserverInput = z.object({
 });
 
 export type UpsertObserverInput = z.infer<typeof upsertObserverInput>;
-
-export const upsertObserverResponse = observerSchema;

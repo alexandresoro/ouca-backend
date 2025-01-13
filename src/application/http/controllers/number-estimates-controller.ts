@@ -1,10 +1,8 @@
+import { numberEstimateSchema } from "@ou-ca/common/api/entities/number-estimate.js";
 import {
-  getNumberEstimateResponse,
   getNumberEstimatesQueryParamsSchema,
-  getNumberEstimatesResponse,
   numberEstimateInfoSchema,
   upsertNumberEstimateInput,
-  upsertNumberEstimateResponse,
 } from "@ou-ca/common/api/number-estimate.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
@@ -12,7 +10,7 @@ import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const numberEstimatesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +25,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Quantity"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getNumberEstimateResponse,
+          200: numberEstimateSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +93,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Quantity"],
         querystring: getNumberEstimatesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getNumberEstimatesResponse,
+          200: getPaginatedResponseSchema(numberEstimateSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +128,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         tags: ["Quantity"],
         body: upsertNumberEstimateInput,
         response: withAuthenticationErrorResponses({
-          200: upsertNumberEstimateResponse,
+          200: numberEstimateSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +158,7 @@ export const numberEstimatesController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertNumberEstimateInput,
         response: withAuthenticationErrorResponses({
-          200: upsertNumberEstimateResponse,
+          200: numberEstimateSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

@@ -1,16 +1,6 @@
 import { z } from "zod";
-import {
-  getPaginatedResponseSchema,
-  paginationQueryParamsSchema,
-} from "../../application/http/controllers/common/pagination.js";
+import { paginationQueryParamsSchema } from "../../application/http/controllers/common/pagination.js";
 import { getSearchCriteriaParamsSchema } from "./common/search-criteria.js";
-import { entrySchema } from "./entities/entry.js";
-
-/**
- * `GET` `/entry/:id`
- *  Retrieve entry
- */
-export const getEntryResponse = entrySchema;
 
 /**
  * `GET` `/entries`
@@ -40,8 +30,6 @@ export const getEntriesQueryParamsSchema = paginationQueryParamsSchema
 
 export type EntriesSearchParams = z.infer<typeof getEntriesQueryParamsSchema>;
 
-export const getEntriesResponse = getPaginatedResponseSchema(entrySchema);
-
 /**
  * `PUT` `/entry/:id` Update of entry
  * `POST` `/entry` Create new entry
@@ -66,5 +54,3 @@ export const upsertEntryInput = z
   });
 
 export type UpsertEntryInput = z.infer<typeof upsertEntryInput>;
-
-export const upsertEntryResponse = entrySchema;

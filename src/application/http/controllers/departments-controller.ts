@@ -1,18 +1,16 @@
 import {
   departmentInfoSchema,
-  getDepartmentResponse,
   getDepartmentsQueryParamsSchema,
-  getDepartmentsResponse,
   upsertDepartmentInput,
-  upsertDepartmentResponse,
 } from "@ou-ca/common/api/department.js";
+import { departmentSchema } from "@ou-ca/common/api/entities/department.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const departmentsController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +25,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getDepartmentResponse,
+          200: departmentSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -99,7 +97,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         querystring: getDepartmentsQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getDepartmentsResponse,
+          200: getPaginatedResponseSchema(departmentSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -134,7 +132,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
         tags: ["Location"],
         body: upsertDepartmentInput,
         response: withAuthenticationErrorResponses({
-          200: upsertDepartmentResponse,
+          200: departmentSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -164,7 +162,7 @@ export const departmentsController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertDepartmentInput,
         response: withAuthenticationErrorResponses({
-          200: upsertDepartmentResponse,
+          200: departmentSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

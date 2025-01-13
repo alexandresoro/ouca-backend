@@ -1,10 +1,8 @@
+import { environmentSchema } from "@ou-ca/common/api/entities/environment.js";
 import {
   environmentInfoSchema,
-  getEnvironmentResponse,
   getEnvironmentsQueryParamsSchema,
-  getEnvironmentsResponse,
   upsertEnvironmentInput,
-  upsertEnvironmentResponse,
 } from "@ou-ca/common/api/environment.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
@@ -12,7 +10,7 @@ import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const environmentsController: FastifyPluginCallbackZod<{
   services: Services;
@@ -27,7 +25,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         tags: ["Environment"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: getEnvironmentResponse,
+          200: environmentSchema,
           ...buildFastifyDefaultErrorResponses([403, 404]),
         }),
       },
@@ -95,7 +93,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         tags: ["Environment"],
         querystring: getEnvironmentsQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getEnvironmentsResponse,
+          200: getPaginatedResponseSchema(environmentSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -130,7 +128,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         tags: ["Environment"],
         body: upsertEnvironmentInput,
         response: withAuthenticationErrorResponses({
-          200: upsertEnvironmentResponse,
+          200: environmentSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },
@@ -160,7 +158,7 @@ export const environmentsController: FastifyPluginCallbackZod<{
         params: idParamAsNumberSchema,
         body: upsertEnvironmentInput,
         response: withAuthenticationErrorResponses({
-          200: upsertEnvironmentResponse,
+          200: environmentSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
         }),
       },

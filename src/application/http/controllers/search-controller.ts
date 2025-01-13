@@ -1,10 +1,11 @@
-import { getSpeciesPaginatedResponse, getSpeciesQueryParamsSchema } from "@ou-ca/common/api/species.js";
+import { speciesSchema } from "@ou-ca/common/api/entities/species.js";
+import { getSpeciesQueryParamsSchema } from "@ou-ca/common/api/species.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses } from "./api-utils.js";
-import { getPaginationMetadata } from "./common/pagination.js";
+import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
 
 export const searchController: FastifyPluginCallbackZod<{
   services: Services;
@@ -19,7 +20,7 @@ export const searchController: FastifyPluginCallbackZod<{
         tags: ["Species"],
         querystring: getSpeciesQueryParamsSchema,
         response: withAuthenticationErrorResponses({
-          200: getSpeciesPaginatedResponse,
+          200: getPaginatedResponseSchema(speciesSchema),
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
