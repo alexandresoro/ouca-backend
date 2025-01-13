@@ -14,7 +14,7 @@ import { logger } from "../../../utils/logger.js";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./controller-utils.js";
+import { getPaginationMetadata } from "./common/pagination.js";
 import { enrichedInventory } from "./inventories-enricher.js";
 
 export const inventoriesController: FastifyPluginCallbackZod<{

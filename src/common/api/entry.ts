@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema, paginationQueryParamsSchema } from "./common/pagination.js";
+import {
+  getPaginatedResponseSchema,
+  paginationQueryParamsSchema,
+} from "../../application/http/controllers/common/pagination.js";
 import { getSearchCriteriaParamsSchema } from "./common/search-criteria.js";
 import { entrySchema } from "./entities/entry.js";
 

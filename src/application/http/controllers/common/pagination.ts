@@ -7,13 +7,34 @@ export const paginationQueryParamsSchema = z.object({
 });
 
 // OUTPUT
-const paginationMetadataSchema = z.object({
+export const paginationMetadataSchema = z.object({
   pageNumber: z.number().int().min(1).optional(),
   pageSize: z.number().int().min(1).optional(),
   count: z.number().min(0).int(),
 });
 
-export type PaginationMetadata = z.infer<typeof paginationMetadataSchema>;
+type PaginationMetadata = z.infer<typeof paginationMetadataSchema>;
+
+export const getPaginationMetadata = (
+  count: number,
+  {
+    pageNumber,
+    pageSize,
+  }: {
+    pageNumber?: number;
+    pageSize?: number;
+  },
+): PaginationMetadata => {
+  return {
+    count,
+    ...(pageNumber != null && pageSize != null
+      ? {
+          pageNumber,
+          pageSize,
+        }
+      : {}),
+  };
+};
 
 export const getPaginatedResponseSchema = <T extends z.ZodTypeAny>(dataElement: T) =>
   z.object({

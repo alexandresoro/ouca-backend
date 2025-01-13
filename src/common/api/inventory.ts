@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { getPaginatedResponseSchema, paginationQueryParamsSchema } from "./common/pagination.js";
+import {
+  getPaginatedResponseSchema,
+  paginationQueryParamsSchema,
+} from "../../application/http/controllers/common/pagination.js";
 import { coordinatesSchema } from "./entities/coordinates.js";
 import { inventorySchema } from "./entities/inventory.js";
 

@@ -12,7 +12,7 @@ import { z } from "zod";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
-import { getPaginationMetadata } from "./controller-utils.js";
+import { getPaginationMetadata } from "./common/pagination.js";
 
 export const departmentsController: FastifyPluginCallbackZod<{
   services: Services;

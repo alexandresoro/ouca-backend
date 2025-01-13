@@ -1,7 +1,7 @@
 import { z } from "zod";
+import { getPaginatedResponseSchema } from "../../application/http/controllers/common/pagination.js";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
-import { getPaginatedResponseSchema } from "./common/pagination.js";
 import { getSearchCriteriaParamsSchema } from "./common/search-criteria.js";
 import { speciesSchema } from "./entities/species.js";
 
