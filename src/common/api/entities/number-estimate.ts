@@ -6,5 +6,3 @@ export const numberEstimateSchema = z.object({
   nonCompte: z.boolean(),
   ownerId: z.string().uuid().nullable(),
 });
-
-export type NumberEstimate = z.infer<typeof numberEstimateSchema>;

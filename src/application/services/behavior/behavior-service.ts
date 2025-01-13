@@ -1,9 +1,8 @@
-import type { BehaviorCreateInput, BehaviorFailureReason } from "@domain/behavior/behavior.js";
+import type { Behavior, BehaviorCreateInput, BehaviorFailureReason } from "@domain/behavior/behavior.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { BehaviorRepository } from "@interfaces/behavior-repository-interface.js";
 import type { BehaviorsSearchParams, UpsertBehaviorInput } from "@ou-ca/common/api/behavior.js";
-import type { Behavior } from "@ou-ca/common/api/entities/behavior.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";
 

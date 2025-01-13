@@ -1,9 +1,8 @@
-import type { AgeCreateInput, AgeFailureReason } from "@domain/age/age.js";
+import type { Age, AgeCreateInput, AgeFailureReason } from "@domain/age/age.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { AgeRepository } from "@interfaces/age-repository-interface.js";
 import type { AgesSearchParams, UpsertAgeInput } from "@ou-ca/common/api/age.js";
-import type { Age } from "@ou-ca/common/api/entities/age.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";
 

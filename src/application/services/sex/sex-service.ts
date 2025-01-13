@@ -1,8 +1,7 @@
-import type { SexCreateInput, SexFailureReason } from "@domain/sex/sex.js";
+import type { Sex, SexCreateInput, SexFailureReason } from "@domain/sex/sex.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { SexRepository } from "@interfaces/sex-repository-interface.js";
-import type { Sex } from "@ou-ca/common/api/entities/sex.js";
 import type { SexesSearchParams, UpsertSexInput } from "@ou-ca/common/api/sex.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";

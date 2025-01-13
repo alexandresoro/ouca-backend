@@ -1,5 +1,5 @@
+import type { NumberEstimate } from "@domain/number-estimate/number-estimate.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { NumberEstimate } from "@ou-ca/common/api/entities/number-estimate.js";
 import { ImportEntiteAvecLibelleService } from "./import-entite-avec-libelle-service.js";
 import { ImportedEstimationNombre } from "./objects/imported-estimation-nombre.object.js";
 

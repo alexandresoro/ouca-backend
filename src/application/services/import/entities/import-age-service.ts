@@ -1,6 +1,5 @@
-import type { AgeCreateInput } from "@domain/age/age.js";
+import type { Age, AgeCreateInput } from "@domain/age/age.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { Age } from "@ou-ca/common/api/entities/age.js";
 import { ImportEntiteAvecLibelleService } from "./import-entite-avec-libelle-service.js";
 
 export class ImportAgeService extends ImportEntiteAvecLibelleService<Age> {

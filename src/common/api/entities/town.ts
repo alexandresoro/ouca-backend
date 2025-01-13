@@ -7,5 +7,3 @@ export const townSchema = z.object({
   departmentId: z.string(),
   ownerId: z.string().uuid().nullable(),
 });
-
-export type Town = z.infer<typeof townSchema>;

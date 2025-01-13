@@ -1,10 +1,13 @@
 import type { Inventory } from "@domain/inventory/inventory.js";
 import type { AccessFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { Inventory as InventoryApi } from "@ou-ca/common/api/entities/inventory.js";
+import type { inventorySchema } from "@ou-ca/common/api/entities/inventory.js";
 import { Result, err, ok } from "neverthrow";
+import type { z } from "zod";
 import { getDateOnlyAsLocalISOString } from "../../../utils/time-utils.js";
 import type { Services } from "../../services/services.js";
+
+export type InventoryApi = z.infer<typeof inventorySchema>;
 
 export const enrichedInventory = async (
   services: Services,

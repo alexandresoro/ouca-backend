@@ -1,7 +1,7 @@
+import type { Department } from "@domain/department/department.js";
+import type { Town } from "@domain/town/town.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { Department } from "@ou-ca/common/api/entities/department.js";
 import type { Locality } from "@ou-ca/common/api/entities/locality.js";
-import type { Town } from "@ou-ca/common/api/entities/town.js";
 import type { UpsertLocalityInput } from "@ou-ca/common/api/locality.js";
 import { ImportService } from "./import-service.js";
 import { ImportedLieuDit } from "./objects/imported-lieu-dit.object.js";

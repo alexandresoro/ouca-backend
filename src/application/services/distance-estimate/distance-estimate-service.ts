@@ -1,4 +1,4 @@
-import type { DistanceEstimateFailureReason } from "@domain/distance-estimate/distance-estimate.js";
+import type { DistanceEstimate, DistanceEstimateFailureReason } from "@domain/distance-estimate/distance-estimate.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { DistanceEstimateRepository } from "@interfaces/distance-estimate-repository-interface.js";
@@ -6,7 +6,6 @@ import type {
   DistanceEstimatesSearchParams,
   UpsertDistanceEstimateInput,
 } from "@ou-ca/common/api/distance-estimate.js";
-import type { DistanceEstimate } from "@ou-ca/common/api/entities/distance-estimate.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";
 

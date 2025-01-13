@@ -1,5 +1,5 @@
+import type { DistanceEstimate } from "@domain/distance-estimate/distance-estimate.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { DistanceEstimate } from "@ou-ca/common/api/entities/distance-estimate.js";
 import { ImportEntiteAvecLibelleService } from "./import-entite-avec-libelle-service.js";
 
 export class ImportEstimationDistanceService extends ImportEntiteAvecLibelleService {

@@ -1,8 +1,7 @@
-import type { EnvironmentCreateInput, EnvironmentFailureReason } from "@domain/environment/environment.js";
+import type { Environment, EnvironmentCreateInput, EnvironmentFailureReason } from "@domain/environment/environment.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { EnvironmentRepository } from "@interfaces/environment-repository-interface.js";
-import type { Environment } from "@ou-ca/common/api/entities/environment.js";
 import type { EnvironmentsSearchParams, UpsertEnvironmentInput } from "@ou-ca/common/api/environment.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";

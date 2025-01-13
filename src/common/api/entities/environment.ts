@@ -6,5 +6,3 @@ export const environmentSchema = z.object({
   libelle: z.string(),
   ownerId: z.string().uuid().nullable(),
 });
-
-export type Environment = z.infer<typeof environmentSchema>;

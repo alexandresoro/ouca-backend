@@ -1,11 +1,10 @@
-import type { DepartmentCreateInput, DepartmentFailureReason } from "@domain/department/department.js";
+import type { Department, DepartmentCreateInput, DepartmentFailureReason } from "@domain/department/department.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { DepartmentRepository } from "@interfaces/department-repository-interface.js";
 import type { LocalityRepository } from "@interfaces/locality-repository-interface.js";
 import type { TownRepository } from "@interfaces/town-repository-interface.js";
 import type { DepartmentsSearchParams, UpsertDepartmentInput } from "@ou-ca/common/api/department.js";
-import type { Department } from "@ou-ca/common/api/entities/department.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";
 

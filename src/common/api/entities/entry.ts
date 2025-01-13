@@ -21,5 +21,3 @@ export const entrySchema = z.object({
   environments: z.array(environmentSchema),
   comment: z.string().nullable(),
 });
-
-export type Entry = z.infer<typeof entrySchema>;

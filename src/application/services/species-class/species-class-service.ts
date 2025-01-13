@@ -1,9 +1,8 @@
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
-import type { SpeciesClassFailureReason } from "@domain/species-class/species-class.js";
+import type { SpeciesClass, SpeciesClassFailureReason } from "@domain/species-class/species-class.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { SpeciesClassRepository } from "@interfaces/species-class-repository-interface.js";
 import type { SpeciesRepository } from "@interfaces/species-repository-interface.js";
-import type { SpeciesClass } from "@ou-ca/common/api/entities/species-class.js";
 import type { ClassesSearchParams, UpsertClassInput } from "@ou-ca/common/api/species-class.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";

@@ -1,9 +1,8 @@
 import type { AgeCreateInput } from "@domain/age/age.js";
-import type { ObserverFailureReason } from "@domain/observer/observer.js";
+import type { Observer, ObserverFailureReason } from "@domain/observer/observer.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { ObserverRepository } from "@interfaces/observer-repository-interface.js";
-import type { Observer } from "@ou-ca/common/api/entities/observer.js";
 import type { ObserversSearchParams, UpsertObserverInput } from "@ou-ca/common/api/observer.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";

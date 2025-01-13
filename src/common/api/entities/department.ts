@@ -5,5 +5,3 @@ export const departmentSchema = z.object({
   code: z.string(),
   ownerId: z.string().uuid().nullable(),
 });
-
-export type Department = z.infer<typeof departmentSchema>;

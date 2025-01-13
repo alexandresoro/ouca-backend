@@ -1,5 +1,5 @@
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { Weather } from "@ou-ca/common/api/entities/weather.js";
+import type { Weather } from "@domain/weather/weather.js";
 import { ImportEntiteAvecLibelleService } from "./import-entite-avec-libelle-service.js";
 
 export class ImportMeteoService extends ImportEntiteAvecLibelleService {

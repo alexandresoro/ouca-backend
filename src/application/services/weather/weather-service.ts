@@ -1,8 +1,7 @@
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { WeatherCreateInput, WeatherFailureReason } from "@domain/weather/weather.js";
+import type { Weather, WeatherCreateInput, WeatherFailureReason } from "@domain/weather/weather.js";
 import type { WeatherRepository } from "@interfaces/weather-repository-interface.js";
-import type { Weather } from "@ou-ca/common/api/entities/weather.js";
 import type { UpsertWeatherInput, WeathersSearchParams } from "@ou-ca/common/api/weather.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";

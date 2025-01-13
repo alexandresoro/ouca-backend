@@ -1,9 +1,12 @@
 import type { Entry } from "@domain/entry/entry.js";
 import type { AccessFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { Entry as EntryApi } from "@ou-ca/common/api/entities/entry.js";
+import type { entrySchema } from "@ou-ca/common/api/entities/entry.js";
 import { Result, err, ok } from "neverthrow";
+import type { z } from "zod";
 import type { Services } from "../../services/services.js";
+
+type EntryApi = z.infer<typeof entrySchema>;
 
 export const enrichedEntry = async (
   services: Services,

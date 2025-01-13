@@ -8,5 +8,3 @@ export const behaviorSchema = z.object({
   nicheur: z.enum(BREEDER_CODES).nullable(),
   ownerId: z.string().uuid().nullable(),
 });
-
-export type Behavior = z.infer<typeof behaviorSchema>;

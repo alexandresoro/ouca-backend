@@ -1,5 +1,5 @@
+import type { Environment } from "@domain/environment/environment.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { Environment } from "@ou-ca/common/api/entities/environment.js";
 import { ImportEntiteAvecLibelleEtCodeService } from "./import-entite-avec-libelle-et-code-service.js";
 
 export class ImportMilieuService extends ImportEntiteAvecLibelleEtCodeService {

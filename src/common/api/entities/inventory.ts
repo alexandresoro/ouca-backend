@@ -16,5 +16,3 @@ export const inventorySchema = z.object({
   temperature: z.number().nullable(),
   weathers: z.array(weatherSchema),
 });
-
-export type Inventory = z.infer<typeof inventorySchema>;

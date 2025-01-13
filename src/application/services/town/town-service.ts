@@ -1,9 +1,8 @@
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
-import type { TownCreateInput, TownFailureReason } from "@domain/town/town.js";
+import type { Town, TownCreateInput, TownFailureReason } from "@domain/town/town.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { LocalityRepository } from "@interfaces/locality-repository-interface.js";
 import type { TownRepository } from "@interfaces/town-repository-interface.js";
-import type { Town } from "@ou-ca/common/api/entities/town.js";
 import type { TownsSearchParams, UpsertTownInput } from "@ou-ca/common/api/town.js";
 import { type Result, err, ok } from "neverthrow";
 import { getSqlPagination } from "../entities-utils.js";
