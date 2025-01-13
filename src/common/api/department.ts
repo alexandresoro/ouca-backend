@@ -10,8 +10,6 @@ import { departmentSchema } from "./entities/department.js";
  */
 export const getDepartmentResponse = departmentSchema;
 
-export type GetDepartmentResponse = z.infer<typeof getDepartmentResponse>;
-
 /**
  * `GET` `/department/:id/info`
  *  Retrieve department info
@@ -26,7 +24,6 @@ export const departmentInfoSchema = entityInfoSchema.extend({
  *  Retrieve paginated departments results
  */
 export const DEPARTMENTS_ORDER_BY_ELEMENTS = ["id", "code", "nbCommunes", "nbLieuxDits", "nbDonnees"] as const;
-export type DepartmentsOrderBy = (typeof DEPARTMENTS_ORDER_BY_ELEMENTS)[number];
 
 export const getDepartmentsQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(DEPARTMENTS_ORDER_BY_ELEMENTS).optional(),
@@ -47,5 +44,3 @@ export const upsertDepartmentInput = z.object({
 export type UpsertDepartmentInput = z.infer<typeof upsertDepartmentInput>;
 
 export const upsertDepartmentResponse = departmentSchema;
-
-export type UpsertDepartmentResponse = z.infer<typeof upsertDepartmentResponse>;

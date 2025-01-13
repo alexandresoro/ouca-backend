@@ -13,8 +13,6 @@ import { observerSchema } from "./entities/observer.js";
  */
 export const getObserverResponse = observerSchema;
 
-export type GetObserverResponse = z.infer<typeof getObserverResponse>;
-
 /**
  * `GET` `/observers/:id/info`
  *  Retrieve observer info
@@ -44,12 +42,3 @@ export const upsertObserverInput = z.object({
 export type UpsertObserverInput = z.infer<typeof upsertObserverInput>;
 
 export const upsertObserverResponse = observerSchema;
-
-export type UpsertObserverResponse = z.infer<typeof upsertObserverResponse>;
-
-/**
- * `DELETE` `/observer/:id` Delete observer entity
- */
-export const deleteObserverResponse = observerSchema;
-
-export type DeleteObserverResponse = z.infer<typeof deleteObserverResponse>;

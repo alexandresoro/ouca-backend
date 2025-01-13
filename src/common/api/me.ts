@@ -62,8 +62,6 @@ export const getMeResponse = z.object({
   permissions: permissionsSchema,
 });
 
-export type GetMeResponse = z.infer<typeof getMeResponse>;
-
 /**
  * `PUT` `/me`
  * Update of user settings
@@ -79,5 +77,3 @@ export const putMeInput = z.object({
   isMeteoDisplayed: z.boolean(),
   isDistanceDisplayed: z.boolean(),
 });
-
-export type PutMeInput = z.infer<typeof putMeInput>;

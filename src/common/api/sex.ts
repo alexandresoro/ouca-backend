@@ -13,8 +13,6 @@ import { sexSchema } from "./entities/sex.js";
  */
 export const getSexResponse = sexSchema;
 
-export type GetSexResponse = z.infer<typeof getSexResponse>;
-
 /**
  * `GET` `/sexes/:id/info`
  *  Retrieve sex info
@@ -44,5 +42,3 @@ export const upsertSexInput = z.object({
 export type UpsertSexInput = z.infer<typeof upsertSexInput>;
 
 export const upsertSexResponse = sexSchema;
-
-export type UpsertSexResponse = z.infer<typeof upsertSexResponse>;

@@ -33,5 +33,3 @@ export const getSearchCriteriaParamsSchema = z.object({
     }, z.coerce.boolean())
     .optional(),
 });
-
-export type SearchCriteriaParams = z.infer<typeof getSearchCriteriaParamsSchema>;

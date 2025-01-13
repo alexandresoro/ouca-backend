@@ -1,5 +1,4 @@
 import {
-  deleteObserverResponse,
   getObserverResponse,
   getObserversQueryParamsSchema,
   getObserversResponse,
@@ -213,8 +212,7 @@ export const observersController: FastifyPluginCallbackZod<{
         return await reply.notFound();
       }
 
-      const response = deleteObserverResponse.parse(deletedObserver);
-      return await reply.send(response);
+      return await reply.send(deletedObserver);
     },
   );
 

@@ -1,7 +1,7 @@
 import type { Entry } from "@domain/entry/entry.js";
 import type { AccessFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
-import type { GetEntryResponse } from "@ou-ca/common/api/entry.js";
+import type { Entry as EntryApi } from "@ou-ca/common/api/entities/entry.js";
 import { Result, err, ok } from "neverthrow";
 import type { Services } from "../../services/services.js";
 
@@ -9,7 +9,7 @@ export const enrichedEntry = async (
   services: Services,
   entry: Entry,
   user: LoggedUser | null,
-): Promise<Result<GetEntryResponse, AccessFailureReason | "extendedDataNotFound">> => {
+): Promise<Result<EntryApi, AccessFailureReason | "extendedDataNotFound">> => {
   const enrichedResult = Result.combine([
     await services.ageService.findAge(Number.parseInt(entry.ageId), user),
     await services.behaviorService.findBehaviors(entry.behaviorIds, user),

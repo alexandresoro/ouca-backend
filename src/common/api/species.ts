@@ -11,8 +11,6 @@ import { speciesSchema } from "./entities/species.js";
  */
 export const getSpeciesResponse = speciesSchema;
 
-export type GetSpeciesResponse = z.infer<typeof getSpeciesResponse>;
-
 /**
  * `GET` `/species/:id/info`
  *  Retrieve species info
@@ -28,7 +26,6 @@ export const speciesInfoSchema = entityInfoSchema.extend({
  *  Retrieve paginated species results
  */
 export const SPECIES_ORDER_BY_ELEMENTS = ["id", "code", "nomFrancais", "nomLatin", "nomClasse", "nbDonnees"] as const;
-export type SpeciesOrderBy = (typeof SPECIES_ORDER_BY_ELEMENTS)[number];
 
 export const getSpeciesQueryParamsSchema = entitiesCommonQueryParamsSchema
   .extend({
@@ -54,5 +51,3 @@ export const upsertSpeciesInput = z.object({
 export type UpsertSpeciesInput = z.infer<typeof upsertSpeciesInput>;
 
 export const upsertSpeciesResponse = speciesSchema;
-
-export type UpsertSpeciesResponse = z.infer<typeof upsertSpeciesResponse>;

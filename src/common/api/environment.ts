@@ -13,8 +13,6 @@ import { environmentSchema } from "./entities/environment.js";
  */
 export const getEnvironmentResponse = environmentSchema;
 
-export type GetEnvironmentResponse = z.infer<typeof getEnvironmentResponse>;
-
 /**
  * `GET` `/environments/:id/info`
  *  Retrieve environment info
@@ -26,7 +24,6 @@ export const environmentInfoSchema = entityInfoSchema;
  *  Retrieve paginated environments results
  */
 export const ENVIRONMENTS_ORDER_BY_ELEMENTS = [...ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS, "code"] as const;
-export type EnvironmentsOrderBy = (typeof ENVIRONMENTS_ORDER_BY_ELEMENTS)[number];
 
 export const getEnvironmentsQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(ENVIRONMENTS_ORDER_BY_ELEMENTS).optional(),
@@ -48,5 +45,3 @@ export const upsertEnvironmentInput = z.object({
 export type UpsertEnvironmentInput = z.infer<typeof upsertEnvironmentInput>;
 
 export const upsertEnvironmentResponse = environmentSchema;
-
-export type UpsertEnvironmentResponse = z.infer<typeof upsertEnvironmentResponse>;

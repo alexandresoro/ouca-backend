@@ -10,8 +10,6 @@ import { townSchema } from "./entities/town.js";
  */
 export const getTownResponse = townSchema;
 
-export type GetTownResponse = z.infer<typeof getTownResponse>;
-
 /**
  * `GET` `/towns/:id/info`
  *  Retrieve town info
@@ -26,7 +24,6 @@ export const townInfoSchema = entityInfoSchema.extend({
  *  Retrieve paginated towns results
  */
 export const TOWNS_ORDER_BY_ELEMENTS = ["id", "code", "nom", "departement", "nbLieuxDits", "nbDonnees"] as const;
-export type TownsOrderBy = (typeof TOWNS_ORDER_BY_ELEMENTS)[number];
 
 export const getTownsQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(TOWNS_ORDER_BY_ELEMENTS).optional(),
@@ -50,5 +47,3 @@ export const upsertTownInput = z.object({
 export type UpsertTownInput = z.infer<typeof upsertTownInput>;
 
 export const upsertTownResponse = townSchema;
-
-export type UpsertTownResponse = z.infer<typeof upsertTownResponse>;

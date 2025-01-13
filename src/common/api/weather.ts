@@ -13,8 +13,6 @@ import { weatherSchema } from "./entities/weather.js";
  */
 export const getWeatherResponse = weatherSchema;
 
-export type GetWeatherResponse = z.infer<typeof getWeatherResponse>;
-
 /**
  * `GET` `/weathers/:id/info`
  *  Retrieve weather info
@@ -44,5 +42,3 @@ export const upsertWeatherInput = z.object({
 export type UpsertWeatherInput = z.infer<typeof upsertWeatherInput>;
 
 export const upsertWeatherResponse = weatherSchema;
-
-export type UpsertWeatherResponse = z.infer<typeof upsertWeatherResponse>;

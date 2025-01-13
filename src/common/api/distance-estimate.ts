@@ -13,8 +13,6 @@ import { distanceEstimateSchema } from "./entities/distance-estimate.js";
  */
 export const getDistanceEstimateResponse = distanceEstimateSchema;
 
-export type GetDistanceEstimateResponse = z.infer<typeof getDistanceEstimateResponse>;
-
 /**
  * `GET` `/distance-estimates/:id/info`
  *  Retrieve distance estimate info
@@ -44,5 +42,3 @@ export const upsertDistanceEstimateInput = z.object({
 export type UpsertDistanceEstimateInput = z.infer<typeof upsertDistanceEstimateInput>;
 
 export const upsertDistanceEstimateResponse = distanceEstimateSchema;
-
-export type UpsertDistanceEstimateResponse = z.infer<typeof upsertDistanceEstimateResponse>;

@@ -13,8 +13,6 @@ import { ageSchema } from "./entities/age.js";
  */
 export const getAgeResponse = ageSchema;
 
-export type GetAgeResponse = z.infer<typeof getAgeResponse>;
-
 /**
  * `GET` `/ages/:id/info`
  *  Retrieve age info
@@ -44,5 +42,3 @@ export const upsertAgeInput = z.object({
 export type UpsertAgeInput = z.infer<typeof upsertAgeInput>;
 
 export const upsertAgeResponse = ageSchema;
-
-export type UpsertAgeResponse = z.infer<typeof upsertAgeResponse>;

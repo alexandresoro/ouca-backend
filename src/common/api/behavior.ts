@@ -14,8 +14,6 @@ import { behaviorSchema } from "./entities/behavior.js";
  */
 export const getBehaviorResponse = behaviorSchema;
 
-export type GetBehaviorResponse = z.infer<typeof getBehaviorResponse>;
-
 /**
  * `GET` `/behavior/:id/info`
  *  Retrieve behavior info
@@ -27,7 +25,6 @@ export const behaviorInfoSchema = entityInfoSchema;
  *  Retrieve paginated behaviors results
  */
 export const BEHAVIORS_ORDER_BY_ELEMENTS = [...ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS, "code", "nicheur"] as const;
-export type BehaviorsOrderBy = (typeof BEHAVIORS_ORDER_BY_ELEMENTS)[number];
 
 export const getBehaviorsQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(BEHAVIORS_ORDER_BY_ELEMENTS).optional(),
@@ -50,5 +47,3 @@ export const upsertBehaviorInput = z.object({
 export type UpsertBehaviorInput = z.infer<typeof upsertBehaviorInput>;
 
 export const upsertBehaviorResponse = behaviorSchema;
-
-export type UpsertBehaviorResponse = z.infer<typeof upsertBehaviorResponse>;

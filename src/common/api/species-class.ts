@@ -13,8 +13,6 @@ import { speciesClassSchema } from "./entities/species-class.js";
  */
 export const getClassResponse = speciesClassSchema;
 
-export type GetClassResponse = z.infer<typeof getClassResponse>;
-
 /**
  * `GET` `/classes/:id/info`
  *  Retrieve species class info
@@ -28,7 +26,6 @@ export const speciesClassInfoSchema = entityInfoSchema.extend({
  *  Retrieve paginated classes results
  */
 export const CLASSES_ORDER_BY_ELEMENTS = [...ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS, "nbEspeces"] as const;
-export type ClassesOrderBy = (typeof CLASSES_ORDER_BY_ELEMENTS)[number];
 
 export const getClassesQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(CLASSES_ORDER_BY_ELEMENTS).optional(),
@@ -49,5 +46,3 @@ export const upsertClassInput = z.object({
 export type UpsertClassInput = z.infer<typeof upsertClassInput>;
 
 export const upsertClassResponse = speciesClassSchema;
-
-export type UpsertClassResponse = z.infer<typeof upsertClassResponse>;

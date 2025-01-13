@@ -14,7 +14,6 @@ export const getInventoryResponse = inventorySchema;
  *  Retrieve paginated inventories results
  */
 export const INVENTORIES_ORDER_BY_ELEMENTS = ["creationDate"] as const;
-export type InventoriesOrderBy = (typeof INVENTORIES_ORDER_BY_ELEMENTS)[number];
 
 export const getInventoriesQueryParamsSchema = paginationQueryParamsSchema.required().extend({
   orderBy: z.enum(INVENTORIES_ORDER_BY_ELEMENTS).optional(),
@@ -62,5 +61,3 @@ export const upsertInventoryInput = z.object({
 export type UpsertInventoryInput = z.infer<typeof upsertInventoryInput>;
 
 export const upsertInventoryResponse = inventorySchema;
-
-export type UpsertInventoryResponse = z.infer<typeof upsertInventoryResponse>;

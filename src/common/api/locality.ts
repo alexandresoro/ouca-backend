@@ -10,8 +10,6 @@ import { localitySchema } from "./entities/locality.js";
  */
 export const getLocalityResponse = localitySchema;
 
-export type GetLocalityResponse = z.infer<typeof getLocalityResponse>;
-
 /**
  * `GET` `/locality/:id/info`
  *  Retrieve locality info
@@ -37,7 +35,6 @@ export const LOCALITIES_ORDER_BY_ELEMENTS = [
   "departement",
   "nbDonnees",
 ] as const;
-export type LocalitiesOrderBy = (typeof LOCALITIES_ORDER_BY_ELEMENTS)[number];
 
 export const getLocalitiesQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(LOCALITIES_ORDER_BY_ELEMENTS).optional(),
@@ -63,5 +60,3 @@ export const upsertLocalityInput = z.object({
 export type UpsertLocalityInput = z.infer<typeof upsertLocalityInput>;
 
 export const upsertLocalityResponse = localitySchema;
-
-export type UpsertLocalityResponse = z.infer<typeof upsertLocalityResponse>;

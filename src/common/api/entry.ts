@@ -9,8 +9,6 @@ import { entrySchema } from "./entities/entry.js";
  */
 export const getEntryResponse = entrySchema;
 
-export type GetEntryResponse = z.infer<typeof getEntryResponse>;
-
 /**
  * `GET` `/entries`
  *  Retrieve paginated entries results
@@ -28,7 +26,6 @@ export const ENTRIES_ORDER_BY_ELEMENTS = [
   "duree",
   "observateur",
 ] as const;
-export type EntriesOrderBy = (typeof ENTRIES_ORDER_BY_ELEMENTS)[number];
 
 export const getEntriesQueryParamsSchema = paginationQueryParamsSchema
   .required()
@@ -41,8 +38,6 @@ export const getEntriesQueryParamsSchema = paginationQueryParamsSchema
 export type EntriesSearchParams = z.infer<typeof getEntriesQueryParamsSchema>;
 
 export const getEntriesResponse = getPaginatedResponseSchema(entrySchema);
-
-export type GetEntriesResponse = z.infer<typeof getEntriesResponse>;
 
 /**
  * `PUT` `/entry/:id` Update of entry
@@ -70,5 +65,3 @@ export const upsertEntryInput = z
 export type UpsertEntryInput = z.infer<typeof upsertEntryInput>;
 
 export const upsertEntryResponse = entrySchema;
-
-export type UpsertEntryResponse = z.infer<typeof upsertEntryResponse>;

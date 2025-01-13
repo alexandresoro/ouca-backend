@@ -13,8 +13,6 @@ import { numberEstimateSchema } from "./entities/number-estimate.js";
  */
 export const getNumberEstimateResponse = numberEstimateSchema;
 
-export type GetNumberEstimateResponse = z.infer<typeof getNumberEstimateResponse>;
-
 /**
  * `GET` `/number-estimates/:id/info`
  *  Retrieve number estimate info
@@ -26,7 +24,6 @@ export const numberEstimateInfoSchema = entityInfoSchema;
  *  Retrieve paginated number estimates results
  */
 export const NUMBER_ESTIMATES_ORDER_BY_ELEMENTS = [...ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS, "nonCompte"] as const;
-export type NumberEstimatesOrderBy = (typeof NUMBER_ESTIMATES_ORDER_BY_ELEMENTS)[number];
 
 export const getNumberEstimatesQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(NUMBER_ESTIMATES_ORDER_BY_ELEMENTS).optional(),
@@ -48,5 +45,3 @@ export const upsertNumberEstimateInput = z.object({
 export type UpsertNumberEstimateInput = z.infer<typeof upsertNumberEstimateInput>;
 
 export const upsertNumberEstimateResponse = numberEstimateSchema;
-
-export type UpsertNumberEstimateResponse = z.infer<typeof upsertNumberEstimateResponse>;
