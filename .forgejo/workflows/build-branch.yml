@@ -29,7 +29,7 @@ jobs:
     runs-on: docker
 
     container:
-      image: node:20-bookworm@sha256:ad58eb609e8447fa2b6c925e15186682fd86bb00a976ccb04b165243ae4ed92e
+      image: node:20-bookworm@sha256:c10929a76495ac7e6685bcef0a858ac7ccb30b2b54fdb654617a5eef67086854
 
     outputs:
       image-label: ${{ steps.docker-metadata.outputs.version }}
