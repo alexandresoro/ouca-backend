@@ -4,10 +4,9 @@ import { ageCreateInputFactory, ageFactory } from "@fixtures/domain/age/age.fixt
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
 import { upsertAgeInputFactory } from "@fixtures/services/age/age-service.fixtures.js";
 import type { AgeRepository } from "@interfaces/age-repository-interface.js";
-import type { AgesSearchParams } from "@ou-ca/common/api/age.js";
 import { err, ok } from "neverthrow";
 import { mock } from "../../../utils/mock.js";
-import { buildAgeService } from "./age-service.js";
+import { type AgesQueryParams, buildAgeService } from "./age-service.js";
 
 const ageRepository = mock<AgeRepository>();
 
@@ -115,7 +114,7 @@ describe("Entities paginated find by search criteria", () => {
     const agesData = ageFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    const searchParams: AgesSearchParams = {
+    const searchParams: AgesQueryParams = {
       orderBy: "libelle",
       sortOrder: "desc",
       q: "Bob",

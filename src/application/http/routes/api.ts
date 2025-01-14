@@ -1,6 +1,5 @@
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
-import { upsertAgeInput } from "@ou-ca/common/api/age.js";
 import { upsertBehaviorInput } from "@ou-ca/common/api/behavior.js";
 import { upsertDepartmentInput } from "@ou-ca/common/api/department.js";
 import { upsertDistanceEstimateInput } from "@ou-ca/common/api/distance-estimate.js";
@@ -41,6 +40,7 @@ import {
 import { ZodError } from "zod";
 import { logger as loggerParent } from "../../../utils/logger.js";
 import type { Services } from "../../services/services.js";
+import { upsertAgeInputApiSchema } from "../controllers/ages-controller.js";
 import { userController } from "../controllers/user-controller.js";
 import { apiV1Routes } from "./api-v1-routes.js";
 
@@ -121,7 +121,7 @@ export const apiRoutes: FastifyPluginAsync<{ services: Services }> = async (fast
         // biome-ignore lint/style/useNamingConvention: <explanation>
         Weather: weatherSchema,
         // biome-ignore lint/style/useNamingConvention: <explanation>
-        UpsertAgeInput: upsertAgeInput,
+        UpsertAgeInput: upsertAgeInputApiSchema,
         // biome-ignore lint/style/useNamingConvention: <explanation>
         UpsertBehaviorInput: upsertBehaviorInput,
         // biome-ignore lint/style/useNamingConvention: <explanation>

@@ -2,13 +2,19 @@ import type { Age, AgeCreateInput, AgeFailureReason } from "@domain/age/age.js";
 import type { AccessFailureReason, DeletionFailureReason } from "@domain/shared/failure-reason.js";
 import type { LoggedUser } from "@domain/user/logged-user.js";
 import type { AgeRepository } from "@interfaces/age-repository-interface.js";
-import type { AgesSearchParams, UpsertAgeInput } from "@ou-ca/common/api/age.js";
 import { type Result, err, ok } from "neverthrow";
+import type { EntitiesCommonQueryParams, EntitiesWithLabelOrderByCommon } from "../entities-common.js";
 import { getSqlPagination } from "../entities-utils.js";
 
 type AgeServiceDependencies = {
   ageRepository: AgeRepository;
 };
+
+export type AgesQueryParams = EntitiesCommonQueryParams & {
+  orderBy?: EntitiesWithLabelOrderByCommon;
+};
+
+export type UpsertAgeInput = Omit<AgeCreateInput, "ownerId">;
 
 export const buildAgeService = ({ ageRepository }: AgeServiceDependencies) => {
   const findAge = async (
@@ -57,7 +63,7 @@ export const buildAgeService = ({ ageRepository }: AgeServiceDependencies) => {
 
   const findPaginatedAges = async (
     loggedUser: LoggedUser | null,
-    options: AgesSearchParams,
+    options: AgesQueryParams,
   ): Promise<Result<Age[], AccessFailureReason>> => {
     if (!loggedUser) {
       return err("notAllowed");

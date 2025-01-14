@@ -1,9 +1,6 @@
-type PaginationOptions = Partial<{
-  pageNumber: number | null;
-  pageSize: number | null;
-}>;
+// Utility method to compute the SQL pagination from the services pagination
+import type { PaginationOptions } from "./entities-common.js";
 
-// Utility method to compute the SQL pagination from the API pagination
 // Page number is starting at index 1
 export const getSqlPagination = (
   paginationOptions: PaginationOptions | null | undefined,

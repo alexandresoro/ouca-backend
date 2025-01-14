@@ -1,4 +1,8 @@
-import { ageInfoSchema, getAgesQueryParamsSchema, upsertAgeInput } from "@ou-ca/common/api/age.js";
+import {
+  ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
+  entitiesCommonQueryParamsSchema,
+} from "@ou-ca/common/api/common/entitiesSearchParams.js";
+import { entityInfoSchema } from "@ou-ca/common/api/common/entity-info.js";
 import { ageSchema } from "@ou-ca/common/api/entities/age.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
@@ -7,6 +11,14 @@ import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
 import { getPaginatedResponseSchema, getPaginationMetadata } from "./common/pagination.js";
+
+const getAgesQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
+  orderBy: z.enum(ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS).optional(),
+});
+
+export const upsertAgeInputApiSchema = z.object({
+  libelle: z.string().trim().min(1),
+});
 
 export const agesController: FastifyPluginCallbackZod<{
   services: Services;
@@ -54,7 +66,7 @@ export const agesController: FastifyPluginCallbackZod<{
         tags: ["Age"],
         params: idParamAsNumberSchema,
         response: withAuthenticationErrorResponses({
-          200: ageInfoSchema,
+          200: entityInfoSchema,
           ...buildFastifyDefaultErrorResponses([403]),
         }),
       },
@@ -122,7 +134,7 @@ export const agesController: FastifyPluginCallbackZod<{
       schema: {
         security: [{ token: [] }],
         tags: ["Age"],
-        body: upsertAgeInput,
+        body: upsertAgeInputApiSchema,
         response: withAuthenticationErrorResponses({
           200: ageSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
@@ -152,7 +164,7 @@ export const agesController: FastifyPluginCallbackZod<{
         security: [{ token: [] }],
         tags: ["Age"],
         params: idParamAsNumberSchema,
-        body: upsertAgeInput,
+        body: upsertAgeInputApiSchema,
         response: withAuthenticationErrorResponses({
           200: ageSchema,
           ...buildFastifyDefaultErrorResponses([403, 409]),
