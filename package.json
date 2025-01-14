@@ -64,7 +64,7 @@
     "@types/pg": "8.11.10",
     "dotenv": "16.4.7",
     "fishery": "2.2.2",
-    "lefthook": "1.10.4",
+    "lefthook": "1.10.5",
     "tsc-alias": "1.8.10",
     "tsx": "4.19.2",
     "typescript": "5.7.3"
