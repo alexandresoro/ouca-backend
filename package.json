@@ -60,7 +60,7 @@
     "@biomejs/biome": "1.9.4",
     "@faker-js/faker": "9.4.0",
     "@types/content-disposition": "0.5.8",
-    "@types/node": "20.17.13",
+    "@types/node": "20.17.14",
     "@types/pg": "8.11.10",
     "dotenv": "16.4.7",
     "fishery": "2.2.2",
