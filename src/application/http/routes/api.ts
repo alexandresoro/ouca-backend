@@ -33,11 +33,11 @@ import { upsertWeatherInput } from "@ou-ca/common/api/weather.js";
 import type { FastifyPluginAsync } from "fastify";
 import {
   createJsonSchemaTransformObject,
+  hasZodFastifySchemaValidationErrors,
   jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
-import { ZodError } from "zod";
 import { logger as loggerParent } from "../../../utils/logger.js";
 import type { Services } from "../../services/services.js";
 import { upsertAgeInputApiSchema } from "../controllers/ages-controller.js";
@@ -54,12 +54,12 @@ export const apiRoutes: FastifyPluginAsync<{ services: Services }> = async (fast
   fastify.setSerializerCompiler(serializerCompiler);
 
   fastify.setErrorHandler((error, _, reply) => {
-    if (error instanceof ZodError) {
+    if (hasZodFastifySchemaValidationErrors(error)) {
       // Treat validation errors as HTTP 422
       reply.status(fastify.httpErrors.unprocessableEntity().statusCode).send({
         statusCode: fastify.httpErrors.unprocessableEntity().statusCode,
         error: fastify.httpErrors.unprocessableEntity().message,
-        issues: error.issues,
+        issues: error.validation?.map((validation) => validation.params.issue),
       });
       return;
     }
