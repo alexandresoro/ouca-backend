@@ -17,7 +17,7 @@
     "build": "pnpm run compile:tsc",
     "start": "tsx watch -r dotenv/config src/main.ts",
     "start:tsc": "pnpm run compile:tsc:dev && node -r dotenv/config dist/main",
-    "test": "find ./src -name '*.test.ts' | tr '\\n' ' ' | xargs node --import tsx --test",
+    "test": "find ./src -name '*.test.ts' | tr '\\n' ' ' | xargs node --import tsx --test --test-reporter spec",
     "lint": "biome lint *",
     "typecheck": "tsc --project tsconfig.build.json --noEmit",
     "biome:ci": "biome ci *",
