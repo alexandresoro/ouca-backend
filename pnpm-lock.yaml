@@ -88,7 +88,7 @@ importers:
         version: 12.0.0
       umzug:
         specifier: 3.8.2
-        version: 3.8.2(@types/node@20.17.14)
+        version: 3.8.2(@types/node@22.10.7)
       zod:
         specifier: 3.24.1
         version: 3.24.1
@@ -103,8 +103,8 @@ importers:
         specifier: 0.5.8
         version: 0.5.8
       '@types/node':
-        specifier: 20.17.14
-        version: 20.17.14
+        specifier: 22.10.7
+        version: 22.10.7
       '@types/pg':
         specifier: 8.11.10
         version: 8.11.10
@@ -739,8 +739,8 @@ packages:
   '@types/node@14.18.63':
     resolution: {integrity: sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==}
 
-  '@types/node@20.17.14':
-    resolution: {integrity: sha512-w6qdYetNL5KRBiSClK/KWai+2IMEJuAj+EujKCumalFOwXtvOXaEan9AuwcRID2IcOIAWSIfR495hBtgKlx2zg==}
+  '@types/node@22.10.7':
+    resolution: {integrity: sha512-V09KvXxFiutGp6B7XkpaDXlNadZxrzajcY50EuoLIpQ6WWYCSvf19lVIazzfIzQvhUN2HjX12spLojTnhuKlGg==}
 
   '@types/pg-pool@2.0.6':
     resolution: {integrity: sha512-TaAUE5rq2VQYxab5Ts7WZhKNmuN78Q6PiFonTDdpbx8a1H0M1vhy3rhiMjl+e2iHmogyMw7jZF4FrE6eJUy5HQ==}
@@ -1899,8 +1899,8 @@ packages:
     resolution: {integrity: sha512-BEWEF8OJjTYVC56GjELeHl/1XjFejrD7aHzn+HldRJTx+pL1siBrKHZC8n4K/xL3bEzVA9o++qD1tK2CpZu4KA==}
     engines: {node: '>=12'}
 
-  undici-types@6.19.8:
-    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+  undici-types@6.20.0:
+    resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
 
   universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
@@ -2552,7 +2552,7 @@ snapshots:
   '@rollup/rollup-linux-x64-gnu@4.30.1':
     optional: true
 
-  '@rushstack/node-core-library@5.10.2(@types/node@20.17.14)':
+  '@rushstack/node-core-library@5.10.2(@types/node@22.10.7)':
     dependencies:
       ajv: 8.13.0
       ajv-draft-04: 1.0.0(ajv@8.13.0)
@@ -2563,18 +2563,18 @@ snapshots:
       resolve: 1.22.10
       semver: 7.5.4
     optionalDependencies:
-      '@types/node': 20.17.14
+      '@types/node': 22.10.7
 
-  '@rushstack/terminal@0.14.5(@types/node@20.17.14)':
+  '@rushstack/terminal@0.14.5(@types/node@22.10.7)':
     dependencies:
-      '@rushstack/node-core-library': 5.10.2(@types/node@20.17.14)
+      '@rushstack/node-core-library': 5.10.2(@types/node@22.10.7)
       supports-color: 8.1.1
     optionalDependencies:
-      '@types/node': 20.17.14
+      '@types/node': 22.10.7
 
-  '@rushstack/ts-command-line@4.23.3(@types/node@20.17.14)':
+  '@rushstack/ts-command-line@4.23.3(@types/node@22.10.7)':
     dependencies:
-      '@rushstack/terminal': 0.14.5(@types/node@20.17.14)
+      '@rushstack/terminal': 0.14.5(@types/node@22.10.7)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -2641,7 +2641,7 @@ snapshots:
 
   '@types/connect@3.4.36':
     dependencies:
-      '@types/node': 20.17.14
+      '@types/node': 22.10.7
 
   '@types/content-disposition@0.5.8': {}
 
@@ -2649,13 +2649,13 @@ snapshots:
 
   '@types/mysql@2.15.26':
     dependencies:
-      '@types/node': 20.17.14
+      '@types/node': 22.10.7
 
   '@types/node@14.18.63': {}
 
-  '@types/node@20.17.14':
+  '@types/node@22.10.7':
     dependencies:
-      undici-types: 6.19.8
+      undici-types: 6.20.0
 
   '@types/pg-pool@2.0.6':
     dependencies:
@@ -2663,13 +2663,13 @@ snapshots:
 
   '@types/pg@8.11.10':
     dependencies:
-      '@types/node': 20.17.14
+      '@types/node': 22.10.7
       pg-protocol: 1.7.0
       pg-types: 4.0.2
 
   '@types/pg@8.6.1':
     dependencies:
-      '@types/node': 20.17.14
+      '@types/node': 22.10.7
       pg-protocol: 1.7.0
       pg-types: 2.2.0
 
@@ -2677,7 +2677,7 @@ snapshots:
 
   '@types/tedious@4.0.14':
     dependencies:
-      '@types/node': 20.17.14
+      '@types/node': 22.10.7
 
   abstract-logging@2.0.1: {}
 
@@ -3824,9 +3824,9 @@ snapshots:
 
   typescript@5.7.3: {}
 
-  umzug@3.8.2(@types/node@20.17.14):
+  umzug@3.8.2(@types/node@22.10.7):
     dependencies:
-      '@rushstack/ts-command-line': 4.23.3(@types/node@20.17.14)
+      '@rushstack/ts-command-line': 4.23.3(@types/node@22.10.7)
       emittery: 0.13.1
       fast-glob: 3.3.3
       pony-cause: 2.1.11
@@ -3834,7 +3834,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  undici-types@6.19.8: {}
+  undici-types@6.20.0: {}
 
   universalify@0.1.2: {}
 

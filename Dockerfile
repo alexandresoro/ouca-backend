@@ -12,7 +12,7 @@ RUN corepack enable
 COPY ./ /app/
 
 RUN pnpm i --frozen-lockfile
-RUN pnpm build
+RUN node --run build
 
 # 2. Run the NodeJS backend
 FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as final

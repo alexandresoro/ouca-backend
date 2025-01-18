@@ -14,9 +14,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run compile:tsc",
+    "build": "node --run compile:tsc",
     "start": "tsx watch -r dotenv/config src/main.ts",
-    "start:tsc": "pnpm run compile:tsc:dev && node -r dotenv/config dist/main",
+    "start:tsc": "node --run compile:tsc:dev && node -r dotenv/config dist/main",
     "test": "find ./src -name '*.test.ts' | tr '\\n' ' ' | xargs node --import tsx --test --test-reporter spec",
     "lint": "biome lint *",
     "typecheck": "tsc --project tsconfig.build.json --noEmit",
@@ -60,7 +60,7 @@
     "@biomejs/biome": "1.9.4",
     "@faker-js/faker": "9.4.0",
     "@types/content-disposition": "0.5.8",
-    "@types/node": "20.17.14",
+    "@types/node": "22.10.7",
     "@types/pg": "8.11.10",
     "dotenv": "16.4.7",
     "fishery": "2.2.2",
@@ -70,7 +70,7 @@
     "typescript": "5.7.3"
   },
   "engines": {
-    "node": "^20.16"
+    "node": "^22.0.0"
   },
   "packageManager": "pnpm@9.15.4"
 }
