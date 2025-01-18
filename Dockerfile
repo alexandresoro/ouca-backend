@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1@sha256:93bfd3b68c109427185cd78b4779fc82b484b0b7618e36d0f104d4d801e66d25
 ARG REGISTRY_URL="docker.io/library"
-ARG NODE_IMAGE_VERSION=20
+ARG NODE_IMAGE_VERSION=22
 
 # 1. Transpile the project
 FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as build
