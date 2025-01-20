@@ -13,6 +13,7 @@
         "noUnusedImports": "warn",
         "noUnusedVariables": "warn",
         "useExhaustiveDependencies": "warn",
+        "useImportExtensions": "error",
         "useHookAtTopLevel": "error"
       },
       "style": {
