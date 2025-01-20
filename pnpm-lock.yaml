@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@bull-board/api':
-        specifier: 6.7.0
-        version: 6.7.0(@bull-board/ui@6.7.0)
+        specifier: 6.7.1
+        version: 6.7.1(@bull-board/ui@6.7.1)
       '@bull-board/fastify':
-        specifier: 6.7.0
-        version: 6.7.0
+        specifier: 6.7.1
+        version: 6.7.1
       '@fastify/cors':
         specifier: 10.0.2
         version: 10.0.2
@@ -182,16 +182,16 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@bull-board/api@6.7.0':
-    resolution: {integrity: sha512-1kUTVc7UCodShxMU2nVJA8yY4N1GlypY2tTx5dghlWo/ngrbujgirD4BgEKW+K4uSVGnKZkd82HbWGGXuzzUAA==}
+  '@bull-board/api@6.7.1':
+    resolution: {integrity: sha512-Gv+0jo0QYBjNE0DatcUSavMLfGAOuhsLVPxJHR3QjN7Rp0s1VM/O2ExNTezDip1Q67G8fq8Tp9ZfleJZb1KP2Q==}
     peerDependencies:
-      '@bull-board/ui': 6.7.0
+      '@bull-board/ui': 6.7.1
 
-  '@bull-board/fastify@6.7.0':
-    resolution: {integrity: sha512-I53F9doNWpHiy/EYeG7wrmSFUDvPwfTKYD8R3fnzV2EIwlDQa2Eo8wMNCbrpyiWI5hA5UsXLxL6g12yXa55vFg==}
+  '@bull-board/fastify@6.7.1':
+    resolution: {integrity: sha512-26CwH8TjW97nPoLYck4mIfht1TR8uWQGx3dqz+Izba3RMmmYAcAyhNWKZXia14fsGqSMtBNVhBl1ut9FfTCzVg==}
 
-  '@bull-board/ui@6.7.0':
-    resolution: {integrity: sha512-f398IerHbJTeIubAbeOTEfLJa06Tw6ameSidAlwn7m6jK7oXqbKiqtrBNQ4H1BG68EQ5KNLRvBxDe5QMMVEIZA==}
+  '@bull-board/ui@6.7.1':
+    resolution: {integrity: sha512-Bf2S81enM+KSz7ltOmWBE/Z69NtKPmYhUFbPEXooFGXs63yrR/17vzdSlraJb9jC6kMLzJhp0y61rXLdCqPTBw==}
 
   '@esbuild/aix-ppc64@0.23.1':
     resolution: {integrity: sha512-6VhYk1diRqrhBAqpJEdjASR/+WVRtfjpqKuNw11cLiaWpAT/Uu+nokB+UJnevzy/P9C/ty6AOe0dwueMrGh/iQ==}
@@ -2004,22 +2004,22 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@bull-board/api@6.7.0(@bull-board/ui@6.7.0)':
+  '@bull-board/api@6.7.1(@bull-board/ui@6.7.1)':
     dependencies:
-      '@bull-board/ui': 6.7.0
+      '@bull-board/ui': 6.7.1
       redis-info: 3.1.0
 
-  '@bull-board/fastify@6.7.0':
+  '@bull-board/fastify@6.7.1':
     dependencies:
-      '@bull-board/api': 6.7.0(@bull-board/ui@6.7.0)
-      '@bull-board/ui': 6.7.0
+      '@bull-board/api': 6.7.1(@bull-board/ui@6.7.1)
+      '@bull-board/ui': 6.7.1
       '@fastify/static': 8.0.4
       '@fastify/view': 10.0.2
       ejs: 3.1.10
 
-  '@bull-board/ui@6.7.0':
+  '@bull-board/ui@6.7.1':
     dependencies:
-      '@bull-board/api': 6.7.0(@bull-board/ui@6.7.0)
+      '@bull-board/api': 6.7.1(@bull-board/ui@6.7.1)
 
   '@esbuild/aix-ppc64@0.23.1':
     optional: true
