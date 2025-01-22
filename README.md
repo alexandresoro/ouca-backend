@@ -7,13 +7,11 @@ The aim of the _Où ça ?_ project is to provide naturalists with an application
 This project provides an API to interact with these observations - add new elements, edit them and so on.
 This API is structured as a stateless microservice. It exposes a REST API and is agnostic of the integrator.
 
-This project also provides a web application that consumes the API and allows a user-friendly representation of the data.
-
 ## Prerequisites
 
 - _Node.js 22_ or later
 - _pnpm 9_ or later
-- PostgreSQL 15 or newer to store the data.
+- PostgreSQL 17 or newer to store the data.
 - A Redis instance used as temporary cache.
 - An OIDC provider to provide authentication services.
 
@@ -22,11 +20,9 @@ Hence, currently only [Zitadel](https://zitadel.com/) is supported, but addition
 
 ## API structure
 
-Backend is exposed via a REST API available under `/v1/`.
+Application is exposed via a REST API available under `/v1/`. Specification is exposed at `/documentation`.
 
-The application exposes a static path at `/download`, that is to be used for two use cases: database exports and imports report files. The exact file paths are returned by their respective REST actions.
-
-Finally, the app exposes a single REST endpoint at `POST /uploads/:entityName` to allow users to import observations. This endpoint expects a single file as a multipart data body and will return an `uploadId` if valid.
+The application exposes a static path at `/download/:id`, that is to be used for downloading export files. The exact path is returned by the corresponding generate export endpoints.
 
 ## Authentication
 
@@ -40,7 +36,7 @@ The access token does not need to be a JWT token and can be an opaque one as int
 
 ## Options
 
-The following options are available as environment variables:
+The following environment variables are available to configure the application:
 
 | Option                           |      Type       |                                        Default                                         | Description                                                                                                                                                                                                                                         |
 | -------------------------------- | :-------------: | :------------------------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -48,7 +44,7 @@ The following options are available as environment variables:
 | `OUCA_SERVER_PORT`               | `number (port)` |                                         `4000`                                         | The port used by the server                                                                                                                                                                                                                         |
 | `OUCA_LOG_LEVEL`                 |    `string`     |                                         `warn`                                         | The log level of the server. Uses [Pino](https://github.com/pinojs/pino) logging levels                                                                                                                                                             |
 | `OUCA_LOG_PRETTY`                 |    `boolean`     |                                         `false`                                         | If `true` the logs will be displayed in a human friendly format                                                                                                                                                            |
-| `DATABASE_URL`                   |    `string`     | `postgresql://` `basenaturaliste:basenaturaliste` `@127.0.0.1:5432/` `basenaturaliste` | The URL of the database to connect to                                                                                                                                                                                                               |
+| `DATABASE_URL`                   |    `string`     | `postgresql://basenaturaliste:basenaturaliste@127.0.0.1:5432/basenaturaliste` | The URL of the database to connect to                                                                                                                                                                                                               |
 | `REDIS_URL` | `string`| `redis://localhost:6379/0` | The URL of the Redis instance to connect to. |
 | `OUCA_DATABASE_RUN_MIGRATIONS`   |    `boolean`    |                                         `false`                                         | To enable or disable database migration scripts at startup. Default is `false` as it is expected to run migrations separately                                                                                                                                                                                          |
 | `OUCA_DATABASE_MIGRATION_SCHEMA` |    `string`     |                                        `public`                                        | The name of the schema where to store the database migrations info                                                                                                                                                                                  |
@@ -83,8 +79,3 @@ The characteristics above are considered to be an inventory. An observation belo
 - An optional list of behaviors describing the state of the species.
 - An optional list of environments surrounding the species.
 - An optional comment on the observation.
-
-## Authors
-
-- [Alexandre Soro](https://github.com/alexandresoro)
-- [Camille Carrier](https://github.com/camillecarrier)
