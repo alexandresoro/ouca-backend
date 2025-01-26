@@ -1,5 +1,5 @@
 import { kysely } from "@infrastructure/kysely/kysely.js";
-import * as Sentry from "@sentry/node";
+import * as Sentry from "@sentry/bun";
 import type {
   FastifyInstance,
   RawReplyDefaultExpression,

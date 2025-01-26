@@ -4,7 +4,7 @@ import { fastifySensible } from "@fastify/sensible";
 import fastifyUnderPressure from "@fastify/under-pressure";
 import { buildBullBoardAdapter } from "@infrastructure/bullmq/bullboard.js";
 import type { Queues } from "@infrastructure/bullmq/queues.js";
-import * as Sentry from "@sentry/node";
+import * as Sentry from "@sentry/bun";
 import fastify, {
   type FastifyInstance,
   type RawReplyDefaultExpression,

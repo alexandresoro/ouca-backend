@@ -7,12 +7,12 @@ runs:
   steps:
     - name: Biome
       shell: bash
-      run: node --run biome:ci
+      run: bun run biome:ci
 
     - name: Test
       shell: bash
-      run: node --run test
+      run: bun test
 
     - name: Typecheck
       shell: bash
-      run: node --run typecheck
+      run: bun run typecheck
