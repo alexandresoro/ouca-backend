@@ -1,5 +1,5 @@
+import { describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import test, { describe } from "node:test";
 import { mergePermissions } from "@domain/user/permissions.js";
 
 describe("mergePermissions", () => {

@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import test, { describe, beforeEach } from "node:test";
 import { departmentFactory } from "@fixtures/domain/department/department.fixtures.js";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
 import { upsertDepartmentInputFactory } from "@fixtures/services/department/department-service.fixtures.js";
@@ -22,17 +22,17 @@ const departmentService = buildDepartmentService({
 });
 
 beforeEach(() => {
-  departmentRepository.findDepartmentById.mock.resetCalls();
-  departmentRepository.findDepartments.mock.resetCalls();
-  departmentRepository.createDepartment.mock.resetCalls();
-  departmentRepository.createDepartments.mock.resetCalls();
-  departmentRepository.updateDepartment.mock.resetCalls();
-  departmentRepository.deleteDepartmentById.mock.resetCalls();
-  departmentRepository.getCount.mock.resetCalls();
-  departmentRepository.getEntriesCountById.mock.resetCalls();
-  departmentRepository.findDepartmentByTownId.mock.resetCalls();
-  townRepository.getCount.mock.resetCalls();
-  localityRepository.getCount.mock.resetCalls();
+  departmentRepository.findDepartmentById.mockReset();
+  departmentRepository.findDepartments.mockReset();
+  departmentRepository.createDepartment.mockReset();
+  departmentRepository.createDepartments.mockReset();
+  departmentRepository.updateDepartment.mockReset();
+  departmentRepository.deleteDepartmentById.mockReset();
+  departmentRepository.getCount.mockReset();
+  departmentRepository.getEntriesCountById.mockReset();
+  departmentRepository.findDepartmentByTownId.mockReset();
+  townRepository.getCount.mockReset();
+  localityRepository.getCount.mockReset();
 });
 
 describe("Find department", () => {
@@ -40,29 +40,29 @@ describe("Find department", () => {
     const departmentData = departmentFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    departmentRepository.findDepartmentById.mock.mockImplementationOnce(() => Promise.resolve(departmentData));
+    departmentRepository.findDepartmentById.mockImplementationOnce(() => Promise.resolve(departmentData));
 
     await departmentService.findDepartment(12, loggedUser);
 
-    assert.strictEqual(departmentRepository.findDepartmentById.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.findDepartmentById.mock.calls[0].arguments, [12]);
+    assert.strictEqual(departmentRepository.findDepartmentById.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.findDepartmentById.mock.calls[0], [12]);
   });
 
   test("should handle department not found", async () => {
-    departmentRepository.findDepartmentById.mock.mockImplementationOnce(() => Promise.resolve(null));
+    departmentRepository.findDepartmentById.mockImplementationOnce(() => Promise.resolve(null));
     const loggedUser = loggedUserFactory.build();
 
     assert.deepStrictEqual(await departmentService.findDepartment(10, loggedUser), ok(null));
 
-    assert.strictEqual(departmentRepository.findDepartmentById.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.findDepartmentById.mock.calls[0].arguments, [10]);
+    assert.strictEqual(departmentRepository.findDepartmentById.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.findDepartmentById.mock.calls[0], [10]);
   });
 
   test("should not be allowed when the no login details are provided", async () => {
     const findResult = await departmentService.findDepartment(11, null);
 
     assert.deepStrictEqual(findResult, err("notAllowed"));
-    assert.strictEqual(departmentRepository.findDepartmentById.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.findDepartmentById.mock.calls.length, 0);
   });
 });
 
@@ -72,8 +72,8 @@ describe("Cities count per entity", () => {
 
     await departmentService.getTownsCountByDepartment("12", loggedUser);
 
-    assert.strictEqual(townRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.getCount.mock.calls[0].arguments, [undefined, "12"]);
+    assert.strictEqual(townRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.getCount.mock.calls[0], [undefined, "12"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -89,8 +89,8 @@ describe("Localities count per entity", () => {
 
     await departmentService.getLocalitiesCountByDepartment("12", loggedUser);
 
-    assert.strictEqual(localityRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0].arguments, [undefined, undefined, "12"]);
+    assert.strictEqual(localityRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0], [undefined, undefined, "12"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -106,8 +106,8 @@ describe("Data count per entity", () => {
 
     await departmentService.getEntriesCountByDepartment("12", loggedUser);
 
-    assert.strictEqual(departmentRepository.getEntriesCountById.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.getEntriesCountById.mock.calls[0].arguments, ["12", loggedUser.id]);
+    assert.strictEqual(departmentRepository.getEntriesCountById.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.getEntriesCountById.mock.calls[0], ["12", loggedUser.id]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -124,12 +124,12 @@ describe("Find department by city ID", () => {
     });
     const loggedUser = loggedUserFactory.build();
 
-    departmentRepository.findDepartmentByTownId.mock.mockImplementationOnce(() => Promise.resolve(departmentData));
+    departmentRepository.findDepartmentByTownId.mockImplementationOnce(() => Promise.resolve(departmentData));
 
     const departmentResult = await departmentService.findDepartmentOfTownId("43", loggedUser);
 
-    assert.strictEqual(departmentRepository.findDepartmentByTownId.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.findDepartmentByTownId.mock.calls[0].arguments, [43]);
+    assert.strictEqual(departmentRepository.findDepartmentByTownId.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.findDepartmentByTownId.mock.calls[0], [43]);
     assert.ok(departmentResult.isOk());
     assert.strictEqual(departmentResult.value?.id, "256");
   });
@@ -144,12 +144,12 @@ describe("Find department by city ID", () => {
 test("Find all departments", async () => {
   const departmentsData = departmentFactory.buildList(3);
 
-  departmentRepository.findDepartments.mock.mockImplementationOnce(() => Promise.resolve(departmentsData));
+  departmentRepository.findDepartments.mockImplementationOnce(() => Promise.resolve(departmentsData));
 
   await departmentService.findAllDepartments();
 
-  assert.strictEqual(departmentRepository.findDepartments.mock.callCount(), 1);
-  assert.deepStrictEqual(departmentRepository.findDepartments.mock.calls[0].arguments, [
+  assert.strictEqual(departmentRepository.findDepartments.mock.calls.length, 1);
+  assert.deepStrictEqual(departmentRepository.findDepartments.mock.calls[0], [
     {
       orderBy: "code",
     },
@@ -161,12 +161,12 @@ describe("Entities paginated find by search criteria", () => {
     const departmentsData = departmentFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    departmentRepository.findDepartments.mock.mockImplementationOnce(() => Promise.resolve(departmentsData));
+    departmentRepository.findDepartments.mockImplementationOnce(() => Promise.resolve(departmentsData));
 
     await departmentService.findPaginatedDepartments(loggedUser, {});
 
-    assert.strictEqual(departmentRepository.findDepartments.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.findDepartments.mock.calls[0].arguments, [
+    assert.strictEqual(departmentRepository.findDepartments.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.findDepartments.mock.calls[0], [
       { limit: undefined, offset: undefined, orderBy: undefined, q: undefined, sortOrder: undefined },
       loggedUser.id,
     ]);
@@ -184,12 +184,12 @@ describe("Entities paginated find by search criteria", () => {
       pageSize: 10,
     };
 
-    departmentRepository.findDepartments.mock.mockImplementationOnce(() => Promise.resolve([departmentsData[0]]));
+    departmentRepository.findDepartments.mockImplementationOnce(() => Promise.resolve([departmentsData[0]]));
 
     await departmentService.findPaginatedDepartments(loggedUser, searchParams);
 
-    assert.strictEqual(departmentRepository.findDepartments.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.findDepartments.mock.calls[0].arguments, [
+    assert.strictEqual(departmentRepository.findDepartments.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.findDepartments.mock.calls[0], [
       {
         q: "Bob",
         orderBy: "code",
@@ -214,8 +214,8 @@ describe("Entities count by search criteria", () => {
 
     await departmentService.getDepartmentsCount(loggedUser);
 
-    assert.strictEqual(departmentRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.getCount.mock.calls[0].arguments, [undefined]);
+    assert.strictEqual(departmentRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.getCount.mock.calls[0], [undefined]);
   });
 
   test("should handle to be called with some criteria provided", async () => {
@@ -223,8 +223,8 @@ describe("Entities count by search criteria", () => {
 
     await departmentService.getDepartmentsCount(loggedUser, "test");
 
-    assert.strictEqual(departmentRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.getCount.mock.calls[0].arguments, ["test"]);
+    assert.strictEqual(departmentRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.getCount.mock.calls[0], ["test"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -240,14 +240,12 @@ describe("Update of a department", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { department: { canEdit: true } } });
 
-    departmentRepository.updateDepartment.mock.mockImplementationOnce(() =>
-      Promise.resolve(ok(departmentFactory.build())),
-    );
+    departmentRepository.updateDepartment.mockImplementationOnce(() => Promise.resolve(ok(departmentFactory.build())));
 
     await departmentService.updateDepartment(12, departmentData, loggedUser);
 
-    assert.strictEqual(departmentRepository.updateDepartment.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.updateDepartment.mock.calls[0].arguments, [12, departmentData]);
+    assert.strictEqual(departmentRepository.updateDepartment.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.updateDepartment.mock.calls[0], [12, departmentData]);
   });
 
   test("should be allowed when requested by the owner", async () => {
@@ -259,15 +257,13 @@ describe("Update of a department", () => {
 
     const loggedUser = loggedUserFactory.build({ id: "notAdmin" });
 
-    departmentRepository.findDepartmentById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
-    departmentRepository.updateDepartment.mock.mockImplementationOnce(() =>
-      Promise.resolve(ok(departmentFactory.build())),
-    );
+    departmentRepository.findDepartmentById.mockImplementationOnce(() => Promise.resolve(existingData));
+    departmentRepository.updateDepartment.mockImplementationOnce(() => Promise.resolve(ok(departmentFactory.build())));
 
     await departmentService.updateDepartment(12, departmentData, loggedUser);
 
-    assert.strictEqual(departmentRepository.updateDepartment.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.updateDepartment.mock.calls[0].arguments, [12, departmentData]);
+    assert.strictEqual(departmentRepository.updateDepartment.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.updateDepartment.mock.calls[0], [12, departmentData]);
   });
 
   test("should not be allowed when requested by an user that is nor owner nor has permission", async () => {
@@ -279,12 +275,12 @@ describe("Update of a department", () => {
 
     const user = loggedUserFactory.build();
 
-    departmentRepository.findDepartmentById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
+    departmentRepository.findDepartmentById.mockImplementationOnce(() => Promise.resolve(existingData));
 
     const updateResult = await departmentService.updateDepartment(12, departmentData, user);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(departmentRepository.updateDepartment.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.updateDepartment.mock.calls.length, 0);
   });
 
   test("should not be allowed when trying to update to a department that exists", async () => {
@@ -292,13 +288,13 @@ describe("Update of a department", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { department: { canEdit: true } } });
 
-    departmentRepository.updateDepartment.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    departmentRepository.updateDepartment.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const updateResult = await departmentService.updateDepartment(12, departmentData, loggedUser);
 
     assert.deepStrictEqual(updateResult, err("alreadyExists"));
-    assert.strictEqual(departmentRepository.updateDepartment.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.updateDepartment.mock.calls[0].arguments, [12, departmentData]);
+    assert.strictEqual(departmentRepository.updateDepartment.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.updateDepartment.mock.calls[0], [12, departmentData]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -307,7 +303,7 @@ describe("Update of a department", () => {
     const updateResult = await departmentService.updateDepartment(12, departmentData, null);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(departmentRepository.updateDepartment.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.updateDepartment.mock.calls.length, 0);
   });
 });
 
@@ -317,14 +313,12 @@ describe("Creation of a department", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { department: { canCreate: true } } });
 
-    departmentRepository.createDepartment.mock.mockImplementationOnce(() =>
-      Promise.resolve(ok(departmentFactory.build())),
-    );
+    departmentRepository.createDepartment.mockImplementationOnce(() => Promise.resolve(ok(departmentFactory.build())));
 
     await departmentService.createDepartment(departmentData, loggedUser);
 
-    assert.strictEqual(departmentRepository.createDepartment.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.createDepartment.mock.calls[0].arguments, [
+    assert.strictEqual(departmentRepository.createDepartment.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.createDepartment.mock.calls[0], [
       {
         ...departmentData,
         ownerId: loggedUser.id,
@@ -337,13 +331,13 @@ describe("Creation of a department", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { department: { canCreate: true } } });
 
-    departmentRepository.createDepartment.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    departmentRepository.createDepartment.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const createResult = await departmentService.createDepartment(departmentData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("alreadyExists"));
-    assert.strictEqual(departmentRepository.createDepartment.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.createDepartment.mock.calls[0].arguments, [
+    assert.strictEqual(departmentRepository.createDepartment.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.createDepartment.mock.calls[0], [
       {
         ...departmentData,
         ownerId: loggedUser.id,
@@ -359,7 +353,7 @@ describe("Creation of a department", () => {
     const createResult = await departmentService.createDepartment(departmentData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(departmentRepository.createDepartment.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.createDepartment.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -368,7 +362,7 @@ describe("Creation of a department", () => {
     const createResult = await departmentService.createDepartment(departmentData, null);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(departmentRepository.createDepartment.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.createDepartment.mock.calls.length, 0);
   });
 });
 
@@ -380,25 +374,23 @@ describe("Deletion of a department", () => {
       ownerId: loggedUser.id,
     });
 
-    departmentRepository.findDepartmentById.mock.mockImplementationOnce(() => Promise.resolve(department));
+    departmentRepository.findDepartmentById.mockImplementationOnce(() => Promise.resolve(department));
 
     await departmentService.deleteDepartment(11, loggedUser);
 
-    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.deleteDepartmentById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.deleteDepartmentById.mock.calls[0], [11]);
   });
 
   test("should handle the deletion of any department if has permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { department: { canDelete: true } } });
 
-    departmentRepository.findDepartmentById.mock.mockImplementationOnce(() =>
-      Promise.resolve(departmentFactory.build()),
-    );
+    departmentRepository.findDepartmentById.mockImplementationOnce(() => Promise.resolve(departmentFactory.build()));
 
     await departmentService.deleteDepartment(11, loggedUser);
 
-    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.callCount(), 1);
-    assert.deepStrictEqual(departmentRepository.deleteDepartmentById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.calls.length, 1);
+    assert.deepStrictEqual(departmentRepository.deleteDepartmentById.mock.calls[0], [11]);
   });
 
   test("should not be allowed when deleting a non-owned department and no permission", async () => {
@@ -409,25 +401,25 @@ describe("Deletion of a department", () => {
     const deleteResult = await departmentService.deleteDepartment(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the entity is used", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { department: { canDelete: true } } });
 
-    townRepository.getCount.mock.mockImplementationOnce(() => Promise.resolve(1));
+    townRepository.getCount.mockImplementationOnce(() => Promise.resolve(1));
 
     const deleteResult = await departmentService.deleteDepartment(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("isUsed"));
-    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
     const deleteResult = await departmentService.deleteDepartment(11, null);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.callCount(), 0);
+    assert.strictEqual(departmentRepository.deleteDepartmentById.mock.calls.length, 0);
   });
 });
 
@@ -436,12 +428,12 @@ test("Create multiple departments", async () => {
 
   const loggedUser = loggedUserFactory.build();
 
-  departmentRepository.createDepartments.mock.mockImplementationOnce(() => Promise.resolve([]));
+  departmentRepository.createDepartments.mockImplementationOnce(() => Promise.resolve([]));
 
   await departmentService.createDepartments(departmentsData, loggedUser);
 
-  assert.strictEqual(departmentRepository.createDepartments.mock.callCount(), 1);
-  assert.deepStrictEqual(departmentRepository.createDepartments.mock.calls[0].arguments, [
+  assert.strictEqual(departmentRepository.createDepartments.mock.calls.length, 1);
+  assert.deepStrictEqual(departmentRepository.createDepartments.mock.calls[0], [
     departmentsData.map((department) => {
       return {
         ...department,

@@ -1,5 +1,5 @@
+import { describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import { describe, test } from "node:test";
 import { localityFactory } from "@fixtures/domain/locality/locality.fixtures.js";
 import { upsertInventoryInputFactory } from "@fixtures/services/inventory/inventory-service.fixtures.js";
 import { reshapeInputInventoryUpsertData } from "./inventory-service-reshape.js";

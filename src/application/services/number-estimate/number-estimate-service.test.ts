@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import test, { describe, beforeEach } from "node:test";
 import {
   numberEstimateCreateInputFactory,
   numberEstimateFactory,
@@ -19,14 +19,14 @@ const numberEstimateService = buildNumberEstimateService({
 });
 
 beforeEach(() => {
-  numberEstimateRepository.findNumberEstimateById.mock.resetCalls();
-  numberEstimateRepository.findNumberEstimates.mock.resetCalls();
-  numberEstimateRepository.createNumberEstimate.mock.resetCalls();
-  numberEstimateRepository.createNumberEstimates.mock.resetCalls();
-  numberEstimateRepository.updateNumberEstimate.mock.resetCalls();
-  numberEstimateRepository.deleteNumberEstimateById.mock.resetCalls();
-  numberEstimateRepository.getCount.mock.resetCalls();
-  numberEstimateRepository.getEntriesCountById.mock.resetCalls();
+  numberEstimateRepository.findNumberEstimateById.mockReset();
+  numberEstimateRepository.findNumberEstimates.mockReset();
+  numberEstimateRepository.createNumberEstimate.mockReset();
+  numberEstimateRepository.createNumberEstimates.mockReset();
+  numberEstimateRepository.updateNumberEstimate.mockReset();
+  numberEstimateRepository.deleteNumberEstimateById.mockReset();
+  numberEstimateRepository.getCount.mockReset();
+  numberEstimateRepository.getEntriesCountById.mockReset();
 });
 
 describe("Find number estimate", () => {
@@ -34,31 +34,29 @@ describe("Find number estimate", () => {
     const numberEstimateData = numberEstimateFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    numberEstimateRepository.findNumberEstimateById.mock.mockImplementationOnce(() =>
-      Promise.resolve(numberEstimateData),
-    );
+    numberEstimateRepository.findNumberEstimateById.mockImplementationOnce(() => Promise.resolve(numberEstimateData));
 
     await numberEstimateService.findNumberEstimate(12, loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.findNumberEstimateById.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimateById.mock.calls[0].arguments, [12]);
+    assert.strictEqual(numberEstimateRepository.findNumberEstimateById.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimateById.mock.calls[0], [12]);
   });
 
   test("should handle number estimate not found", async () => {
-    numberEstimateRepository.findNumberEstimateById.mock.mockImplementationOnce(() => Promise.resolve(null));
+    numberEstimateRepository.findNumberEstimateById.mockImplementationOnce(() => Promise.resolve(null));
     const loggedUser = loggedUserFactory.build();
 
     assert.deepStrictEqual(await numberEstimateService.findNumberEstimate(10, loggedUser), ok(null));
 
-    assert.strictEqual(numberEstimateRepository.findNumberEstimateById.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimateById.mock.calls[0].arguments, [10]);
+    assert.strictEqual(numberEstimateRepository.findNumberEstimateById.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimateById.mock.calls[0], [10]);
   });
 
   test("should not be allowed when the no login details are provided", async () => {
     const findResult = await numberEstimateService.findNumberEstimate(11, null);
 
     assert.deepStrictEqual(findResult, err("notAllowed"));
-    assert.strictEqual(numberEstimateRepository.findNumberEstimateById.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.findNumberEstimateById.mock.calls.length, 0);
   });
 });
 
@@ -68,8 +66,8 @@ describe("Data count per entity", () => {
 
     await numberEstimateService.getEntriesCountByNumberEstimate("12", loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.getEntriesCountById.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.getEntriesCountById.mock.calls[0].arguments, ["12", loggedUser.id]);
+    assert.strictEqual(numberEstimateRepository.getEntriesCountById.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.getEntriesCountById.mock.calls[0], ["12", loggedUser.id]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -82,12 +80,12 @@ describe("Data count per entity", () => {
 test("Find all number estimates", async () => {
   const numberEstimatesData = numberEstimateFactory.buildList(3);
 
-  numberEstimateRepository.findNumberEstimates.mock.mockImplementationOnce(() => Promise.resolve(numberEstimatesData));
+  numberEstimateRepository.findNumberEstimates.mockImplementationOnce(() => Promise.resolve(numberEstimatesData));
 
   await numberEstimateService.findAllNumberEstimates();
 
-  assert.strictEqual(numberEstimateRepository.findNumberEstimates.mock.callCount(), 1);
-  assert.deepStrictEqual(numberEstimateRepository.findNumberEstimates.mock.calls[0].arguments, [
+  assert.strictEqual(numberEstimateRepository.findNumberEstimates.mock.calls.length, 1);
+  assert.deepStrictEqual(numberEstimateRepository.findNumberEstimates.mock.calls[0], [
     {
       orderBy: "libelle",
     },
@@ -99,14 +97,12 @@ describe("Entities paginated find by search criteria", () => {
     const numberEstimatesData = numberEstimateFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    numberEstimateRepository.findNumberEstimates.mock.mockImplementationOnce(() =>
-      Promise.resolve(numberEstimatesData),
-    );
+    numberEstimateRepository.findNumberEstimates.mockImplementationOnce(() => Promise.resolve(numberEstimatesData));
 
     await numberEstimateService.findPaginatesNumberEstimates(loggedUser, {});
 
-    assert.strictEqual(numberEstimateRepository.findNumberEstimates.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimates.mock.calls[0].arguments, [
+    assert.strictEqual(numberEstimateRepository.findNumberEstimates.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimates.mock.calls[0], [
       { limit: undefined, offset: undefined, orderBy: undefined, q: undefined, sortOrder: undefined },
       loggedUser.id,
     ]);
@@ -124,14 +120,14 @@ describe("Entities paginated find by search criteria", () => {
       pageSize: 10,
     };
 
-    numberEstimateRepository.findNumberEstimates.mock.mockImplementationOnce(() =>
+    numberEstimateRepository.findNumberEstimates.mockImplementationOnce(() =>
       Promise.resolve([numberEstimatesData[0]]),
     );
 
     await numberEstimateService.findPaginatesNumberEstimates(loggedUser, searchParams);
 
-    assert.strictEqual(numberEstimateRepository.findNumberEstimates.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimates.mock.calls[0].arguments, [
+    assert.strictEqual(numberEstimateRepository.findNumberEstimates.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.findNumberEstimates.mock.calls[0], [
       {
         q: "Bob",
         orderBy: "libelle",
@@ -156,8 +152,8 @@ describe("Entities count by search criteria", () => {
 
     await numberEstimateService.getNumberEstimatesCount(loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.getCount.mock.calls[0].arguments, [undefined]);
+    assert.strictEqual(numberEstimateRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.getCount.mock.calls[0], [undefined]);
   });
 
   test("should handle to be called with some criteria provided", async () => {
@@ -165,8 +161,8 @@ describe("Entities count by search criteria", () => {
 
     await numberEstimateService.getNumberEstimatesCount(loggedUser, "test");
 
-    assert.strictEqual(numberEstimateRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.getCount.mock.calls[0].arguments, ["test"]);
+    assert.strictEqual(numberEstimateRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.getCount.mock.calls[0], ["test"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -182,17 +178,14 @@ describe("Update of a number estimate", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { numberEstimate: { canEdit: true } } });
 
-    numberEstimateRepository.updateNumberEstimate.mock.mockImplementationOnce(() =>
+    numberEstimateRepository.updateNumberEstimate.mockImplementationOnce(() =>
       Promise.resolve(ok(numberEstimateFactory.build())),
     );
 
     await numberEstimateService.updateNumberEstimate(12, numberEstimateData, loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls[0].arguments, [
-      12,
-      numberEstimateData,
-    ]);
+    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls[0], [12, numberEstimateData]);
   });
 
   test("should be allowed when requested by the owner", async () => {
@@ -204,18 +197,15 @@ describe("Update of a number estimate", () => {
 
     const loggedUser = loggedUserFactory.build({ id: "notAdmin" });
 
-    numberEstimateRepository.findNumberEstimateById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
-    numberEstimateRepository.updateNumberEstimate.mock.mockImplementationOnce(() =>
+    numberEstimateRepository.findNumberEstimateById.mockImplementationOnce(() => Promise.resolve(existingData));
+    numberEstimateRepository.updateNumberEstimate.mockImplementationOnce(() =>
       Promise.resolve(ok(numberEstimateFactory.build())),
     );
 
     await numberEstimateService.updateNumberEstimate(12, numberEstimateData, loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls[0].arguments, [
-      12,
-      numberEstimateData,
-    ]);
+    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls[0], [12, numberEstimateData]);
   });
 
   test("should not be allowed when requested by an user that is nor owner nor has permission", async () => {
@@ -227,12 +217,12 @@ describe("Update of a number estimate", () => {
 
     const user = loggedUserFactory.build();
 
-    numberEstimateRepository.findNumberEstimateById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
+    numberEstimateRepository.findNumberEstimateById.mockImplementationOnce(() => Promise.resolve(existingData));
 
     const updateResult = await numberEstimateService.updateNumberEstimate(12, numberEstimateData, user);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls.length, 0);
   });
 
   test("should not be allowed when trying to update to a number estimate that exists", async () => {
@@ -240,18 +230,13 @@ describe("Update of a number estimate", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { numberEstimate: { canEdit: true } } });
 
-    numberEstimateRepository.updateNumberEstimate.mock.mockImplementationOnce(() =>
-      Promise.resolve(err("alreadyExists")),
-    );
+    numberEstimateRepository.updateNumberEstimate.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const updateResult = await numberEstimateService.updateNumberEstimate(12, numberEstimateData, loggedUser);
 
     assert.deepStrictEqual(updateResult, err("alreadyExists"));
-    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls[0].arguments, [
-      12,
-      numberEstimateData,
-    ]);
+    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls[0], [12, numberEstimateData]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -260,7 +245,7 @@ describe("Update of a number estimate", () => {
     const updateResult = await numberEstimateService.updateNumberEstimate(12, numberEstimateData, null);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.updateNumberEstimate.mock.calls.length, 0);
   });
 });
 
@@ -270,14 +255,14 @@ describe("Creation of a number estimate", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { numberEstimate: { canCreate: true } } });
 
-    numberEstimateRepository.createNumberEstimate.mock.mockImplementationOnce(() =>
+    numberEstimateRepository.createNumberEstimate.mockImplementationOnce(() =>
       Promise.resolve(ok(numberEstimateFactory.build())),
     );
 
     await numberEstimateService.createNumberEstimate(numberEstimateData, loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.createNumberEstimate.mock.calls[0].arguments, [
+    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.createNumberEstimate.mock.calls[0], [
       {
         ...numberEstimateData,
         ownerId: loggedUser.id,
@@ -290,15 +275,13 @@ describe("Creation of a number estimate", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { numberEstimate: { canCreate: true } } });
 
-    numberEstimateRepository.createNumberEstimate.mock.mockImplementationOnce(() =>
-      Promise.resolve(err("alreadyExists")),
-    );
+    numberEstimateRepository.createNumberEstimate.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const createResult = await numberEstimateService.createNumberEstimate(numberEstimateData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("alreadyExists"));
-    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.createNumberEstimate.mock.calls[0].arguments, [
+    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.createNumberEstimate.mock.calls[0], [
       {
         ...numberEstimateData,
         ownerId: loggedUser.id,
@@ -314,7 +297,7 @@ describe("Creation of a number estimate", () => {
     const createResult = await numberEstimateService.createNumberEstimate(numberEstimateData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -323,7 +306,7 @@ describe("Creation of a number estimate", () => {
     const createResult = await numberEstimateService.createNumberEstimate(numberEstimateData, null);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.createNumberEstimate.mock.calls.length, 0);
   });
 });
 
@@ -337,56 +320,56 @@ describe("Deletion of a number estimate", () => {
       ownerId: loggedUser.id,
     });
 
-    numberEstimateRepository.findNumberEstimateById.mock.mockImplementationOnce(() => Promise.resolve(numberEstimate));
+    numberEstimateRepository.findNumberEstimateById.mockImplementationOnce(() => Promise.resolve(numberEstimate));
 
     await numberEstimateService.deleteNumberEstimate(11, loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls[0], [11]);
   });
 
   test("should handle the deletion of any number estimate if has permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { numberEstimate: { canDelete: true } } });
 
-    numberEstimateRepository.findNumberEstimateById.mock.mockImplementationOnce(() =>
+    numberEstimateRepository.findNumberEstimateById.mockImplementationOnce(() =>
       Promise.resolve(numberEstimateFactory.build()),
     );
 
     await numberEstimateService.deleteNumberEstimate(11, loggedUser);
 
-    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.callCount(), 1);
-    assert.deepStrictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls.length, 1);
+    assert.deepStrictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls[0], [11]);
   });
 
   test("should not be allowed when deleting a non-owned number estimate and no permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { numberEstimate: { canDelete: false } } });
 
-    numberEstimateRepository.findNumberEstimateById.mock.mockImplementationOnce(() =>
+    numberEstimateRepository.findNumberEstimateById.mockImplementationOnce(() =>
       Promise.resolve(numberEstimateFactory.build()),
     );
 
     const deleteResult = await numberEstimateService.deleteNumberEstimate(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the entity is used", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { numberEstimate: { canDelete: true } } });
 
-    numberEstimateRepository.getEntriesCountById.mock.mockImplementationOnce(() => Promise.resolve(1));
+    numberEstimateRepository.getEntriesCountById.mockImplementationOnce(() => Promise.resolve(1));
 
     const deleteResult = await numberEstimateService.deleteNumberEstimate(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("isUsed"));
-    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
     const deleteResult = await numberEstimateService.deleteNumberEstimate(11, null);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.callCount(), 0);
+    assert.strictEqual(numberEstimateRepository.deleteNumberEstimateById.mock.calls.length, 0);
   });
 });
 
@@ -395,12 +378,12 @@ test("Create multiple number estimates", async () => {
 
   const loggedUser = loggedUserFactory.build();
 
-  numberEstimateRepository.createNumberEstimates.mock.mockImplementationOnce(() => Promise.resolve([]));
+  numberEstimateRepository.createNumberEstimates.mockImplementationOnce(() => Promise.resolve([]));
 
   await numberEstimateService.createNumberEstimates(numberEstimatesData, loggedUser);
 
-  assert.strictEqual(numberEstimateRepository.createNumberEstimates.mock.callCount(), 1);
-  assert.deepStrictEqual(numberEstimateRepository.createNumberEstimates.mock.calls[0].arguments, [
+  assert.strictEqual(numberEstimateRepository.createNumberEstimates.mock.calls.length, 1);
+  assert.deepStrictEqual(numberEstimateRepository.createNumberEstimates.mock.calls[0], [
     numberEstimatesData.map((numberEstimate) => {
       return {
         ...numberEstimate,

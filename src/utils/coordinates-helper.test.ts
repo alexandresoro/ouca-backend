@@ -1,5 +1,5 @@
+import { test } from "bun:test";
 import assert from "node:assert";
-import test from "node:test";
 import type { Locality } from "@ou-ca/common/api/entities/locality.js";
 import { areCoordinatesCustom } from "./coordinates-helper.js";
 

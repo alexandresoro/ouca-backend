@@ -1,5 +1,5 @@
 import { sentryConfig } from "@infrastructure/config/sentry-config.js";
-import * as Sentry from "@sentry/node";
+import * as Sentry from "@sentry/bun";
 import { logger } from "../../utils/logger.js";
 
 // Sentry

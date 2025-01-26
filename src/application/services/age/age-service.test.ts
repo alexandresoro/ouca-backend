@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import test, { describe, beforeEach } from "node:test";
 import { ageCreateInputFactory, ageFactory } from "@fixtures/domain/age/age.fixtures.js";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
 import { upsertAgeInputFactory } from "@fixtures/services/age/age-service.fixtures.js";
@@ -15,14 +15,14 @@ const ageService = buildAgeService({
 });
 
 beforeEach(() => {
-  ageRepository.findAgeById.mock.resetCalls();
-  ageRepository.findAges.mock.resetCalls();
-  ageRepository.getCount.mock.resetCalls();
-  ageRepository.getEntriesCountById.mock.resetCalls();
-  ageRepository.updateAge.mock.resetCalls();
-  ageRepository.createAge.mock.resetCalls();
-  ageRepository.deleteAgeById.mock.resetCalls();
-  ageRepository.createAges.mock.resetCalls();
+  ageRepository.findAgeById.mockReset();
+  ageRepository.findAges.mockReset();
+  ageRepository.getCount.mockReset();
+  ageRepository.getEntriesCountById.mockReset();
+  ageRepository.updateAge.mockReset();
+  ageRepository.createAge.mockReset();
+  ageRepository.deleteAgeById.mockReset();
+  ageRepository.createAges.mockReset();
 });
 
 describe("Find age", () => {
@@ -30,29 +30,29 @@ describe("Find age", () => {
     const ageData = ageFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    ageRepository.findAgeById.mock.mockImplementationOnce(() => Promise.resolve(ageData));
+    ageRepository.findAgeById.mockImplementationOnce(() => Promise.resolve(ageData));
 
     await ageService.findAge(12, loggedUser);
 
-    assert.strictEqual(ageRepository.findAgeById.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.findAgeById.mock.calls[0].arguments, [12]);
+    assert.strictEqual(ageRepository.findAgeById.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.findAgeById.mock.calls[0], [12]);
   });
 
   test("should handle age not found", async () => {
-    ageRepository.findAgeById.mock.mockImplementationOnce(() => Promise.resolve(null));
+    ageRepository.findAgeById.mockImplementationOnce(() => Promise.resolve(null));
     const loggedUser = loggedUserFactory.build();
 
     assert.deepStrictEqual(await ageService.findAge(10, loggedUser), ok(null));
 
-    assert.strictEqual(ageRepository.findAgeById.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.findAgeById.mock.calls[0].arguments, [10]);
+    assert.strictEqual(ageRepository.findAgeById.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.findAgeById.mock.calls[0], [10]);
   });
 
   test("should not be allowed when the no login details are provided", async () => {
     const findResult = await ageService.findAge(11, null);
 
     assert.deepStrictEqual(findResult, err("notAllowed"));
-    assert.strictEqual(ageRepository.findAgeById.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.findAgeById.mock.calls.length, 0);
   });
 });
 
@@ -62,8 +62,8 @@ describe("Data count per entity", () => {
 
     await ageService.getEntriesCountByAge("12", loggedUser);
 
-    assert.strictEqual(ageRepository.getEntriesCountById.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.getEntriesCountById.mock.calls[0].arguments, ["12", loggedUser.id]);
+    assert.strictEqual(ageRepository.getEntriesCountById.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.getEntriesCountById.mock.calls[0], ["12", loggedUser.id]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -76,12 +76,12 @@ describe("Data count per entity", () => {
 test("Find all ages", async () => {
   const agesData = ageFactory.buildList(3);
 
-  ageRepository.findAges.mock.mockImplementationOnce(() => Promise.resolve(agesData));
+  ageRepository.findAges.mockImplementationOnce(() => Promise.resolve(agesData));
 
   await ageService.findAllAges();
 
-  assert.strictEqual(ageRepository.findAges.mock.callCount(), 1);
-  assert.deepStrictEqual(ageRepository.findAges.mock.calls[0].arguments, [
+  assert.strictEqual(ageRepository.findAges.mock.calls.length, 1);
+  assert.deepStrictEqual(ageRepository.findAges.mock.calls[0], [
     {
       orderBy: "libelle",
     },
@@ -93,12 +93,12 @@ describe("Entities paginated find by search criteria", () => {
     const agesData = ageFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    ageRepository.findAges.mock.mockImplementationOnce(() => Promise.resolve(agesData));
+    ageRepository.findAges.mockImplementationOnce(() => Promise.resolve(agesData));
 
     await ageService.findPaginatedAges(loggedUser, {});
 
-    assert.strictEqual(ageRepository.findAges.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.findAges.mock.calls[0].arguments, [
+    assert.strictEqual(ageRepository.findAges.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.findAges.mock.calls[0], [
       {
         limit: undefined,
         offset: undefined,
@@ -122,12 +122,12 @@ describe("Entities paginated find by search criteria", () => {
       pageSize: 10,
     };
 
-    ageRepository.findAges.mock.mockImplementationOnce(() => Promise.resolve([agesData[0]]));
+    ageRepository.findAges.mockImplementationOnce(() => Promise.resolve([agesData[0]]));
 
     await ageService.findPaginatedAges(loggedUser, searchParams);
 
-    assert.strictEqual(ageRepository.findAges.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.findAges.mock.calls[0].arguments, [
+    assert.strictEqual(ageRepository.findAges.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.findAges.mock.calls[0], [
       {
         q: "Bob",
         orderBy: "libelle",
@@ -152,8 +152,8 @@ describe("Entities count by search criteria", () => {
 
     await ageService.getAgesCount(loggedUser);
 
-    assert.strictEqual(ageRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.getCount.mock.calls[0].arguments, [undefined]);
+    assert.strictEqual(ageRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.getCount.mock.calls[0], [undefined]);
   });
 
   test("should handle to be called with some criteria provided", async () => {
@@ -161,8 +161,8 @@ describe("Entities count by search criteria", () => {
 
     await ageService.getAgesCount(loggedUser, "test");
 
-    assert.strictEqual(ageRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.getCount.mock.calls[0].arguments, ["test"]);
+    assert.strictEqual(ageRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.getCount.mock.calls[0], ["test"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -178,12 +178,12 @@ describe("Update of an age", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { age: { canEdit: true } } });
 
-    ageRepository.updateAge.mock.mockImplementationOnce(() => Promise.resolve(ok(ageFactory.build())));
+    ageRepository.updateAge.mockImplementationOnce(() => Promise.resolve(ok(ageFactory.build())));
 
     await ageService.updateAge(12, ageData, loggedUser);
 
-    assert.strictEqual(ageRepository.updateAge.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.updateAge.mock.calls[0].arguments, [12, ageData]);
+    assert.strictEqual(ageRepository.updateAge.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.updateAge.mock.calls[0], [12, ageData]);
   });
 
   test("should be allowed when requested by the owner", async () => {
@@ -195,13 +195,13 @@ describe("Update of an age", () => {
 
     const loggedUser = loggedUserFactory.build({ id: "notAdmin" });
 
-    ageRepository.findAgeById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
-    ageRepository.updateAge.mock.mockImplementationOnce(() => Promise.resolve(ok(ageFactory.build())));
+    ageRepository.findAgeById.mockImplementationOnce(() => Promise.resolve(existingData));
+    ageRepository.updateAge.mockImplementationOnce(() => Promise.resolve(ok(ageFactory.build())));
 
     await ageService.updateAge(12, ageData, loggedUser);
 
-    assert.strictEqual(ageRepository.updateAge.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.updateAge.mock.calls[0].arguments, [12, ageData]);
+    assert.strictEqual(ageRepository.updateAge.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.updateAge.mock.calls[0], [12, ageData]);
   });
 
   test("should not be allowed when requested by an user that is nor owner nor has permission", async () => {
@@ -213,12 +213,12 @@ describe("Update of an age", () => {
 
     const user = loggedUserFactory.build();
 
-    ageRepository.findAgeById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
+    ageRepository.findAgeById.mockImplementationOnce(() => Promise.resolve(existingData));
 
     const updateResult = await ageService.updateAge(12, ageData, user);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(ageRepository.updateAge.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.updateAge.mock.calls.length, 0);
   });
 
   test("should not be allowed when trying to update to an age that exists", async () => {
@@ -226,13 +226,13 @@ describe("Update of an age", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { age: { canEdit: true } } });
 
-    ageRepository.updateAge.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    ageRepository.updateAge.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const updateResult = await ageService.updateAge(12, ageData, loggedUser);
 
     assert.deepStrictEqual(updateResult, err("alreadyExists"));
-    assert.strictEqual(ageRepository.updateAge.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.updateAge.mock.calls[0].arguments, [12, ageData]);
+    assert.strictEqual(ageRepository.updateAge.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.updateAge.mock.calls[0], [12, ageData]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -241,7 +241,7 @@ describe("Update of an age", () => {
     const updateResult = await ageService.updateAge(12, ageData, null);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(ageRepository.updateAge.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.updateAge.mock.calls.length, 0);
   });
 });
 
@@ -251,12 +251,12 @@ describe("Creation of an age", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { age: { canCreate: true } } });
 
-    ageRepository.createAge.mock.mockImplementationOnce(() => Promise.resolve(ok(ageFactory.build())));
+    ageRepository.createAge.mockImplementationOnce(() => Promise.resolve(ok(ageFactory.build())));
 
     await ageService.createAge(ageData, loggedUser);
 
-    assert.strictEqual(ageRepository.createAge.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.createAge.mock.calls[0].arguments, [
+    assert.strictEqual(ageRepository.createAge.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.createAge.mock.calls[0], [
       {
         ...ageData,
         ownerId: loggedUser.id,
@@ -269,13 +269,13 @@ describe("Creation of an age", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { age: { canCreate: true } } });
 
-    ageRepository.createAge.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    ageRepository.createAge.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const createResult = await ageService.createAge(ageData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("alreadyExists"));
-    assert.strictEqual(ageRepository.createAge.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.createAge.mock.calls[0].arguments, [
+    assert.strictEqual(ageRepository.createAge.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.createAge.mock.calls[0], [
       {
         ...ageData,
         ownerId: loggedUser.id,
@@ -291,7 +291,7 @@ describe("Creation of an age", () => {
     const createResult = await ageService.createAge(ageData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(ageRepository.createAge.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.createAge.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -300,7 +300,7 @@ describe("Creation of an age", () => {
     const createResult = await ageService.createAge(ageData, null);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(ageRepository.createAge.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.createAge.mock.calls.length, 0);
   });
 });
 
@@ -312,23 +312,23 @@ describe("Deletion of an age", () => {
 
     const age = ageFactory.build({ ownerId: loggedUser.id });
 
-    ageRepository.findAgeById.mock.mockImplementationOnce(() => Promise.resolve(age));
+    ageRepository.findAgeById.mockImplementationOnce(() => Promise.resolve(age));
 
     await ageService.deleteAge(11, loggedUser);
 
-    assert.strictEqual(ageRepository.deleteAgeById.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.deleteAgeById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(ageRepository.deleteAgeById.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.deleteAgeById.mock.calls[0], [11]);
   });
 
   test("should handle the deletion of any age if has permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { age: { canDelete: true } } });
 
-    ageRepository.findAgeById.mock.mockImplementationOnce(() => Promise.resolve(ageFactory.build()));
+    ageRepository.findAgeById.mockImplementationOnce(() => Promise.resolve(ageFactory.build()));
 
     await ageService.deleteAge(11, loggedUser);
 
-    assert.strictEqual(ageRepository.deleteAgeById.mock.callCount(), 1);
-    assert.deepStrictEqual(ageRepository.deleteAgeById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(ageRepository.deleteAgeById.mock.calls.length, 1);
+    assert.deepStrictEqual(ageRepository.deleteAgeById.mock.calls[0], [11]);
   });
 
   test("should not be allowed when deleting a non-owned age and no permission", async () => {
@@ -339,25 +339,25 @@ describe("Deletion of an age", () => {
     const deleteResult = await ageService.deleteAge(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(ageRepository.deleteAgeById.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.deleteAgeById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the entity is used", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { age: { canDelete: true } } });
 
-    ageRepository.getEntriesCountById.mock.mockImplementationOnce(() => Promise.resolve(1));
+    ageRepository.getEntriesCountById.mockImplementationOnce(() => Promise.resolve(1));
 
     const deleteResult = await ageService.deleteAge(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("isUsed"));
-    assert.strictEqual(ageRepository.deleteAgeById.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.deleteAgeById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
     const deleteResult = await ageService.deleteAge(11, null);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(ageRepository.deleteAgeById.mock.callCount(), 0);
+    assert.strictEqual(ageRepository.deleteAgeById.mock.calls.length, 0);
   });
 });
 
@@ -366,12 +366,12 @@ test("Create multiple ages", async () => {
 
   const loggedUser = loggedUserFactory.build();
 
-  ageRepository.createAges.mock.mockImplementationOnce(() => Promise.resolve([]));
+  ageRepository.createAges.mockImplementationOnce(() => Promise.resolve([]));
 
   await ageService.createAges(agesData, loggedUser);
 
-  assert.strictEqual(ageRepository.createAges.mock.callCount(), 1);
-  assert.deepStrictEqual(ageRepository.createAges.mock.calls[0].arguments, [
+  assert.strictEqual(ageRepository.createAges.mock.calls.length, 1);
+  assert.deepStrictEqual(ageRepository.createAges.mock.calls[0], [
     agesData.map((age) => {
       return {
         ...age,

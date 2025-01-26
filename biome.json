@@ -52,6 +52,6 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["pnpm-*.yaml", "*-sandboxed.js"]
+    "ignore": ["bun.lock"]
   }
 }

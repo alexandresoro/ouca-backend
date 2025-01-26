@@ -1,5 +1,5 @@
+import { test } from "bun:test";
 import assert from "node:assert";
-import test from "node:test";
 import type { BreederCode } from "@domain/behavior/breeder.js";
 import { BREEDER_NAMES, getNicheurStatusToDisplay } from "./breeder-helper.js";
 

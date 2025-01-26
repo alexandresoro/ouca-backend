@@ -11,15 +11,20 @@ on:
 
 jobs:
   validate:
-#     environment:
-#       name: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && 'production' || 'preview' }}
+    #     environment:
+    #       name: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && 'production' || 'preview' }}
 
     runs-on: docker
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - uses: ./.forgejo/actions/install
+      - uses: https://github.com/oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5 # v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - shell: bash
+        run: bun install
 
       - uses: ./.forgejo/actions/validate
 
@@ -43,10 +48,10 @@ jobs:
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        id: setup-node
-        with:
-          node-version-file: .tool-versions
+      - name: Set up Bun version
+        id: setup-bun-version
+        run: |
+          echo "bun-version=$(cat .bun-version)" >> $GITHUB_OUTPUT
 
       - uses: https://github.com/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
         id: docker-metadata
@@ -54,17 +59,12 @@ jobs:
           images: |
             ${{ secrets.HARBOR_REGISTRY_URL }}/library/ouca-backend
           tags: |
-            type=ref,event=branch,enable=${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }}
+            type=ref,event=branch,enable=${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }},suffix=-{{sha}}
             type=sha
             # set latest tag for default branch
             type=raw,value=latest,enable={{is_default_branch}},priority=50
           flavor: |
             latest=false
-
-      - name: Rewrite Node version for Docker
-        id: rewrite-node-version
-        run: |
-          echo "NODE_IMAGE_VERSION=$(echo '${{ steps.setup-node.outputs.node-version }}' | cut -c2- )" >> $GITHUB_ENV
 
       - uses: https://github.com/redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         id: build-image
@@ -73,15 +73,11 @@ jobs:
           tags: ${{ steps.docker-metadata.outputs.tags }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
           build-args: |
-            NODE_IMAGE_VERSION=${{ env.NODE_IMAGE_VERSION }}
+            BUN_IMAGE_VERSION=${{ steps.setup-bun-version.outputs.bun-version }}
             GIT_SHA=${{ github.sha }}
-            REGISTRY_URL=${{ secrets.HARBOR_REGISTRY_URL }}/docker.io/library
+            REGISTRY_URL=${{ secrets.HARBOR_REGISTRY_URL }}/docker.io
           containerfiles: |
             ./Dockerfile
-          # Disable caching as it's slower than building from scratch
-          # extra-args: |
-          #   --cache-from ${{ secrets.FORGEJO_DOMAIN }}/alexandresoro/cache
-          #   --cache-to ${{ secrets.FORGEJO_DOMAIN }}/alexandresoro/cache
 
       - uses: https://github.com/redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
         id: push-image
@@ -99,7 +95,6 @@ jobs:
     runs-on: docker
 
     steps:
-
       - name: Dispatch backend image update to forgejo
         run: >
           curl -v --fail

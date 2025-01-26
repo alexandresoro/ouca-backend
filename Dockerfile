@@ -1,48 +1,24 @@
 # syntax=docker/dockerfile:1@sha256:93bfd3b68c109427185cd78b4779fc82b484b0b7618e36d0f104d4d801e66d25
-ARG REGISTRY_URL="docker.io/library"
-ARG NODE_IMAGE_VERSION=22
+ARG REGISTRY_URL="docker.io"
+ARG BUN_IMAGE_VERSION=1.2
 
-# 1. Transpile the project
-FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as build
-
-WORKDIR /app
-
-# https://github.com/nodejs/corepack/issues/612
-RUN npm install -g corepack@latest
-RUN corepack enable
-
-COPY ./ /app/
-
-RUN pnpm i --frozen-lockfile
-RUN node --run build
-
-# 2. Run the NodeJS backend
-FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as final
-
-# https://github.com/nodejs/corepack/issues/612
-RUN npm install -g corepack@latest
-RUN corepack enable
-
-# Sets to production, it also sets the install script to install deps only
-ENV NODE_ENV production
+FROM ${REGISTRY_URL}/oven/bun:${BUN_IMAGE_VERSION}-alpine
 
 WORKDIR /app
 
-COPY .npmrc ./
+COPY bunfig.toml ./
 
 COPY /migrations/ migrations/
 
-COPY package.json pnpm-*.yaml ./
+COPY package.json bun.lock tsconfig.json ./
 
-RUN pnpm i --frozen-lockfile
+RUN bun install --production --frozen-lockfile
 
-COPY --from=build /app/dist/ dist/
-
-WORKDIR /app/dist
+COPY src/ src/
 
 ARG GIT_SHA
 ENV SENTRY_RELEASE ${GIT_SHA}
 
-ENTRYPOINT ["node", "--import", "@sentry/node/preload", "main.js"]
+ENTRYPOINT ["bun", "src/main.ts"]
 
 EXPOSE 4000/tcp

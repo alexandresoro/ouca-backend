@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import { beforeEach, describe, test } from "node:test";
 import { townCreateInputFactory, townFactory } from "@fixtures/domain/town/town.fixtures.js";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
 import { upsertTownInputFactory } from "@fixtures/services/town/town-service.fixtures.js";
@@ -19,16 +19,16 @@ const townService = buildTownService({
 });
 
 beforeEach(() => {
-  townRepository.findTownById.mock.resetCalls();
-  townRepository.findTowns.mock.resetCalls();
-  townRepository.updateTown.mock.resetCalls();
-  townRepository.createTown.mock.resetCalls();
-  townRepository.createTowns.mock.resetCalls();
-  townRepository.deleteTownById.mock.resetCalls();
-  townRepository.getCount.mock.resetCalls();
-  townRepository.getEntriesCountById.mock.resetCalls();
-  townRepository.findTownByLocalityId.mock.resetCalls();
-  localityRepository.getCount.mock.resetCalls();
+  townRepository.findTownById.mockReset();
+  townRepository.findTowns.mockReset();
+  townRepository.updateTown.mockReset();
+  townRepository.createTown.mockReset();
+  townRepository.createTowns.mockReset();
+  townRepository.deleteTownById.mockReset();
+  townRepository.getCount.mockReset();
+  townRepository.getEntriesCountById.mockReset();
+  townRepository.findTownByLocalityId.mockReset();
+  localityRepository.getCount.mockReset();
 });
 
 describe("Find city", () => {
@@ -36,29 +36,29 @@ describe("Find city", () => {
     const cityData = townFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    townRepository.findTownById.mock.mockImplementationOnce(() => Promise.resolve(cityData));
+    townRepository.findTownById.mockImplementationOnce(() => Promise.resolve(cityData));
 
     await townService.findTown(12, loggedUser);
 
-    assert.strictEqual(townRepository.findTownById.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.findTownById.mock.calls[0].arguments, [12]);
+    assert.strictEqual(townRepository.findTownById.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.findTownById.mock.calls[0], [12]);
   });
 
   test("should handle city not found", async () => {
-    townRepository.findTownById.mock.mockImplementationOnce(() => Promise.resolve(null));
+    townRepository.findTownById.mockImplementationOnce(() => Promise.resolve(null));
     const loggedUser = loggedUserFactory.build();
 
     assert.deepStrictEqual(await townService.findTown(10, loggedUser), ok(null));
 
-    assert.strictEqual(townRepository.findTownById.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.findTownById.mock.calls[0].arguments, [10]);
+    assert.strictEqual(townRepository.findTownById.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.findTownById.mock.calls[0], [10]);
   });
 
   test("should not be allowed when the no login details are provided", async () => {
     const findResult = await townService.findTown(11, null);
 
     assert.deepStrictEqual(findResult, err("notAllowed"));
-    assert.strictEqual(townRepository.findTownById.mock.callCount(), 0);
+    assert.strictEqual(townRepository.findTownById.mock.calls.length, 0);
   });
 });
 
@@ -68,8 +68,8 @@ describe("Localities count per entity", () => {
 
     await townService.getLocalitiesCountByTown("12", loggedUser);
 
-    assert.strictEqual(localityRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0].arguments, [undefined, "12"]);
+    assert.strictEqual(localityRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0], [undefined, "12"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -85,8 +85,8 @@ describe("Data count per entity", () => {
 
     await townService.getEntriesCountByTown("12", loggedUser);
 
-    assert.strictEqual(townRepository.getEntriesCountById.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.getEntriesCountById.mock.calls[0].arguments, ["12", loggedUser.id]);
+    assert.strictEqual(townRepository.getEntriesCountById.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.getEntriesCountById.mock.calls[0], ["12", loggedUser.id]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -103,12 +103,12 @@ describe("Find city by locality ID", () => {
     });
     const loggedUser = loggedUserFactory.build();
 
-    townRepository.findTownByLocalityId.mock.mockImplementationOnce(() => Promise.resolve(cityData));
+    townRepository.findTownByLocalityId.mockImplementationOnce(() => Promise.resolve(cityData));
 
     const townResult = await townService.findTownOfLocalityId("43", loggedUser);
 
-    assert.strictEqual(townRepository.findTownByLocalityId.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.findTownByLocalityId.mock.calls[0].arguments, ["43"]);
+    assert.strictEqual(townRepository.findTownByLocalityId.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.findTownByLocalityId.mock.calls[0], ["43"]);
     assert.ok(townResult.isOk());
     assert.strictEqual(townResult.value?.id, cityData.id);
   });
@@ -123,12 +123,12 @@ describe("Find city by locality ID", () => {
 test("Find all cities", async () => {
   const citiesData = townFactory.buildList(3);
 
-  townRepository.findTowns.mock.mockImplementationOnce(() => Promise.resolve(citiesData));
+  townRepository.findTowns.mockImplementationOnce(() => Promise.resolve(citiesData));
 
   await townService.findAllTowns();
 
-  assert.strictEqual(townRepository.findTowns.mock.callCount(), 1);
-  assert.deepStrictEqual(townRepository.findTowns.mock.calls[0].arguments, [
+  assert.strictEqual(townRepository.findTowns.mock.calls.length, 1);
+  assert.deepStrictEqual(townRepository.findTowns.mock.calls[0], [
     {
       orderBy: "nom",
     },
@@ -140,12 +140,12 @@ describe("Entities paginated find by search criteria", () => {
     const citiesData = townFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    townRepository.findTowns.mock.mockImplementationOnce(() => Promise.resolve(citiesData));
+    townRepository.findTowns.mockImplementationOnce(() => Promise.resolve(citiesData));
 
     await townService.findPaginatedTowns(loggedUser, {});
 
-    assert.strictEqual(townRepository.findTowns.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.findTowns.mock.calls[0].arguments, [
+    assert.strictEqual(townRepository.findTowns.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.findTowns.mock.calls[0], [
       {
         departmentId: undefined,
         limit: undefined,
@@ -170,12 +170,12 @@ describe("Entities paginated find by search criteria", () => {
       pageSize: 10,
     };
 
-    townRepository.findTowns.mock.mockImplementationOnce(() => Promise.resolve([citiesData[0]]));
+    townRepository.findTowns.mockImplementationOnce(() => Promise.resolve([citiesData[0]]));
 
     await townService.findPaginatedTowns(loggedUser, searchParams);
 
-    assert.strictEqual(townRepository.findTowns.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.findTowns.mock.calls[0].arguments, [
+    assert.strictEqual(townRepository.findTowns.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.findTowns.mock.calls[0], [
       {
         departmentId: undefined,
         q: "Bob",
@@ -201,8 +201,8 @@ describe("Entities count by search criteria", () => {
 
     await townService.getTownsCount(loggedUser, {});
 
-    assert.strictEqual(townRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.getCount.mock.calls[0].arguments, [undefined, undefined]);
+    assert.strictEqual(townRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.getCount.mock.calls[0], [undefined, undefined]);
   });
 
   test("should handle to be called with some criteria provided", async () => {
@@ -210,8 +210,8 @@ describe("Entities count by search criteria", () => {
 
     await townService.getTownsCount(loggedUser, { q: "test", departmentId: "12" });
 
-    assert.strictEqual(townRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.getCount.mock.calls[0].arguments, ["test", "12"]);
+    assert.strictEqual(townRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.getCount.mock.calls[0], ["test", "12"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -227,12 +227,12 @@ describe("Update of a city", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { town: { canEdit: true } } });
 
-    townRepository.updateTown.mock.mockImplementationOnce(() => Promise.resolve(ok(townFactory.build())));
+    townRepository.updateTown.mockImplementationOnce(() => Promise.resolve(ok(townFactory.build())));
 
     await townService.updateTown(12, cityData, loggedUser);
 
-    assert.strictEqual(townRepository.updateTown.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.updateTown.mock.calls[0].arguments, [12, cityData]);
+    assert.strictEqual(townRepository.updateTown.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.updateTown.mock.calls[0], [12, cityData]);
   });
 
   test("should be allowed when requested by the owner", async () => {
@@ -244,13 +244,13 @@ describe("Update of a city", () => {
 
     const loggedUser = loggedUserFactory.build({ id: "notAdmin" });
 
-    townRepository.findTownById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
-    townRepository.updateTown.mock.mockImplementationOnce(() => Promise.resolve(ok(townFactory.build())));
+    townRepository.findTownById.mockImplementationOnce(() => Promise.resolve(existingData));
+    townRepository.updateTown.mockImplementationOnce(() => Promise.resolve(ok(townFactory.build())));
 
     await townService.updateTown(12, cityData, loggedUser);
 
-    assert.strictEqual(townRepository.updateTown.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.updateTown.mock.calls[0].arguments, [12, cityData]);
+    assert.strictEqual(townRepository.updateTown.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.updateTown.mock.calls[0], [12, cityData]);
   });
 
   test("should not be allowed when requested by an user that is nor owner nor has permission", async () => {
@@ -262,12 +262,12 @@ describe("Update of a city", () => {
 
     const user = loggedUserFactory.build();
 
-    townRepository.findTownById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
+    townRepository.findTownById.mockImplementationOnce(() => Promise.resolve(existingData));
 
     const updateResult = await townService.updateTown(12, cityData, user);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(townRepository.updateTown.mock.callCount(), 0);
+    assert.strictEqual(townRepository.updateTown.mock.calls.length, 0);
   });
 
   test("should not be allowed when trying to update to a city that exists", async () => {
@@ -275,13 +275,13 @@ describe("Update of a city", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { town: { canEdit: true } } });
 
-    townRepository.updateTown.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    townRepository.updateTown.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const updateResult = await townService.updateTown(12, cityData, loggedUser);
 
     assert.deepStrictEqual(updateResult, err("alreadyExists"));
-    assert.strictEqual(townRepository.updateTown.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.updateTown.mock.calls[0].arguments, [12, cityData]);
+    assert.strictEqual(townRepository.updateTown.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.updateTown.mock.calls[0], [12, cityData]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -290,7 +290,7 @@ describe("Update of a city", () => {
     const updateResult = await townService.updateTown(12, cityData, null);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(townRepository.updateTown.mock.callCount(), 0);
+    assert.strictEqual(townRepository.updateTown.mock.calls.length, 0);
   });
 });
 
@@ -300,12 +300,12 @@ describe("Creation of a city", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { town: { canCreate: true } } });
 
-    townRepository.createTown.mock.mockImplementationOnce(() => Promise.resolve(ok(townFactory.build())));
+    townRepository.createTown.mockImplementationOnce(() => Promise.resolve(ok(townFactory.build())));
 
     await townService.createTown(cityData, loggedUser);
 
-    assert.strictEqual(townRepository.createTown.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.createTown.mock.calls[0].arguments, [
+    assert.strictEqual(townRepository.createTown.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.createTown.mock.calls[0], [
       {
         ...cityData,
         ownerId: loggedUser.id,
@@ -318,13 +318,13 @@ describe("Creation of a city", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { town: { canCreate: true } } });
 
-    townRepository.createTown.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    townRepository.createTown.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const createResult = await townService.createTown(cityData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("alreadyExists"));
-    assert.strictEqual(townRepository.createTown.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.createTown.mock.calls[0].arguments, [
+    assert.strictEqual(townRepository.createTown.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.createTown.mock.calls[0], [
       {
         ...cityData,
         ownerId: loggedUser.id,
@@ -340,7 +340,7 @@ describe("Creation of a city", () => {
     const createResult = await townService.createTown(cityData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(townRepository.createTown.mock.callCount(), 0);
+    assert.strictEqual(townRepository.createTown.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -349,7 +349,7 @@ describe("Creation of a city", () => {
     const createResult = await townService.createTown(cityData, null);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(townRepository.createTown.mock.callCount(), 0);
+    assert.strictEqual(townRepository.createTown.mock.calls.length, 0);
   });
 });
 
@@ -361,52 +361,52 @@ describe("Deletion of a city", () => {
       ownerId: loggedUser.id,
     });
 
-    townRepository.findTownById.mock.mockImplementationOnce(() => Promise.resolve(city));
+    townRepository.findTownById.mockImplementationOnce(() => Promise.resolve(city));
 
     await townService.deleteTown(11, loggedUser);
 
-    assert.strictEqual(townRepository.deleteTownById.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.deleteTownById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(townRepository.deleteTownById.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.deleteTownById.mock.calls[0], [11]);
   });
 
   test("should handle the deletion of any city if has permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { town: { canDelete: true } } });
 
-    townRepository.findTownById.mock.mockImplementationOnce(() => Promise.resolve(townFactory.build()));
+    townRepository.findTownById.mockImplementationOnce(() => Promise.resolve(townFactory.build()));
 
     await townService.deleteTown(11, loggedUser);
 
-    assert.strictEqual(townRepository.deleteTownById.mock.callCount(), 1);
-    assert.deepStrictEqual(townRepository.deleteTownById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(townRepository.deleteTownById.mock.calls.length, 1);
+    assert.deepStrictEqual(townRepository.deleteTownById.mock.calls[0], [11]);
   });
 
   test("should not be allowed when deleting a non-owned city and no permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { town: { canDelete: false } } });
 
-    townRepository.findTownById.mock.mockImplementationOnce(() => Promise.resolve(townFactory.build()));
+    townRepository.findTownById.mockImplementationOnce(() => Promise.resolve(townFactory.build()));
 
     const deleteResult = await townService.deleteTown(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(townRepository.deleteTownById.mock.callCount(), 0);
+    assert.strictEqual(townRepository.deleteTownById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the entity is used", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { town: { canDelete: true } } });
 
-    localityRepository.getCount.mock.mockImplementationOnce(() => Promise.resolve(1));
+    localityRepository.getCount.mockImplementationOnce(() => Promise.resolve(1));
 
     const deleteResult = await townService.deleteTown(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("isUsed"));
-    assert.strictEqual(townRepository.deleteTownById.mock.callCount(), 0);
+    assert.strictEqual(townRepository.deleteTownById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
     const deleteResult = await townService.deleteTown(11, null);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(townRepository.deleteTownById.mock.callCount(), 0);
+    assert.strictEqual(townRepository.deleteTownById.mock.calls.length, 0);
   });
 });
 
@@ -415,12 +415,12 @@ test("Create multiple cities", async () => {
 
   const loggedUser = loggedUserFactory.build();
 
-  townRepository.createTowns.mock.mockImplementationOnce(() => Promise.resolve([]));
+  townRepository.createTowns.mockImplementationOnce(() => Promise.resolve([]));
 
   await townService.createTowns(townsData, loggedUser);
 
-  assert.strictEqual(townRepository.createTowns.mock.callCount(), 1);
-  assert.deepStrictEqual(townRepository.createTowns.mock.calls[0].arguments, [
+  assert.strictEqual(townRepository.createTowns.mock.calls.length, 1);
+  assert.deepStrictEqual(townRepository.createTowns.mock.calls[0], [
     townsData.map((town) => {
       return {
         ...town,

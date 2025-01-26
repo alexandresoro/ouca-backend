@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import test, { beforeEach, describe } from "node:test";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
 import { createUserInputFactory, userFactory, userSettingsFactory } from "@fixtures/domain/user/user.fixtures.js";
 import type { UserRepository } from "@interfaces/user-repository-interface.js";
@@ -13,7 +13,7 @@ const userService = buildUserService({
 });
 
 beforeEach(() => {
-  userRepository.updateUserSettings.mock.resetCalls();
+  userRepository.updateUserSettings.mockReset();
 });
 
 describe("User creation", () => {
@@ -22,7 +22,7 @@ describe("User creation", () => {
 
     await userService.createUser(signupData);
 
-    assert.strictEqual(userRepository.createUser.mock.callCount(), 1);
+    assert.strictEqual(userRepository.createUser.mock.calls.length, 1);
   });
 });
 
@@ -31,13 +31,13 @@ describe("User settings update", () => {
     const loggedUser = loggedUserFactory.build();
     const settings = userSettingsFactory.build();
 
-    userRepository.updateUserSettings.mock.mockImplementationOnce(() =>
+    userRepository.updateUserSettings.mockImplementationOnce(() =>
       Promise.resolve(userFactory.build({ id: loggedUser.id, settings })),
     );
 
     await userService.updateSettings(loggedUser.id, settings);
 
-    assert.strictEqual(userRepository.updateUserSettings.mock.callCount(), 1);
-    assert.deepStrictEqual(userRepository.updateUserSettings.mock.calls[0].arguments, [loggedUser.id, settings]);
+    assert.strictEqual(userRepository.updateUserSettings.mock.calls.length, 1);
+    assert.deepStrictEqual(userRepository.updateUserSettings.mock.calls[0], [loggedUser.id, settings]);
   });
 });

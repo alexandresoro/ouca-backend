@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import { beforeEach, describe, test } from "node:test";
 import { entryFactory } from "@fixtures/domain/entry/entry.fixtures.js";
 import { inventoryFactory } from "@fixtures/domain/inventory/inventory.fixtures.js";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
@@ -20,14 +20,14 @@ const entryService = buildEntryService({
 });
 
 beforeEach(() => {
-  entryRepository.findEntryById.mock.resetCalls();
-  entryRepository.findExistingEntry.mock.resetCalls();
-  entryRepository.findEntries.mock.resetCalls();
-  entryRepository.getCount.mock.resetCalls();
-  entryRepository.createEntry.mock.resetCalls();
-  entryRepository.updateEntry.mock.resetCalls();
-  entryRepository.deleteEntryById.mock.resetCalls();
-  inventoryRepository.findInventoryByEntryId.mock.resetCalls();
+  entryRepository.findEntryById.mockReset();
+  entryRepository.findExistingEntry.mockReset();
+  entryRepository.findEntries.mockReset();
+  entryRepository.getCount.mockReset();
+  entryRepository.createEntry.mockReset();
+  entryRepository.updateEntry.mockReset();
+  entryRepository.deleteEntryById.mockReset();
+  inventoryRepository.findInventoryByEntryId.mockReset();
 });
 
 describe("Find data", () => {
@@ -35,39 +35,39 @@ describe("Find data", () => {
     const dataData = entryFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    entryRepository.findEntryById.mock.mockImplementationOnce(() => Promise.resolve(dataData));
+    entryRepository.findEntryById.mockImplementationOnce(() => Promise.resolve(dataData));
 
     await entryService.findEntry("12", loggedUser);
 
-    assert.strictEqual(entryRepository.findEntryById.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.findEntryById.mock.calls[0].arguments, ["12"]);
+    assert.strictEqual(entryRepository.findEntryById.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.findEntryById.mock.calls[0], ["12"]);
   });
 
   test("should handle data not found", async () => {
-    entryRepository.findEntryById.mock.mockImplementationOnce(() => Promise.resolve(null));
+    entryRepository.findEntryById.mockImplementationOnce(() => Promise.resolve(null));
     const loggedUser = loggedUserFactory.build();
 
     assert.deepStrictEqual(await entryService.findEntry("10", loggedUser), ok(null));
 
-    assert.strictEqual(entryRepository.findEntryById.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.findEntryById.mock.calls[0].arguments, ["10"]);
+    assert.strictEqual(entryRepository.findEntryById.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.findEntryById.mock.calls[0], ["10"]);
   });
 
   test("should not be allowed when the no login details are provided", async () => {
     assert.deepStrictEqual(await entryService.findEntry("11", null), err("notAllowed"));
 
-    assert.strictEqual(entryRepository.findEntryById.mock.callCount(), 0);
+    assert.strictEqual(entryRepository.findEntryById.mock.calls.length, 0);
   });
 });
 
 test("Find all datas", async () => {
   const dataData = entryFactory.buildList(3);
 
-  entryRepository.findEntries.mock.mockImplementationOnce(() => Promise.resolve(dataData));
+  entryRepository.findEntries.mockImplementationOnce(() => Promise.resolve(dataData));
 
   await entryService.findAllEntries();
 
-  assert.strictEqual(entryRepository.findEntries.mock.callCount(), 1);
+  assert.strictEqual(entryRepository.findEntries.mock.calls.length, 1);
 });
 
 describe("Data paginated find by search criteria", () => {
@@ -75,15 +75,15 @@ describe("Data paginated find by search criteria", () => {
     const dataData = entryFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    entryRepository.findEntries.mock.mockImplementationOnce(() => Promise.resolve(dataData));
+    entryRepository.findEntries.mockImplementationOnce(() => Promise.resolve(dataData));
 
     await entryService.findPaginatedEntries(loggedUser, {
       pageNumber: 1,
       pageSize: 10,
     });
 
-    assert.strictEqual(entryRepository.findEntries.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.findEntries.mock.calls[0].arguments, [
+    assert.strictEqual(entryRepository.findEntries.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.findEntries.mock.calls[0], [
       {
         orderBy: undefined,
         sortOrder: undefined,
@@ -98,7 +98,7 @@ describe("Data paginated find by search criteria", () => {
     const dataData = entryFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    entryRepository.findEntries.mock.mockImplementationOnce(() => Promise.resolve(dataData));
+    entryRepository.findEntries.mockImplementationOnce(() => Promise.resolve(dataData));
 
     await entryService.findPaginatedEntries(loggedUser, {
       pageNumber: 1,
@@ -106,8 +106,8 @@ describe("Data paginated find by search criteria", () => {
       fromAllUsers: true,
     });
 
-    assert.strictEqual(entryRepository.findEntries.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.findEntries.mock.calls[0].arguments, [
+    assert.strictEqual(entryRepository.findEntries.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.findEntries.mock.calls[0], [
       {
         orderBy: undefined,
         sortOrder: undefined,
@@ -131,12 +131,12 @@ describe("Data paginated find by search criteria", () => {
       pageSize: 10,
     };
 
-    entryRepository.findEntries.mock.mockImplementationOnce(() => Promise.resolve([dataData[0]]));
+    entryRepository.findEntries.mockImplementationOnce(() => Promise.resolve([dataData[0]]));
 
     await entryService.findPaginatedEntries(loggedUser, searchParams);
 
-    assert.strictEqual(entryRepository.findEntries.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.findEntries.mock.calls[0].arguments, [
+    assert.strictEqual(entryRepository.findEntries.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.findEntries.mock.calls[0], [
       {
         searchCriteria: {
           number: 12,
@@ -168,8 +168,8 @@ describe("Entities count by search criteria", () => {
       pageSize: 10,
     });
 
-    assert.strictEqual(entryRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.getCount.mock.calls[0].arguments, [
+    assert.strictEqual(entryRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.getCount.mock.calls[0], [
       {
         ownerId: loggedUser.id,
       },
@@ -188,8 +188,8 @@ describe("Entities count by search criteria", () => {
 
     await entryService.getEntriesCount(loggedUser, searchCriteria);
 
-    assert.strictEqual(entryRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.getCount.mock.calls[0].arguments, [
+    assert.strictEqual(entryRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.getCount.mock.calls[0], [
       {
         number: 12,
         breeders: ["certain", "probable"],
@@ -218,12 +218,12 @@ describe("Deletion of a data", () => {
       id: "42",
     });
 
-    inventoryRepository.findInventoryByEntryId.mock.mockImplementationOnce(() => Promise.resolve(matchingInventory));
-    entryRepository.deleteEntryById.mock.mockImplementationOnce(() => Promise.resolve(deletedEntry));
+    inventoryRepository.findInventoryByEntryId.mockImplementationOnce(() => Promise.resolve(matchingInventory));
+    entryRepository.deleteEntryById.mockImplementationOnce(() => Promise.resolve(deletedEntry));
 
     const result = await entryService.deleteEntry("11", loggedUser);
 
-    assert.strictEqual(entryRepository.deleteEntryById.mock.callCount(), 1);
+    assert.strictEqual(entryRepository.deleteEntryById.mock.calls.length, 1);
     assert.deepStrictEqual(result, ok(deletedEntry));
   });
 
@@ -241,12 +241,12 @@ describe("Deletion of a data", () => {
         id: "42",
       });
 
-      inventoryRepository.findInventoryByEntryId.mock.mockImplementationOnce(() => Promise.resolve(matchingInventory));
-      entryRepository.deleteEntryById.mock.mockImplementationOnce(() => Promise.resolve(deletedEntry));
+      inventoryRepository.findInventoryByEntryId.mockImplementationOnce(() => Promise.resolve(matchingInventory));
+      entryRepository.deleteEntryById.mockImplementationOnce(() => Promise.resolve(deletedEntry));
 
       const result = await entryService.deleteEntry("11", loggedUser);
 
-      assert.strictEqual(entryRepository.deleteEntryById.mock.callCount(), 1);
+      assert.strictEqual(entryRepository.deleteEntryById.mock.calls.length, 1);
       assert.deepStrictEqual(result, ok(deletedEntry));
     });
 
@@ -255,11 +255,11 @@ describe("Deletion of a data", () => {
 
       const deletedEntry = entryFactory.build();
 
-      inventoryRepository.findInventoryByEntryId.mock.mockImplementationOnce(() => Promise.resolve(null));
-      entryRepository.deleteEntryById.mock.mockImplementationOnce(() => Promise.resolve(deletedEntry));
+      inventoryRepository.findInventoryByEntryId.mockImplementationOnce(() => Promise.resolve(null));
+      entryRepository.deleteEntryById.mockImplementationOnce(() => Promise.resolve(deletedEntry));
 
       assert.deepStrictEqual(await entryService.deleteEntry("11", loggedUser), err("notAllowed"));
-      assert.strictEqual(entryRepository.deleteEntryById.mock.callCount(), 0);
+      assert.strictEqual(entryRepository.deleteEntryById.mock.calls.length, 0);
     });
   });
 
@@ -268,17 +268,17 @@ describe("Deletion of a data", () => {
       id: "notOwner",
     });
 
-    inventoryRepository.findInventoryByEntryId.mock.mockImplementationOnce(() =>
+    inventoryRepository.findInventoryByEntryId.mockImplementationOnce(() =>
       Promise.resolve(inventoryFactory.build({ ownerId: "owner" })),
     );
 
     assert.deepStrictEqual(await entryService.deleteEntry("11", loggedUser), err("notAllowed"));
-    assert.strictEqual(entryRepository.deleteEntryById.mock.callCount(), 0);
+    assert.strictEqual(entryRepository.deleteEntryById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
     assert.deepStrictEqual(await entryService.deleteEntry("11", null), err("notAllowed"));
-    assert.strictEqual(entryRepository.deleteEntryById.mock.callCount(), 0);
+    assert.strictEqual(entryRepository.deleteEntryById.mock.calls.length, 0);
   });
 });
 
@@ -288,8 +288,8 @@ describe("Update of a data", () => {
 
     const loggedUser = loggedUserFactory.build();
 
-    entryRepository.findExistingEntry.mock.mockImplementationOnce(() => Promise.resolve(null));
-    inventoryRepository.findInventoryByEntryId.mock.mockImplementationOnce(() =>
+    entryRepository.findExistingEntry.mockImplementationOnce(() => Promise.resolve(null));
+    inventoryRepository.findInventoryByEntryId.mockImplementationOnce(() =>
       Promise.resolve(
         inventoryFactory.build({
           ownerId: loggedUser.id,
@@ -299,8 +299,8 @@ describe("Update of a data", () => {
 
     await entryService.updateEntry("12", dataData, loggedUser);
 
-    assert.strictEqual(entryRepository.updateEntry.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.updateEntry.mock.calls[0].arguments, ["12", dataData]);
+    assert.strictEqual(entryRepository.updateEntry.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.updateEntry.mock.calls[0], ["12", dataData]);
   });
 
   test("should not be allowed when trying to update to a different data that already exists", async () => {
@@ -308,14 +308,14 @@ describe("Update of a data", () => {
 
     const loggedUser = loggedUserFactory.build();
 
-    entryRepository.findExistingEntry.mock.mockImplementationOnce(() =>
+    entryRepository.findExistingEntry.mockImplementationOnce(() =>
       Promise.resolve(
         entryFactory.build({
           id: "345",
         }),
       ),
     );
-    inventoryRepository.findInventoryByEntryId.mock.mockImplementationOnce(() =>
+    inventoryRepository.findInventoryByEntryId.mockImplementationOnce(() =>
       Promise.resolve(
         inventoryFactory.build({
           ownerId: loggedUser.id,
@@ -330,14 +330,14 @@ describe("Update of a data", () => {
         correspondingEntryFound: "345",
       }),
     );
-    assert.strictEqual(entryRepository.updateEntry.mock.callCount(), 0);
+    assert.strictEqual(entryRepository.updateEntry.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
     const dataData = upsertEntryInputFactory.build();
 
     assert.deepStrictEqual(await entryService.updateEntry("12", dataData, null), err({ type: "notAllowed" }));
-    assert.strictEqual(entryRepository.updateEntry.mock.callCount(), 0);
+    assert.strictEqual(entryRepository.updateEntry.mock.calls.length, 0);
   });
 });
 
@@ -352,8 +352,8 @@ describe("Creation of a data", () => {
 
     await entryService.createEntry(dataData, loggedUser);
 
-    assert.strictEqual(entryRepository.createEntry.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.createEntry.mock.calls[0].arguments, [dataData]);
+    assert.strictEqual(entryRepository.createEntry.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.createEntry.mock.calls[0], [dataData]);
   });
 
   test("should create new data with behaviors only", async () => {
@@ -364,12 +364,12 @@ describe("Creation of a data", () => {
 
     const loggedUser = loggedUserFactory.build();
 
-    entryRepository.createEntry.mock.mockImplementationOnce(() => Promise.resolve(entryFactory.build()));
+    entryRepository.createEntry.mockImplementationOnce(() => Promise.resolve(entryFactory.build()));
 
     await entryService.createEntry(dataData, loggedUser);
 
-    assert.strictEqual(entryRepository.createEntry.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.createEntry.mock.calls[0].arguments, [dataData]);
+    assert.strictEqual(entryRepository.createEntry.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.createEntry.mock.calls[0], [dataData]);
   });
 
   test("should create new data with environments only", async () => {
@@ -380,11 +380,11 @@ describe("Creation of a data", () => {
 
     const loggedUser = loggedUserFactory.build();
 
-    entryRepository.createEntry.mock.mockImplementationOnce(() => Promise.resolve(entryFactory.build()));
+    entryRepository.createEntry.mockImplementationOnce(() => Promise.resolve(entryFactory.build()));
 
     await entryService.createEntry(dataData, loggedUser);
 
-    assert.strictEqual(entryRepository.createEntry.mock.callCount(), 1);
-    assert.deepStrictEqual(entryRepository.createEntry.mock.calls[0].arguments, [dataData]);
+    assert.strictEqual(entryRepository.createEntry.mock.calls.length, 1);
+    assert.deepStrictEqual(entryRepository.createEntry.mock.calls[0], [dataData]);
   });
 });

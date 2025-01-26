@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import { beforeEach, describe, test } from "node:test";
 import { localityFactory } from "@fixtures/domain/locality/locality.fixtures.js";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
 import { upsertLocalityInputFactory } from "@fixtures/services/locality/locality-service.fixtures.js";
@@ -19,16 +19,16 @@ const localityService = buildLocalityService({
 });
 
 beforeEach(() => {
-  localityRepository.findLocalityById.mock.resetCalls();
-  localityRepository.findLocalityByInventoryId.mock.resetCalls();
-  localityRepository.findLocalities.mock.resetCalls();
-  localityRepository.getCount.mock.resetCalls();
-  localityRepository.getEntriesCountById.mock.resetCalls();
-  localityRepository.updateLocality.mock.resetCalls();
-  localityRepository.createLocality.mock.resetCalls();
-  localityRepository.deleteLocalityById.mock.resetCalls();
-  localityRepository.createLocalities.mock.resetCalls();
-  inventoryRepository.getCountByLocality.mock.resetCalls();
+  localityRepository.findLocalityById.mockReset();
+  localityRepository.findLocalityByInventoryId.mockReset();
+  localityRepository.findLocalities.mockReset();
+  localityRepository.getCount.mockReset();
+  localityRepository.getEntriesCountById.mockReset();
+  localityRepository.updateLocality.mockReset();
+  localityRepository.createLocality.mockReset();
+  localityRepository.deleteLocalityById.mockReset();
+  localityRepository.createLocalities.mockReset();
+  inventoryRepository.getCountByLocality.mockReset();
 });
 
 describe("Find locality", () => {
@@ -36,29 +36,29 @@ describe("Find locality", () => {
     const localityData = localityFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    localityRepository.findLocalityById.mock.mockImplementationOnce(() => Promise.resolve(localityData));
+    localityRepository.findLocalityById.mockImplementationOnce(() => Promise.resolve(localityData));
 
     await localityService.findLocality(12, loggedUser);
 
-    assert.strictEqual(localityRepository.findLocalityById.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.findLocalityById.mock.calls[0].arguments, [12]);
+    assert.strictEqual(localityRepository.findLocalityById.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.findLocalityById.mock.calls[0], [12]);
   });
 
   test("should handle locality not found", async () => {
-    localityRepository.findLocalityById.mock.mockImplementationOnce(() => Promise.resolve(null));
+    localityRepository.findLocalityById.mockImplementationOnce(() => Promise.resolve(null));
     const loggedUser = loggedUserFactory.build();
 
     assert.deepStrictEqual(await localityService.findLocality(10, loggedUser), ok(null));
 
-    assert.strictEqual(localityRepository.findLocalityById.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.findLocalityById.mock.calls[0].arguments, [10]);
+    assert.strictEqual(localityRepository.findLocalityById.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.findLocalityById.mock.calls[0], [10]);
   });
 
   test("should not be allowed when the no login details are provided", async () => {
     const findResult = await localityService.findLocality(11, null);
 
     assert.deepStrictEqual(findResult, err("notAllowed"));
-    assert.strictEqual(localityRepository.findLocalityById.mock.callCount(), 0);
+    assert.strictEqual(localityRepository.findLocalityById.mock.calls.length, 0);
   });
 });
 
@@ -68,8 +68,8 @@ describe("Inventory count per entity", () => {
 
     await localityService.getInventoriesCountByLocality("12", loggedUser);
 
-    assert.strictEqual(inventoryRepository.getCountByLocality.mock.callCount(), 1);
-    assert.deepStrictEqual(inventoryRepository.getCountByLocality.mock.calls[0].arguments, ["12"]);
+    assert.strictEqual(inventoryRepository.getCountByLocality.mock.calls.length, 1);
+    assert.deepStrictEqual(inventoryRepository.getCountByLocality.mock.calls[0], ["12"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -85,8 +85,8 @@ describe("Data count per entity", () => {
 
     await localityService.getEntriesCountByLocality("12", loggedUser);
 
-    assert.strictEqual(localityRepository.getEntriesCountById.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.getEntriesCountById.mock.calls[0].arguments, ["12", loggedUser.id]);
+    assert.strictEqual(localityRepository.getEntriesCountById.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.getEntriesCountById.mock.calls[0], ["12", loggedUser.id]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -103,12 +103,12 @@ describe("Find locality by inventary ID", () => {
     });
     const loggedUser = loggedUserFactory.build();
 
-    localityRepository.findLocalityByInventoryId.mock.mockImplementationOnce(() => Promise.resolve(localityData));
+    localityRepository.findLocalityByInventoryId.mockImplementationOnce(() => Promise.resolve(localityData));
 
     const localityResult = await localityService.findLocalityOfInventoryId("43", loggedUser);
 
-    assert.strictEqual(localityRepository.findLocalityByInventoryId.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.findLocalityByInventoryId.mock.calls[0].arguments, ["43"]);
+    assert.strictEqual(localityRepository.findLocalityByInventoryId.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.findLocalityByInventoryId.mock.calls[0], ["43"]);
     assert.ok(localityResult.isOk());
     assert.strictEqual(localityResult.value?.id, localityData.id);
   });
@@ -123,12 +123,12 @@ describe("Find locality by inventary ID", () => {
 test("Find all localities", async () => {
   const localitiesData = localityFactory.buildList(3);
 
-  localityRepository.findLocalities.mock.mockImplementationOnce(() => Promise.resolve(localitiesData));
+  localityRepository.findLocalities.mockImplementationOnce(() => Promise.resolve(localitiesData));
 
   await localityService.findAllLocalities();
 
-  assert.strictEqual(localityRepository.findLocalities.mock.callCount(), 1);
-  assert.deepStrictEqual(localityRepository.findLocalities.mock.calls[0].arguments, [
+  assert.strictEqual(localityRepository.findLocalities.mock.calls.length, 1);
+  assert.deepStrictEqual(localityRepository.findLocalities.mock.calls[0], [
     {
       orderBy: "nom",
     },
@@ -140,12 +140,12 @@ describe("Entities paginated find by search criteria", () => {
     const localitiesData = localityFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    localityRepository.findLocalities.mock.mockImplementationOnce(() => Promise.resolve(localitiesData));
+    localityRepository.findLocalities.mockImplementationOnce(() => Promise.resolve(localitiesData));
 
     await localityService.findPaginatedLocalities(loggedUser, {});
 
-    assert.strictEqual(localityRepository.findLocalities.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.findLocalities.mock.calls[0].arguments, [
+    assert.strictEqual(localityRepository.findLocalities.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.findLocalities.mock.calls[0], [
       {
         q: undefined,
         orderBy: undefined,
@@ -170,12 +170,12 @@ describe("Entities paginated find by search criteria", () => {
       pageSize: 10,
     };
 
-    localityRepository.findLocalities.mock.mockImplementationOnce(() => Promise.resolve([localitiesData[0]]));
+    localityRepository.findLocalities.mockImplementationOnce(() => Promise.resolve([localitiesData[0]]));
 
     await localityService.findPaginatedLocalities(loggedUser, searchParams);
 
-    assert.strictEqual(localityRepository.findLocalities.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.findLocalities.mock.calls[0].arguments, [
+    assert.strictEqual(localityRepository.findLocalities.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.findLocalities.mock.calls[0], [
       {
         q: "Bob",
         orderBy: "nom",
@@ -201,8 +201,8 @@ describe("Entities count by search criteria", () => {
 
     await localityService.getLocalitiesCount(loggedUser, {});
 
-    assert.strictEqual(localityRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0].arguments, [undefined, undefined]);
+    assert.strictEqual(localityRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0], [undefined, undefined]);
   });
 
   test("should handle to be called with some criteria provided", async () => {
@@ -210,8 +210,8 @@ describe("Entities count by search criteria", () => {
 
     await localityService.getLocalitiesCount(loggedUser, { q: "test", townId: "12" });
 
-    assert.strictEqual(localityRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0].arguments, ["test", "12"]);
+    assert.strictEqual(localityRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.getCount.mock.calls[0], ["test", "12"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -227,12 +227,12 @@ describe("Update of a locality", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { locality: { canEdit: true } } });
 
-    localityRepository.updateLocality.mock.mockImplementationOnce(() => Promise.resolve(ok(localityFactory.build())));
+    localityRepository.updateLocality.mockImplementationOnce(() => Promise.resolve(ok(localityFactory.build())));
 
     await localityService.updateLocality(12, localityData, loggedUser);
 
-    assert.strictEqual(localityRepository.updateLocality.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.updateLocality.mock.calls[0].arguments, [12, localityData]);
+    assert.strictEqual(localityRepository.updateLocality.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.updateLocality.mock.calls[0], [12, localityData]);
   });
 
   test("should be allowed when requested by the owner", async () => {
@@ -244,13 +244,13 @@ describe("Update of a locality", () => {
 
     const loggedUser = loggedUserFactory.build({ id: "notAdmin" });
 
-    localityRepository.findLocalityById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
-    localityRepository.updateLocality.mock.mockImplementationOnce(() => Promise.resolve(ok(localityFactory.build())));
+    localityRepository.findLocalityById.mockImplementationOnce(() => Promise.resolve(existingData));
+    localityRepository.updateLocality.mockImplementationOnce(() => Promise.resolve(ok(localityFactory.build())));
 
     await localityService.updateLocality(12, localityData, loggedUser);
 
-    assert.strictEqual(localityRepository.updateLocality.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.updateLocality.mock.calls[0].arguments, [12, localityData]);
+    assert.strictEqual(localityRepository.updateLocality.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.updateLocality.mock.calls[0], [12, localityData]);
   });
 
   test("should not be allowed when requested by an user that is nor owner nor has permission", async () => {
@@ -262,11 +262,11 @@ describe("Update of a locality", () => {
 
     const user = loggedUserFactory.build();
 
-    localityRepository.findLocalityById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
+    localityRepository.findLocalityById.mockImplementationOnce(() => Promise.resolve(existingData));
 
     assert.deepStrictEqual(await localityService.updateLocality(12, localityData, user), err("notAllowed"));
 
-    assert.strictEqual(localityRepository.updateLocality.mock.callCount(), 0);
+    assert.strictEqual(localityRepository.updateLocality.mock.calls.length, 0);
   });
 
   test("should not be allowed when trying to update to a locality that exists", async () => {
@@ -274,12 +274,12 @@ describe("Update of a locality", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { locality: { canEdit: true } } });
 
-    localityRepository.updateLocality.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    localityRepository.updateLocality.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     assert.deepStrictEqual(await localityService.updateLocality(12, localityData, loggedUser), err("alreadyExists"));
 
-    assert.strictEqual(localityRepository.updateLocality.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.updateLocality.mock.calls[0].arguments, [12, localityData]);
+    assert.strictEqual(localityRepository.updateLocality.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.updateLocality.mock.calls[0], [12, localityData]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -297,12 +297,12 @@ describe("Creation of a locality", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { locality: { canCreate: true } } });
 
-    localityRepository.createLocality.mock.mockImplementationOnce(() => Promise.resolve(ok(localityFactory.build())));
+    localityRepository.createLocality.mockImplementationOnce(() => Promise.resolve(ok(localityFactory.build())));
 
     await localityService.createLocality(localityData, loggedUser);
 
-    assert.strictEqual(localityRepository.createLocality.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.createLocality.mock.calls[0].arguments, [
+    assert.strictEqual(localityRepository.createLocality.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.createLocality.mock.calls[0], [
       {
         ...localityData,
         ownerId: loggedUser.id,
@@ -315,12 +315,12 @@ describe("Creation of a locality", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { locality: { canCreate: true } } });
 
-    localityRepository.createLocality.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    localityRepository.createLocality.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     assert.deepStrictEqual(await localityService.createLocality(localityData, loggedUser), err("alreadyExists"));
 
-    assert.strictEqual(localityRepository.createLocality.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.createLocality.mock.calls[0].arguments, [
+    assert.strictEqual(localityRepository.createLocality.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.createLocality.mock.calls[0], [
       {
         ...localityData,
         ownerId: loggedUser.id,
@@ -355,46 +355,46 @@ describe("Deletion of a locality", () => {
       ownerId: loggedUser.id,
     });
 
-    localityRepository.findLocalityById.mock.mockImplementationOnce(() => Promise.resolve(locality));
-    localityRepository.deleteLocalityById.mock.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
+    localityRepository.findLocalityById.mockImplementationOnce(() => Promise.resolve(locality));
+    localityRepository.deleteLocalityById.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
 
     await localityService.deleteLocality(11, loggedUser);
 
-    assert.strictEqual(localityRepository.deleteLocalityById.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.deleteLocalityById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(localityRepository.deleteLocalityById.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.deleteLocalityById.mock.calls[0], [11]);
   });
 
   test("should handle the deletion of any locality if has permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { locality: { canDelete: true } } });
 
-    localityRepository.findLocalityById.mock.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
-    localityRepository.deleteLocalityById.mock.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
+    localityRepository.findLocalityById.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
+    localityRepository.deleteLocalityById.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
 
     await localityService.deleteLocality(11, loggedUser);
 
-    assert.strictEqual(localityRepository.deleteLocalityById.mock.callCount(), 1);
-    assert.deepStrictEqual(localityRepository.deleteLocalityById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(localityRepository.deleteLocalityById.mock.calls.length, 1);
+    assert.deepStrictEqual(localityRepository.deleteLocalityById.mock.calls[0], [11]);
   });
 
   test("should not be allowed when deleting a non-owned locality and no permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { locality: { canDelete: false } } });
 
-    localityRepository.findLocalityById.mock.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
+    localityRepository.findLocalityById.mockImplementationOnce(() => Promise.resolve(localityFactory.build()));
 
     assert.deepStrictEqual(await localityService.deleteLocality(11, loggedUser), err("notAllowed"));
 
-    assert.strictEqual(localityRepository.deleteLocalityById.mock.callCount(), 0);
+    assert.strictEqual(localityRepository.deleteLocalityById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the entity is used", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { locality: { canDelete: true } } });
 
-    inventoryRepository.getCountByLocality.mock.mockImplementationOnce(() => Promise.resolve(1));
+    inventoryRepository.getCountByLocality.mockImplementationOnce(() => Promise.resolve(1));
 
     const deleteResult = await localityService.deleteLocality(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("isUsed"));
-    assert.strictEqual(localityRepository.deleteLocalityById.mock.callCount(), 0);
+    assert.strictEqual(localityRepository.deleteLocalityById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -409,12 +409,12 @@ test("Create multiple localities", async () => {
 
   const loggedUser = loggedUserFactory.build();
 
-  localityRepository.createLocalities.mock.mockImplementationOnce(() => Promise.resolve([]));
+  localityRepository.createLocalities.mockImplementationOnce(() => Promise.resolve([]));
 
   await localityService.createLocalities(localitiesData, loggedUser);
 
-  assert.strictEqual(localityRepository.createLocalities.mock.callCount(), 1);
-  assert.deepStrictEqual(localityRepository.createLocalities.mock.calls[0].arguments, [
+  assert.strictEqual(localityRepository.createLocalities.mock.calls.length, 1);
+  assert.deepStrictEqual(localityRepository.createLocalities.mock.calls[0], [
     localitiesData.map((locality) => {
       return {
         ...locality,

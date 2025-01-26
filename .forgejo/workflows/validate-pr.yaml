@@ -9,19 +9,18 @@ on:
 
 jobs:
   validate-pr:
-#     environment:
-#       name: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && 'production' || 'preview' }}
 
     runs-on: docker
-
-#     permissions:
-#       pull-requests: write
-#       contents: write
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - uses: ./.forgejo/actions/install
+      - uses: https://github.com/oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5 # v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - shell: bash
+        run: bun install
 
       - uses: ./.forgejo/actions/validate
 

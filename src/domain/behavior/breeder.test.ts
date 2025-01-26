@@ -1,5 +1,5 @@
+import { test } from "bun:test";
 import assert from "node:assert";
-import test from "node:test";
 import { type BreederCode, getHighestBreederStatus } from "./breeder.js";
 
 test("should return correct value when no breeder code provided", () => {

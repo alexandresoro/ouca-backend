@@ -1,6 +1,5 @@
 import "@infrastructure/sentry/sentry.js";
 
-import { serve } from "@hono/node-server";
 import { serverConfig } from "@infrastructure/config/server-config.js";
 import { honoLogger } from "@infrastructure/hono/hono.js";
 import { captureException } from "@infrastructure/sentry/capture-exception.js";
@@ -26,15 +25,12 @@ const startApp = async () => {
 
   const app = buildHonoApp(services);
 
-  const server = serve(
-    {
-      fetch: app.fetch,
-      port: serverConfig.port,
-    },
-    (info) => {
-      honoLogger.info(`Server listening on port ${info.port}`);
-    },
-  );
+  const server = Bun.serve({
+    fetch: app.fetch,
+    port: serverConfig.port,
+  });
+
+  honoLogger.info(`Server listening on port ${serverConfig.port}`);
 
   process.on("SIGINT", shutdown(server));
   process.on("SIGTERM", shutdown(server));

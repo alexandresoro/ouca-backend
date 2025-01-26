@@ -1,5 +1,5 @@
+import { beforeEach, describe, test } from "bun:test";
 import assert from "node:assert/strict";
-import test, { describe, beforeEach } from "node:test";
 import { speciesClassFactory } from "@fixtures/domain/species-class/species-class.fixtures.js";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
 import { upsertSpeciesClassInputFactory } from "@fixtures/services/species-class/species-class-service.fixtures.js";
@@ -19,16 +19,16 @@ const speciesClassService = buildSpeciesClassService({
 });
 
 beforeEach(() => {
-  classRepository.findSpeciesClassById.mock.resetCalls();
-  classRepository.findSpeciesClasses.mock.resetCalls();
-  classRepository.getCount.mock.resetCalls();
-  classRepository.getEntriesCountById.mock.resetCalls();
-  classRepository.createSpeciesClass.mock.resetCalls();
-  classRepository.updateSpeciesClass.mock.resetCalls();
-  classRepository.deleteSpeciesClassById.mock.resetCalls();
-  classRepository.createSpeciesClasses.mock.resetCalls();
-  classRepository.findSpeciesClassBySpeciesId.mock.resetCalls();
-  speciesRepository.getCount.mock.resetCalls();
+  classRepository.findSpeciesClassById.mockReset();
+  classRepository.findSpeciesClasses.mockReset();
+  classRepository.getCount.mockReset();
+  classRepository.getEntriesCountById.mockReset();
+  classRepository.createSpeciesClass.mockReset();
+  classRepository.updateSpeciesClass.mockReset();
+  classRepository.deleteSpeciesClassById.mockReset();
+  classRepository.createSpeciesClasses.mockReset();
+  classRepository.findSpeciesClassBySpeciesId.mockReset();
+  speciesRepository.getCount.mockReset();
 });
 
 describe("Find class", () => {
@@ -36,29 +36,29 @@ describe("Find class", () => {
     const classData = speciesClassFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    classRepository.findSpeciesClassById.mock.mockImplementationOnce(() => Promise.resolve(classData));
+    classRepository.findSpeciesClassById.mockImplementationOnce(() => Promise.resolve(classData));
 
     await speciesClassService.findSpeciesClass(12, loggedUser);
 
-    assert.strictEqual(classRepository.findSpeciesClassById.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.findSpeciesClassById.mock.calls[0].arguments, [12]);
+    assert.strictEqual(classRepository.findSpeciesClassById.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.findSpeciesClassById.mock.calls[0], [12]);
   });
 
   test("should handle class not found", async () => {
-    classRepository.findSpeciesClassById.mock.mockImplementationOnce(() => Promise.resolve(null));
+    classRepository.findSpeciesClassById.mockImplementationOnce(() => Promise.resolve(null));
     const loggedUser = loggedUserFactory.build();
 
     assert.deepStrictEqual(await speciesClassService.findSpeciesClass(10, loggedUser), ok(null));
 
-    assert.strictEqual(classRepository.findSpeciesClassById.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.findSpeciesClassById.mock.calls[0].arguments, [10]);
+    assert.strictEqual(classRepository.findSpeciesClassById.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.findSpeciesClassById.mock.calls[0], [10]);
   });
 
   test("should not be allowed when the no login details are provided", async () => {
     const findResult = await speciesClassService.findSpeciesClass(11, null);
 
     assert.deepStrictEqual(findResult, err("notAllowed"));
-    assert.strictEqual(classRepository.findSpeciesClassById.mock.callCount(), 0);
+    assert.strictEqual(classRepository.findSpeciesClassById.mock.calls.length, 0);
   });
 });
 
@@ -68,8 +68,8 @@ describe("Species count per entity", () => {
 
     await speciesClassService.getSpeciesCountBySpeciesClass("12", loggedUser);
 
-    assert.strictEqual(speciesRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(speciesRepository.getCount.mock.calls[0].arguments, [
+    assert.strictEqual(speciesRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(speciesRepository.getCount.mock.calls[0], [
       {
         searchCriteria: {
           classIds: ["12"],
@@ -91,8 +91,8 @@ describe("Data count per entity", () => {
 
     await speciesClassService.getEntriesCountBySpeciesClass("12", loggedUser);
 
-    assert.strictEqual(classRepository.getEntriesCountById.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.getEntriesCountById.mock.calls[0].arguments, ["12", loggedUser.id]);
+    assert.strictEqual(classRepository.getEntriesCountById.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.getEntriesCountById.mock.calls[0], ["12", loggedUser.id]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -107,12 +107,12 @@ describe("Find class by species ID", () => {
     const classData = speciesClassFactory.build();
     const loggedUser = loggedUserFactory.build();
 
-    classRepository.findSpeciesClassBySpeciesId.mock.mockImplementationOnce(() => Promise.resolve(classData));
+    classRepository.findSpeciesClassBySpeciesId.mockImplementationOnce(() => Promise.resolve(classData));
 
     const speciesClassResult = await speciesClassService.findSpeciesClassOfSpecies("43", loggedUser);
 
-    assert.strictEqual(classRepository.findSpeciesClassBySpeciesId.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.findSpeciesClassBySpeciesId.mock.calls[0].arguments, [43]);
+    assert.strictEqual(classRepository.findSpeciesClassBySpeciesId.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.findSpeciesClassBySpeciesId.mock.calls[0], [43]);
     assert.ok(speciesClassResult.isOk());
     assert.strictEqual(speciesClassResult.value?.id, classData.id);
   });
@@ -127,12 +127,12 @@ describe("Find class by species ID", () => {
 test("Find all classes", async () => {
   const classesData = speciesClassFactory.buildList(3);
 
-  classRepository.findSpeciesClasses.mock.mockImplementationOnce(() => Promise.resolve(classesData));
+  classRepository.findSpeciesClasses.mockImplementationOnce(() => Promise.resolve(classesData));
 
   await speciesClassService.findAllSpeciesClasses();
 
-  assert.strictEqual(classRepository.findSpeciesClasses.mock.callCount(), 1);
-  assert.deepStrictEqual(classRepository.findSpeciesClasses.mock.calls[0].arguments, [
+  assert.strictEqual(classRepository.findSpeciesClasses.mock.calls.length, 1);
+  assert.deepStrictEqual(classRepository.findSpeciesClasses.mock.calls[0], [
     {
       orderBy: "libelle",
     },
@@ -144,12 +144,12 @@ describe("Entities paginated find by search criteria", () => {
     const classesData = speciesClassFactory.buildList(3);
     const loggedUser = loggedUserFactory.build();
 
-    classRepository.findSpeciesClasses.mock.mockImplementationOnce(() => Promise.resolve(classesData));
+    classRepository.findSpeciesClasses.mockImplementationOnce(() => Promise.resolve(classesData));
 
     await speciesClassService.findPaginatedSpeciesClasses(loggedUser, {});
 
-    assert.strictEqual(classRepository.findSpeciesClasses.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.findSpeciesClasses.mock.calls[0].arguments, [
+    assert.strictEqual(classRepository.findSpeciesClasses.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.findSpeciesClasses.mock.calls[0], [
       { limit: undefined, offset: undefined, orderBy: undefined, q: undefined, sortOrder: undefined },
       loggedUser.id,
     ]);
@@ -167,12 +167,12 @@ describe("Entities paginated find by search criteria", () => {
       pageSize: 10,
     };
 
-    classRepository.findSpeciesClasses.mock.mockImplementationOnce(() => Promise.resolve(classesData));
+    classRepository.findSpeciesClasses.mockImplementationOnce(() => Promise.resolve(classesData));
 
     await speciesClassService.findPaginatedSpeciesClasses(loggedUser, searchParams);
 
-    assert.strictEqual(classRepository.findSpeciesClasses.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.findSpeciesClasses.mock.calls[0].arguments, [
+    assert.strictEqual(classRepository.findSpeciesClasses.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.findSpeciesClasses.mock.calls[0], [
       {
         q: "Bob",
         orderBy: "libelle",
@@ -197,8 +197,8 @@ describe("Entities count by search criteria", () => {
 
     await speciesClassService.getSpeciesClassesCount(loggedUser);
 
-    assert.strictEqual(classRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.getCount.mock.calls[0].arguments, [undefined]);
+    assert.strictEqual(classRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.getCount.mock.calls[0], [undefined]);
   });
 
   test("should handle to be called with some criteria provided", async () => {
@@ -206,8 +206,8 @@ describe("Entities count by search criteria", () => {
 
     await speciesClassService.getSpeciesClassesCount(loggedUser, "test");
 
-    assert.strictEqual(classRepository.getCount.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.getCount.mock.calls[0].arguments, ["test"]);
+    assert.strictEqual(classRepository.getCount.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.getCount.mock.calls[0], ["test"]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -223,14 +223,12 @@ describe("Update of a class", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { speciesClass: { canEdit: true } } });
 
-    classRepository.updateSpeciesClass.mock.mockImplementationOnce(() =>
-      Promise.resolve(ok(speciesClassFactory.build())),
-    );
+    classRepository.updateSpeciesClass.mockImplementationOnce(() => Promise.resolve(ok(speciesClassFactory.build())));
 
     await speciesClassService.updateSpeciesClass(12, classData, loggedUser);
 
-    assert.strictEqual(classRepository.updateSpeciesClass.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.updateSpeciesClass.mock.calls[0].arguments, [12, classData]);
+    assert.strictEqual(classRepository.updateSpeciesClass.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.updateSpeciesClass.mock.calls[0], [12, classData]);
   });
 
   test("should be allowed when requested by the owner", async () => {
@@ -242,15 +240,13 @@ describe("Update of a class", () => {
 
     const loggedUser = loggedUserFactory.build({ id: "notAdmin" });
 
-    classRepository.findSpeciesClassById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
-    classRepository.updateSpeciesClass.mock.mockImplementationOnce(() =>
-      Promise.resolve(ok(speciesClassFactory.build())),
-    );
+    classRepository.findSpeciesClassById.mockImplementationOnce(() => Promise.resolve(existingData));
+    classRepository.updateSpeciesClass.mockImplementationOnce(() => Promise.resolve(ok(speciesClassFactory.build())));
 
     await speciesClassService.updateSpeciesClass(12, classData, loggedUser);
 
-    assert.strictEqual(classRepository.updateSpeciesClass.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.updateSpeciesClass.mock.calls[0].arguments, [12, classData]);
+    assert.strictEqual(classRepository.updateSpeciesClass.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.updateSpeciesClass.mock.calls[0], [12, classData]);
   });
 
   test("should not be allowed when requested by an user that is nor owner nor has permission", async () => {
@@ -262,12 +258,12 @@ describe("Update of a class", () => {
 
     const loggedUser = loggedUserFactory.build();
 
-    classRepository.findSpeciesClassById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
+    classRepository.findSpeciesClassById.mockImplementationOnce(() => Promise.resolve(existingData));
 
     const updateResult = await speciesClassService.updateSpeciesClass(12, classData, loggedUser);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(classRepository.updateSpeciesClass.mock.callCount(), 0);
+    assert.strictEqual(classRepository.updateSpeciesClass.mock.calls.length, 0);
   });
 
   test("should not be allowed when trying to update to a class that exists", async () => {
@@ -275,13 +271,13 @@ describe("Update of a class", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { speciesClass: { canEdit: true } } });
 
-    classRepository.updateSpeciesClass.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    classRepository.updateSpeciesClass.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const updateResult = await speciesClassService.updateSpeciesClass(12, classData, loggedUser);
 
     assert.deepStrictEqual(updateResult, err("alreadyExists"));
-    assert.strictEqual(classRepository.updateSpeciesClass.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.updateSpeciesClass.mock.calls[0].arguments, [12, classData]);
+    assert.strictEqual(classRepository.updateSpeciesClass.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.updateSpeciesClass.mock.calls[0], [12, classData]);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -290,7 +286,7 @@ describe("Update of a class", () => {
     const updateResult = await speciesClassService.updateSpeciesClass(12, classData, null);
 
     assert.deepStrictEqual(updateResult, err("notAllowed"));
-    assert.strictEqual(classRepository.updateSpeciesClass.mock.callCount(), 0);
+    assert.strictEqual(classRepository.updateSpeciesClass.mock.calls.length, 0);
   });
 });
 
@@ -300,14 +296,12 @@ describe("Creation of a class", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { speciesClass: { canCreate: true } } });
 
-    classRepository.createSpeciesClass.mock.mockImplementationOnce(() =>
-      Promise.resolve(ok(speciesClassFactory.build())),
-    );
+    classRepository.createSpeciesClass.mockImplementationOnce(() => Promise.resolve(ok(speciesClassFactory.build())));
 
     await speciesClassService.createSpeciesClass(classData, loggedUser);
 
-    assert.strictEqual(classRepository.createSpeciesClass.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.createSpeciesClass.mock.calls[0].arguments, [
+    assert.strictEqual(classRepository.createSpeciesClass.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.createSpeciesClass.mock.calls[0], [
       {
         ...classData,
         ownerId: loggedUser.id,
@@ -320,13 +314,13 @@ describe("Creation of a class", () => {
 
     const loggedUser = loggedUserFactory.build({ permissions: { speciesClass: { canCreate: true } } });
 
-    classRepository.createSpeciesClass.mock.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
+    classRepository.createSpeciesClass.mockImplementationOnce(() => Promise.resolve(err("alreadyExists")));
 
     const createResult = await speciesClassService.createSpeciesClass(classData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("alreadyExists"));
-    assert.strictEqual(classRepository.createSpeciesClass.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.createSpeciesClass.mock.calls[0].arguments, [
+    assert.strictEqual(classRepository.createSpeciesClass.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.createSpeciesClass.mock.calls[0], [
       {
         ...classData,
         ownerId: loggedUser.id,
@@ -342,7 +336,7 @@ describe("Creation of a class", () => {
     const createResult = await speciesClassService.createSpeciesClass(classData, loggedUser);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(classRepository.createSpeciesClass.mock.callCount(), 0);
+    assert.strictEqual(classRepository.createSpeciesClass.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
@@ -351,7 +345,7 @@ describe("Creation of a class", () => {
     const createResult = await speciesClassService.createSpeciesClass(classData, null);
 
     assert.deepStrictEqual(createResult, err("notAllowed"));
-    assert.strictEqual(classRepository.createSpeciesClass.mock.callCount(), 0);
+    assert.strictEqual(classRepository.createSpeciesClass.mock.calls.length, 0);
   });
 });
 
@@ -363,56 +357,52 @@ describe("Deletion of a class", () => {
       ownerId: loggedUser.id,
     });
 
-    classRepository.findSpeciesClassById.mock.mockImplementationOnce(() => Promise.resolve(speciesClass));
+    classRepository.findSpeciesClassById.mockImplementationOnce(() => Promise.resolve(speciesClass));
 
     await speciesClassService.deleteSpeciesClass(11, loggedUser);
 
-    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.deleteSpeciesClassById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.deleteSpeciesClassById.mock.calls[0], [11]);
   });
 
   test("should handle the deletion of any class if has permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { speciesClass: { canDelete: true } } });
 
-    classRepository.findSpeciesClassById.mock.mockImplementationOnce(() =>
-      Promise.resolve(speciesClassFactory.build()),
-    );
+    classRepository.findSpeciesClassById.mockImplementationOnce(() => Promise.resolve(speciesClassFactory.build()));
 
     await speciesClassService.deleteSpeciesClass(11, loggedUser);
 
-    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.callCount(), 1);
-    assert.deepStrictEqual(classRepository.deleteSpeciesClassById.mock.calls[0].arguments, [11]);
+    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.calls.length, 1);
+    assert.deepStrictEqual(classRepository.deleteSpeciesClassById.mock.calls[0], [11]);
   });
 
   test("should not be allowed when deleting a non-owned class and no permission", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { speciesClass: { canDelete: false } } });
 
-    classRepository.findSpeciesClassById.mock.mockImplementationOnce(() =>
-      Promise.resolve(speciesClassFactory.build()),
-    );
+    classRepository.findSpeciesClassById.mockImplementationOnce(() => Promise.resolve(speciesClassFactory.build()));
 
     const deleteResult = await speciesClassService.deleteSpeciesClass(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.callCount(), 0);
+    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the entity is used", async () => {
     const loggedUser = loggedUserFactory.build({ permissions: { speciesClass: { canDelete: true } } });
 
-    speciesRepository.getCount.mock.mockImplementationOnce(() => Promise.resolve(1));
+    speciesRepository.getCount.mockImplementationOnce(() => Promise.resolve(1));
 
     const deleteResult = await speciesClassService.deleteSpeciesClass(11, loggedUser);
 
     assert.deepStrictEqual(deleteResult, err("isUsed"));
-    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.callCount(), 0);
+    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.calls.length, 0);
   });
 
   test("should not be allowed when the requester is not logged", async () => {
     const deleteResult = await speciesClassService.deleteSpeciesClass(11, null);
 
     assert.deepStrictEqual(deleteResult, err("notAllowed"));
-    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.callCount(), 0);
+    assert.strictEqual(classRepository.deleteSpeciesClassById.mock.calls.length, 0);
   });
 });
 
@@ -421,12 +411,12 @@ test("Create multiple classes", async () => {
 
   const loggedUser = loggedUserFactory.build();
 
-  classRepository.createSpeciesClasses.mock.mockImplementationOnce(() => Promise.resolve([]));
+  classRepository.createSpeciesClasses.mockImplementationOnce(() => Promise.resolve([]));
 
   await speciesClassService.createMultipleSpeciesClasses(classesData, loggedUser);
 
-  assert.strictEqual(classRepository.createSpeciesClasses.mock.callCount(), 1);
-  assert.deepStrictEqual(classRepository.createSpeciesClasses.mock.calls[0].arguments, [
+  assert.strictEqual(classRepository.createSpeciesClasses.mock.calls.length, 1);
+  assert.deepStrictEqual(classRepository.createSpeciesClasses.mock.calls[0], [
     classesData.map((speciesClass) => {
       return {
         ...speciesClass,

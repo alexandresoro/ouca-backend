@@ -1,13 +1,13 @@
-import { type Mock, mock as mockNode } from "node:test";
+import { type Mock, mock as mockNode } from "bun:test";
 
 type MockProxy<T> = {
-  // biome-ignore lint/complexity/noBannedTypes: <explanation>
-  [K in keyof T]: T[K] extends Function ? T[K] & Mock<T[K]> : T[K];
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  [K in keyof T]: T[K] extends (...args: any[]) => any ? T[K] & Mock<T[K]> : T[K];
 };
 
 export const mock = <T>(params?: Partial<T>): MockProxy<T> & T => {
-  // biome-ignore lint/complexity/noBannedTypes: <explanation>
-  const mocks: Record<string | symbol, Mock<Function>> = {};
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const mocks: Record<string | symbol, Mock<(...args: any[]) => any>> = {};
 
   return new Proxy(params ?? {}, {
     ownKeys(target: MockProxy<T>) {
@@ -18,7 +18,7 @@ export const mock = <T>(params?: Partial<T>): MockProxy<T> & T => {
         return target[property as keyof typeof target];
       }
       if (mocks[property] == null) {
-        mocks[property] = mockNode.fn();
+        mocks[property] = mockNode();
       }
 
       return mocks[property];
