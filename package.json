@@ -36,7 +36,7 @@
     "@fastify/swagger": "9.4.2",
     "@fastify/swagger-ui": "5.2.1",
     "@fastify/under-pressure": "9.0.3",
-    "@sentry/node": "8.51.0",
+    "@sentry/node": "8.52.0",
     "@turf/helpers": "7.2.0",
     "bullmq": "5.37.0",
     "content-disposition": "0.5.4",
