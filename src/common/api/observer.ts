@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -25,8 +26,12 @@ export type ObserversSearchParams = z.infer<typeof getObserversQueryParamsSchema
  * `PUT` `/observer/:id` Update of observer entity
  * `POST` `/observer` Create new observer entity
  */
-export const upsertObserverInput = z.object({
-  libelle: z.string().trim().min(1),
-});
+export const upsertObserverInput = z
+  .object({
+    libelle: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertObserverInput",
+  });
 
 export type UpsertObserverInput = z.infer<typeof upsertObserverInput>;
