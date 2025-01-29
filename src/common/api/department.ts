@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
 
@@ -27,8 +28,12 @@ export type DepartmentsSearchParams = z.infer<typeof getDepartmentsQueryParamsSc
  * `PUT` `/department/:id` Update of department entity
  * `POST` `/department` Create new department entity
  */
-export const upsertDepartmentInput = z.object({
-  code: z.string().trim().min(1),
-});
+export const upsertDepartmentInput = z
+  .object({
+    code: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertDepartmentInput",
+  });
 
 export type UpsertDepartmentInput = z.infer<typeof upsertDepartmentInput>;

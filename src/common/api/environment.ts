@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -27,9 +28,13 @@ export type EnvironmentsSearchParams = z.infer<typeof getEnvironmentsQueryParams
  * `PUT` `/environment/:id` Update of environment entity
  * `POST` `/environment` Create new environment entity
  */
-export const upsertEnvironmentInput = z.object({
-  code: z.string().trim().min(1),
-  libelle: z.string().trim().min(1),
-});
+export const upsertEnvironmentInput = z
+  .object({
+    code: z.string().trim().min(1),
+    libelle: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertEnvironmentInput",
+  });
 
 export type UpsertEnvironmentInput = z.infer<typeof upsertEnvironmentInput>;

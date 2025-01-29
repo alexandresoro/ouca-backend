@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -27,9 +28,13 @@ export type NumberEstimatesSearchParams = z.infer<typeof getNumberEstimatesQuery
  * `PUT` `/number-estimate/:id` Update of number estimate entity
  * `POST` `/number-estimate` Create new number estimate entity
  */
-export const upsertNumberEstimateInput = z.object({
-  libelle: z.string().trim().min(1),
-  nonCompte: z.boolean(),
-});
+export const upsertNumberEstimateInput = z
+  .object({
+    libelle: z.string().trim().min(1),
+    nonCompte: z.boolean(),
+  })
+  .openapi({
+    ref: "UpsertNumberEstimateInput",
+  });
 
 export type UpsertNumberEstimateInput = z.infer<typeof upsertNumberEstimateInput>;

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import { paginationQueryParamsSchema } from "../../application/http/controllers/common/pagination.js";
 import { getSearchCriteriaParamsSchema } from "./common/search-criteria.js";
 
@@ -51,6 +52,9 @@ export const upsertEntryInput = z
   .refine(({ behaviorIds, environmentIds }) => {
     // Prevent duplicates in behavior/environment
     return new Set(behaviorIds).size === behaviorIds.length && new Set(environmentIds).size === environmentIds.length;
+  })
+  .openapi({
+    ref: "UpsertEntryInput",
   });
 
 export type UpsertEntryInput = z.infer<typeof upsertEntryInput>;

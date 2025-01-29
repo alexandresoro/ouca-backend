@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -25,8 +26,12 @@ export type DistanceEstimatesSearchParams = z.infer<typeof getDistanceEstimatesQ
  * `PUT` `/distance-estimate/:id` Update of distance estimate entity
  * `POST` `/distance-estimate` Create new distance estimate entity
  */
-export const upsertDistanceEstimateInput = z.object({
-  libelle: z.string().trim().min(1),
-});
+export const upsertDistanceEstimateInput = z
+  .object({
+    libelle: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertDistanceEstimateInput",
+  });
 
 export type UpsertDistanceEstimateInput = z.infer<typeof upsertDistanceEstimateInput>;

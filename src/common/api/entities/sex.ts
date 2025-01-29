@@ -1,7 +1,10 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 
-export const sexSchema = z.object({
-  id: z.string(),
-  libelle: z.string(),
-  ownerId: z.string().uuid().nullable(),
-});
+export const sexSchema = z
+  .object({
+    id: z.string(),
+    libelle: z.string(),
+    ownerId: z.string().uuid().nullable(),
+  })
+  .openapi({ ref: "Sex" });

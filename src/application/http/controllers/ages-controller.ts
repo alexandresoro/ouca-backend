@@ -7,6 +7,7 @@ import { ageSchema } from "@ou-ca/common/api/entities/age.js";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import { Result } from "neverthrow";
 import { z } from "zod";
+import "zod-openapi/extend";
 import type { Services } from "../../services/services.js";
 import { withAuthenticationErrorResponses } from "../hooks/handle-authorization-hook.js";
 import { buildFastifyDefaultErrorResponses, idParamAsNumberSchema } from "./api-utils.js";
@@ -16,9 +17,13 @@ const getAgesQueryParamsSchema = entitiesCommonQueryParamsSchema.extend({
   orderBy: z.enum(ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS).optional(),
 });
 
-export const upsertAgeInputApiSchema = z.object({
-  libelle: z.string().trim().min(1),
-});
+export const upsertAgeInputApiSchema = z
+  .object({
+    libelle: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertAgeInput",
+  });
 
 export const agesController: FastifyPluginCallbackZod<{
   services: Services;

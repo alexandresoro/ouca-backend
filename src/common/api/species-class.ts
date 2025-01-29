@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -29,8 +30,12 @@ export type ClassesSearchParams = z.infer<typeof getClassesQueryParamsSchema>;
  * `PUT` `/class/:id` Update of class entity
  * `POST` `/class` Create new class entity
  */
-export const upsertClassInput = z.object({
-  libelle: z.string().trim().min(1),
-});
+export const upsertClassInput = z
+  .object({
+    libelle: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertSpeciesClassInput",
+  });
 
 export type UpsertClassInput = z.infer<typeof upsertClassInput>;

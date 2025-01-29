@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
 
@@ -28,10 +29,14 @@ export type TownsSearchParams = z.infer<typeof getTownsQueryParamsSchema>;
  * `PUT` `/town/:id` Update of town entity
  * `POST` `/town` Create new town entity
  */
-export const upsertTownInput = z.object({
-  code: z.coerce.number().int().min(1),
-  nom: z.string().trim().min(1),
-  departmentId: z.string().trim().min(1),
-});
+export const upsertTownInput = z
+  .object({
+    code: z.coerce.number().int().min(1),
+    nom: z.string().trim().min(1),
+    departmentId: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertTownInput",
+  });
 
 export type UpsertTownInput = z.infer<typeof upsertTownInput>;

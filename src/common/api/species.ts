@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
 import { getSearchCriteriaParamsSchema } from "./common/search-criteria.js";
@@ -31,11 +32,15 @@ export type SpeciesSearchParams = z.infer<typeof getSpeciesQueryParamsSchema>;
  * `PUT` `/species/:id` Update of species entity
  * `POST` `/species` Create new species entity
  */
-export const upsertSpeciesInput = z.object({
-  classId: z.string().trim().min(1),
-  code: z.string().trim().min(1),
-  nomFrancais: z.string().trim().min(1),
-  nomLatin: z.string().trim().min(1),
-});
+export const upsertSpeciesInput = z
+  .object({
+    classId: z.string().trim().min(1),
+    code: z.string().trim().min(1),
+    nomFrancais: z.string().trim().min(1),
+    nomLatin: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertSpeciesInput",
+  });
 
 export type UpsertSpeciesInput = z.infer<typeof upsertSpeciesInput>;

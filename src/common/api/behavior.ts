@@ -1,5 +1,6 @@
 import { BREEDER_CODES } from "@domain/behavior/breeder.js";
 import { z } from "zod";
+import "zod-openapi/extend";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -28,10 +29,14 @@ export type BehaviorsSearchParams = z.infer<typeof getBehaviorsQueryParamsSchema
  * `PUT` `/behavior/:id` Update of behavior entity
  * `POST` `/behavior` Create new behavior entity
  */
-export const upsertBehaviorInput = z.object({
-  code: z.string().trim().min(1),
-  libelle: z.string().trim().min(1),
-  nicheur: z.enum(BREEDER_CODES).nullable(),
-});
+export const upsertBehaviorInput = z
+  .object({
+    code: z.string().trim().min(1),
+    libelle: z.string().trim().min(1),
+    nicheur: z.enum(BREEDER_CODES).nullable(),
+  })
+  .openapi({
+    ref: "UpsertBehaviorInput",
+  });
 
 export type UpsertBehaviorInput = z.infer<typeof upsertBehaviorInput>;

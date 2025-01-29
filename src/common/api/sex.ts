@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import {
   ENTITIES_WITH_LABEL_ORDER_BY_ELEMENTS,
   entitiesCommonQueryParamsSchema,
@@ -25,8 +26,12 @@ export type SexesSearchParams = z.infer<typeof getSexesQueryParamsSchema>;
  * `PUT` `/sex/:id` Update of sex entity
  * `POST` `/sex` Create new sex entity
  */
-export const upsertSexInput = z.object({
-  libelle: z.string().trim().min(1),
-});
+export const upsertSexInput = z
+  .object({
+    libelle: z.string().trim().min(1),
+  })
+  .openapi({
+    ref: "UpsertSexInput",
+  });
 
 export type UpsertSexInput = z.infer<typeof upsertSexInput>;

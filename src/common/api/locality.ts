@@ -1,4 +1,5 @@
 import { z } from "zod";
+import "zod-openapi/extend";
 import { entitiesCommonQueryParamsSchema } from "./common/entitiesSearchParams.js";
 import { entityInfoSchema } from "./common/entity-info.js";
 
@@ -39,12 +40,16 @@ export type LocalitiesSearchParams = z.infer<typeof getLocalitiesQueryParamsSche
  * `PUT` `/locality/:id` Update of locality entity
  * `POST` `/locality` Create new locality entity
  */
-export const upsertLocalityInput = z.object({
-  townId: z.string().trim().min(1),
-  nom: z.string().trim().min(1),
-  altitude: z.number().int().min(-1000).max(9000),
-  longitude: z.number().min(-180).max(180),
-  latitude: z.number().min(-90).max(90),
-});
+export const upsertLocalityInput = z
+  .object({
+    townId: z.string().trim().min(1),
+    nom: z.string().trim().min(1),
+    altitude: z.number().int().min(-1000).max(9000),
+    longitude: z.number().min(-180).max(180),
+    latitude: z.number().min(-90).max(90),
+  })
+  .openapi({
+    ref: "UpsertLocalityInput",
+  });
 
 export type UpsertLocalityInput = z.infer<typeof upsertLocalityInput>;
