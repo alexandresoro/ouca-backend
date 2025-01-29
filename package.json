@@ -42,7 +42,7 @@
     "@scalar/hono-api-reference": "0.5.169",
     "@sentry/node": "8.52.0",
     "@turf/helpers": "7.2.0",
-    "bullmq": "5.38.0",
+    "bullmq": "5.39.0",
     "content-disposition": "0.5.4",
     "csv-parse": "5.6.0",
     "escape-string-regexp": "5.0.0",
