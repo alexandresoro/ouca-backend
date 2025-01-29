@@ -78,8 +78,8 @@ importers:
         specifier: 4.6.19
         version: 4.6.19
       hono-openapi:
-        specifier: 0.4.3
-        version: 0.4.3(@hono/zod-validator@0.4.2(hono@4.6.19)(zod@3.24.1))(hono@4.6.19)(openapi-types@12.1.3)(zod-openapi@4.2.3(zod@3.24.1))(zod@3.24.1)
+        specifier: 0.4.4
+        version: 0.4.4(@hono/zod-validator@0.4.2(hono@4.6.19)(zod@3.24.1))(hono@4.6.19)(openapi-types@12.1.3)(zod-openapi@4.2.3(zod@3.24.1))(zod@3.24.1)
       hono-pino:
         specifier: 0.7.0
         version: 0.7.0(hono@4.6.19)(pino@9.6.0)
@@ -1249,8 +1249,8 @@ packages:
   help-me@5.0.0:
     resolution: {integrity: sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==}
 
-  hono-openapi@0.4.3:
-    resolution: {integrity: sha512-3QYLRxos2NjyMVJ3YTwJDUzn//rAWQS3aEaKKxOWko9xJp/tgvXwZHWz1az2eDUW0BFOiRsoSo4He2mni5a9lg==}
+  hono-openapi@0.4.4:
+    resolution: {integrity: sha512-8UdlOwqGuKwtmGgiUcxRarIi0XOY9ZED+XfpVaZr9un5jl9p9dTLrnIhs1i+eTqvHNHV4QNF0C5bbfxdMBYe+w==}
     peerDependencies:
       '@hono/arktype-validator': ^2.0.0
       '@hono/effect-validator': ^1.2.0
@@ -3359,7 +3359,7 @@ snapshots:
 
   help-me@5.0.0: {}
 
-  hono-openapi@0.4.3(@hono/zod-validator@0.4.2(hono@4.6.19)(zod@3.24.1))(hono@4.6.19)(openapi-types@12.1.3)(zod-openapi@4.2.3(zod@3.24.1))(zod@3.24.1):
+  hono-openapi@0.4.4(@hono/zod-validator@0.4.2(hono@4.6.19)(zod@3.24.1))(hono@4.6.19)(openapi-types@12.1.3)(zod-openapi@4.2.3(zod@3.24.1))(zod@3.24.1):
     dependencies:
       json-schema-walker: 2.0.0
     optionalDependencies:
