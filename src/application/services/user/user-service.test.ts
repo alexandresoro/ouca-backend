@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { beforeEach, describe } from "node:test";
 import { loggedUserFactory } from "@fixtures/domain/user/logged-user.fixtures.js";
-import { createUserInputFactory, userSettingsFactory } from "@fixtures/domain/user/user.fixtures.js";
+import { createUserInputFactory, userFactory, userSettingsFactory } from "@fixtures/domain/user/user.fixtures.js";
 import type { UserRepository } from "@interfaces/user-repository-interface.js";
 import { mock } from "../../../utils/mock.js";
 import { buildUserService } from "./user-service.js";
@@ -32,7 +32,7 @@ describe("User settings update", () => {
     const settings = userSettingsFactory.build();
 
     userRepository.updateUserSettings.mock.mockImplementationOnce(() =>
-      Promise.resolve({ id: loggedUser.id, settings }),
+      Promise.resolve(userFactory.build({ id: loggedUser.id, settings })),
     );
 
     await userService.updateSettings(loggedUser.id, settings);

@@ -380,7 +380,7 @@ describe("Update of a species", () => {
 
     const user = loggedUserFactory.build();
 
-    speciesRepository.findSpeciesById.mock.mockImplementationOnce(() => Promise.resolve(ok(existingData)));
+    speciesRepository.findSpeciesById.mock.mockImplementationOnce(() => Promise.resolve(existingData));
 
     assert.deepStrictEqual(await speciesService.updateSpecies(12, speciesData, user), err("notAllowed"));
 
