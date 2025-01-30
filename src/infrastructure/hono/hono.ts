@@ -4,14 +4,14 @@ import { HonoAdapter } from "@bull-board/hono";
 import { serveStatic } from "@hono/node-server/serve-static";
 import type { Queues } from "@infrastructure/bullmq/queues.js";
 import { Hono } from "hono";
-import { pinoLogger } from "hono-pino";
+import { type Env, pinoLogger } from "hono-pino";
 import { cors } from "hono/cors";
-import { logger } from "../../utils/logger.js";
+import { logger as loggerParent } from "../../utils/logger.js";
 
-export const honoLogger = logger.child({ module: "hono" });
+export const honoLogger = loggerParent.child({ module: "hono" });
 
-export const buildHonoApp = (queues: Queues): Hono => {
-  const app = new Hono();
+export const buildHono = (queues: Queues) => {
+  const app = new Hono<Env<"logger">>();
 
   app.use(
     pinoLogger({
@@ -60,9 +60,9 @@ export const buildHonoApp = (queues: Queues): Hono => {
   });
   serverAdapter.setBasePath("/jobs");
   app.route("/jobs", serverAdapter.registerPlugin());
-  logger.debug("BullBoard successfully registered");
+  honoLogger.debug("BullBoard successfully registered");
 
-  logger.debug("Hono middlewares successfully registered");
+  honoLogger.debug("Hono middlewares successfully registered");
 
   return app;
 };

@@ -32,7 +32,7 @@ type OpenApiResponseTypeWithResolverResult = OpenAPIV3.ResponseObject & {
   };
 };
 
-const authenticationErrorResponseCodes = [400, 401, 500] as const;
+const authenticationErrorResponseCodes = [400, 401, 403, 500] as const;
 type AuthenticationErrorResponseCodes = (typeof authenticationErrorResponseCodes)[number];
 
 export const openApiDefaultErrorResponses = <C extends number>(
