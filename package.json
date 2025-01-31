@@ -71,7 +71,7 @@
     "@types/node": "22.12.0",
     "@types/pg": "8.11.11",
     "dotenv": "16.4.7",
-    "fishery": "2.2.2",
+    "fishery": "2.2.3",
     "lefthook": "1.10.10",
     "openapi-types": "12.1.3",
     "tsc-alias": "1.8.10",

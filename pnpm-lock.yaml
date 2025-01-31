@@ -136,8 +136,8 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       fishery:
-        specifier: 2.2.2
-        version: 2.2.2
+        specifier: 2.2.3
+        version: 2.2.3
       lefthook:
         specifier: 1.10.10
         version: 1.10.10
@@ -1178,8 +1178,8 @@ packages:
     resolution: {integrity: sha512-Y5jIsuYR4BwWDYYQ2A/RWWE6gD8a0FMgtU+HOq1WKku+Cwdz8M1v8wcAmRXXM1/iqtoqg06v+LjAxMYbCjViMw==}
     engines: {node: '>=14'}
 
-  fishery@2.2.2:
-    resolution: {integrity: sha512-jeU0nDhPHJkupmjX+r9niKgVMTBDB8X+U/pktoGHAiWOSyNlMd0HhmqnjrpjUOCDPJYaSSu4Ze16h6dZOKSp2w==}
+  fishery@2.2.3:
+    resolution: {integrity: sha512-Rbp1PCPjNS5Yyuw2tRhVQ59wZ5Ciwv5+latMNx7JjhoZ5JF1TMgzs8J93wKYesLf3WXdXHovjY5dIDkf2EbMDw==}
 
   foreground-child@3.3.0:
     resolution: {integrity: sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==}
@@ -3279,7 +3279,7 @@ snapshots:
       fast-querystring: 1.1.2
       safe-regex2: 4.0.1
 
-  fishery@2.2.2:
+  fishery@2.2.3:
     dependencies:
       lodash.mergewith: 4.6.2
 
