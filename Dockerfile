@@ -7,6 +7,8 @@ FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as build
 
 WORKDIR /app
 
+# https://github.com/nodejs/corepack/issues/612
+RUN npm install -g corepack@latest
 RUN corepack enable
 
 COPY ./ /app/
@@ -17,6 +19,8 @@ RUN node --run build
 # 2. Run the NodeJS backend
 FROM ${REGISTRY_URL}/node:${NODE_IMAGE_VERSION}-alpine as final
 
+# https://github.com/nodejs/corepack/issues/612
+RUN npm install -g corepack@latest
 RUN corepack enable
 
 # Sets to production, it also sets the install script to install deps only
