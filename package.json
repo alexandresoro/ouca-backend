@@ -40,7 +40,7 @@
     "@hono/node-server": "1.13.8",
     "@hono/zod-validator": "0.4.2",
     "@scalar/hono-api-reference": "0.5.171",
-    "@sentry/node": "8.53.0",
+    "@sentry/node": "8.54.0",
     "@turf/helpers": "7.2.0",
     "bullmq": "5.40.0",
     "content-disposition": "0.5.4",
