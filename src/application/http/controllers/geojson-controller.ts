@@ -14,7 +14,7 @@ export const geojsonController: FastifyPluginAsyncZod<{
   });
 
   fastify.get(
-    "/localities.json",
+    "/localities",
     {
       schema: {
         security: [{ token: [] }],
