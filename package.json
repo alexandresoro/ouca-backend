@@ -39,7 +39,7 @@
     "@fastify/under-pressure": "9.0.3",
     "@hono/node-server": "1.13.8",
     "@hono/zod-validator": "0.4.2",
-    "@scalar/hono-api-reference": "0.5.171",
+    "@scalar/hono-api-reference": "0.5.172",
     "@sentry/node": "8.54.0",
     "@turf/helpers": "7.2.0",
     "bullmq": "5.40.0",
