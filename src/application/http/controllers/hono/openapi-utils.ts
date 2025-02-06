@@ -3,14 +3,31 @@ import { resolver } from "hono-openapi/zod";
 import type { OpenAPIV3 } from "openapi-types";
 import { type ZodSchema, z } from "zod";
 
+type OpenApiResponseTypeWithResolverResult = OpenAPIV3.ResponseObject & {
+  content?: {
+    [key: string]: Omit<OpenAPIV3.MediaTypeObject, "schema"> & {
+      schema?: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | ResolverResult;
+    };
+  };
+};
+
 export const openApiJsonResponse = <S extends ZodSchema>(
   statusCode: number,
   schema: S,
-  { description }: { description?: string } = {},
-) => {
+  {
+    description,
+    headers,
+  }: {
+    description?: string;
+    headers?: {
+      [header: string]: OpenAPIV3.ReferenceObject | OpenAPIV3.HeaderObject;
+    };
+  } = {},
+): Record<number, OpenApiResponseTypeWithResolverResult> => {
   return {
     [statusCode]: {
       description: description ?? "Default response",
+      ...(headers ? { headers } : {}),
       content: {
         "application/json": {
           schema: resolver(schema),
@@ -22,14 +39,6 @@ export const openApiJsonResponse = <S extends ZodSchema>(
 
 type OpenApiMediaTypeObjectWithResolverResult = Omit<OpenAPIV3.MediaTypeObject, "schema"> & {
   schema?: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | ResolverResult;
-};
-
-type OpenApiResponseTypeWithResolverResult = OpenAPIV3.ResponseObject & {
-  content?: {
-    [key: string]: Omit<OpenAPIV3.MediaTypeObject, "schema"> & {
-      schema?: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | ResolverResult;
-    };
-  };
 };
 
 const authenticationErrorResponseCodes = [400, 401, 403, 500] as const;
