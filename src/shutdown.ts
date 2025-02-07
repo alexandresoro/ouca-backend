@@ -1,3 +1,4 @@
+import type { ServerType } from "@hono/node-server";
 import { kysely } from "@infrastructure/kysely/kysely.js";
 import * as Sentry from "@sentry/node";
 import type {
@@ -31,6 +32,33 @@ export const shutdown =
       server.close().then(() => {
         logger.info("Web server has been shut down");
       }),
+    ]).finally(() => {
+      process.exit(0);
+    });
+  };
+
+const closeServer = (server: ServerType): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    server.close((err) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
+  });
+};
+
+export const shutdownHono =
+  (server: ServerType): (() => void) =>
+  () => {
+    logger.info("Shutdown requested");
+    server.close();
+    void Promise.all([
+      Sentry.close(2000),
+      kysely.destroy().then(() => {
+        logger.info("Kysely database connection has been shut down");
+      }),
+      closeServer(server),
     ]).finally(() => {
       process.exit(0);
     });
