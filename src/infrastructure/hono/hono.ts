@@ -3,6 +3,7 @@ import { BullMQAdapter } from "@bull-board/api/bullMQAdapter.js";
 import { HonoAdapter } from "@bull-board/hono";
 import { serveStatic } from "@hono/node-server/serve-static";
 import type { Queues } from "@infrastructure/bullmq/queues.js";
+import { captureException } from "@infrastructure/sentry/capture-exception.js";
 import { Hono } from "hono";
 import { type Env, pinoLogger } from "hono-pino";
 import { cors } from "hono/cors";
@@ -61,6 +62,15 @@ export const buildHono = (queues: Queues) => {
   serverAdapter.setBasePath("/jobs");
   app.route("/jobs", serverAdapter.registerPlugin());
   honoLogger.debug("BullBoard successfully registered");
+
+  // Sentry
+  // TODO: manual basic sentry integration
+  app.use(async (c, next) => {
+    await next();
+    if (c.error) {
+      captureException(c.error);
+    }
+  });
 
   honoLogger.debug("Hono middlewares successfully registered");
 
