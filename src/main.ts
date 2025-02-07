@@ -23,6 +23,8 @@ const startApp = async () => {
 
   await startWorkersAndJobs(services);
 
+  logger.info(`Using ${serverConfig.useHonoServer ? "Hono" : "Fastify"} to serve requests`);
+
   const server = await buildServer(services.queues);
 
   await registerRoutes(server, services);
