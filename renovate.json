@@ -18,11 +18,6 @@
       "matchPackageNames": ["@bull-board/{/,}**"]
     },
     {
-      "groupName": "fastify-major",
-      "matchUpdateTypes": ["major"],
-      "matchPackageNames": ["fastify", "@fastify/{/,}**", "@bull-board/{/,}**"]
-    },
-    {
       "matchDatasources": ["docker"],
       "matchDepNames": ["node"],
       "matchUpdateTypes": ["major"],
