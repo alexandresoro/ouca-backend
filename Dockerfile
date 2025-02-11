@@ -28,9 +28,6 @@ ENV NODE_ENV production
 
 WORKDIR /app
 
-# In the container, listen to outside localhost by default
-ENV OUCA_SERVER_HOST 0.0.0.0
-
 COPY .npmrc ./
 
 COPY /migrations/ migrations/
