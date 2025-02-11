@@ -2,8 +2,6 @@ import fastifyCors from "@fastify/cors";
 import fastifyMultipart from "@fastify/multipart";
 import { fastifySensible } from "@fastify/sensible";
 import fastifyUnderPressure from "@fastify/under-pressure";
-import { buildBullBoardAdapter } from "@infrastructure/bullmq/bullboard.js";
-import type { Queues } from "@infrastructure/bullmq/queues.js";
 import * as Sentry from "@sentry/node";
 import fastify, {
   type FastifyInstance,
@@ -14,9 +12,7 @@ import fastify, {
 import type { Logger } from "pino";
 import { logger as loggerParent } from "../../utils/logger.js";
 
-export const buildServer = async (
-  queues: Queues,
-): Promise<
+export const buildServer = async (): Promise<
   FastifyInstance<
     RawServerDefault,
     RawRequestDefaultExpression<RawServerDefault>,
@@ -51,11 +47,6 @@ export const buildServer = async (
   // Remove default text/plain parser
   // https://fastify.dev/docs/latest/Reference/ContentTypeParser/
   server.removeContentTypeParser(["text/plain"]);
-
-  // BullBoard
-  const serverAdapter = buildBullBoardAdapter(queues);
-  await server.register(serverAdapter.registerPlugin(), { basePath: "/jobs", prefix: "/jobs" });
-  logger.debug("BullBoard successfully registered");
 
   // Sentry
   Sentry.setupFastifyErrorHandler(server);
