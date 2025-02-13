@@ -38,7 +38,7 @@ jobs:
       - run: apt update && apt install -y podman
 
       - name: Login to registry
-        run: buildah login ${{ secrets.HARBOR_REGISTRY_URL }} -u '${{ secrets.HARBOR_USER }}' -p '${{ secrets.HARBOR_PASSWORD }}' --verbose
+        run: buildah login -u '${{ secrets.HARBOR_USER }}' -p '${{ secrets.HARBOR_PASSWORD }}' --verbose ${{ secrets.HARBOR_REGISTRY_URL }}
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
