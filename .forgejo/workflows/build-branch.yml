@@ -11,8 +11,8 @@ on:
 
 jobs:
   validate:
-#     environment:
-#       name: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && 'production' || 'preview' }}
+    #     environment:
+    #       name: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && 'production' || 'preview' }}
 
     runs-on: docker
 
@@ -33,13 +33,12 @@ jobs:
 
     outputs:
       image-label: ${{ steps.docker-metadata.outputs.version }}
-      image-digest: ${{ steps.push-image.outputs.digest }}
 
     steps:
       - run: apt update && apt install -y podman
 
       - name: Login to registry
-        run: podman login ${{ secrets.HARBOR_REGISTRY_URL }} -u '${{ secrets.HARBOR_USER }}' -p '${{ secrets.HARBOR_PASSWORD }}' --verbose
+        run: buildah login ${{ secrets.HARBOR_REGISTRY_URL }} -u '${{ secrets.HARBOR_USER }}' -p '${{ secrets.HARBOR_PASSWORD }}' --verbose
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
@@ -84,7 +83,6 @@ jobs:
           #   --cache-to ${{ secrets.FORGEJO_DOMAIN }}/alexandresoro/cache
 
       - uses: https://github.com/redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
-        id: push-image
         with:
           image: ${{ steps.build-image.outputs.image }}
           tags: ${{ steps.build-image.outputs.tags }}
@@ -99,7 +97,6 @@ jobs:
     runs-on: docker
 
     steps:
-
       - name: Dispatch backend image update to forgejo
         run: >
           curl -v --fail
